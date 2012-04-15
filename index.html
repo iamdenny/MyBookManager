@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <title>My Book Manager</title>
+	    
+	    <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width, height=device-height;">
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	    
+	    <link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.1.0.min.css" />
+	    
+	    <script type="text/javascript" src="cordova-android-1.6.0.js"></script>
+	    
+	    <script type="text/javascript" src="jquery.mobile/jquery-1.7.2.min.js"></script>
+	    <script type="text/javascript" src="jquery.mobile/jquery.mobile-1.1.0.min.js"></script>
+	    
+	    <script type="text/javascript" src="dny/dny.js"></script>
+	    <script type="text/javascript" src="dny/dny.MyBookManager.js"></script>
+	    
+	    <script type="text/javascript">
+	    	$(document).ready(function(){
+	    		// Wait for PhoneGap to connect with the device
+	    		document.addEventListener("deviceready", function(){
+					var woMyBookManager = new dny.MyBookManager();	    			
+	    		});
+	    	});
+	    </script>
+	</head>
+	<body>
+		<section id="main" data-role="page" data-fullscreen="false">
+			<header data-role="header" data-position="fixed" data-theme="c">
+				<a id="main-setup" data-icon="gear" data-theme="b">설정</a>
+				<h1>나의 도서 관리</h1>
+				<a id="main-add" data-icon="plus" data-theme="b">추가</a>
+			</header>
+			
+			<div id="main-content" data-role="content" class="content">
+			</div>
+			
+		</section>
+	</body>
+</html>
