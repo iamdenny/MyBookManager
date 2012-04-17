@@ -8,7 +8,7 @@
 	    
 	    <link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.1.0.min.css" />
 	    
-	    <script type="text/javascript" src="cordova-android-1.6.0.js"></script>
+	    <script type="text/javascript" src="cordova-ios-1.6.0.js"></script>
 	    
 	    <script type="text/javascript" src="jquery.mobile/jquery-1.7.2.min.js"></script>
 	    <script type="text/javascript" src="jquery.mobile/jquery.mobile-1.1.0.min.js"></script>
@@ -19,7 +19,8 @@
 	    <script type="text/javascript">
 	    	$(document).ready(function(){
 	    		$.mobile.defaultPageTransition = "none";
-	    		
+                $.mobile.allowCrossDomainPages = true;
+                              
 	    		// Wait for PhoneGap to connect with the device
 	    		document.addEventListener("deviceready", function(){
 					var woMyBookManager = new dny.MyBookManager();	    			
