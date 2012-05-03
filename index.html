@@ -18,22 +18,28 @@
 	    
 	    <script type="text/javascript" src="js/com.iamdenny.js"></script>
 	    <script type="text/javascript" src="js/com.iamdenny.MyBookManager.js"></script>
+	    <script type="text/javascript" src="js/com.iamdenny.MyBookManager.Config.js"></script>
+	    <script type="text/javascript" src="js/com.iamdenny.MyBookManager.List.js"></script>
+	    <script type="text/javascript" src="js/com.iamdenny.MyBookManager.Book.js"></script>
+	    <script type="text/javascript" src="js/com.iamdenny.MyBookManager.DB.js"></script>
 	    
 	    <script type="text/javascript">
 	    	
-	    	var Login = io.connect('http://mybookmanagerserver.iamdenny.com:2046/login');
-	    	Login.on('connect', function(){
+	    	var ioLogin = io.connect('http://mybookmanagerserver.iamdenny.com:2046/login');
+	    	ioLogin.on('connect', function(){
 	    		console.log('/login connect');
 	    	});
 	    	
-	    	var Book = io.connect('http://mybookmanagerserver.iamdenny.com:2046/book');
-	    	Book.on('connect', function(){
+	    	var ioBook = io.connect('http://mybookmanagerserver.iamdenny.com:2046/book');
+	    	ioBook.on('connect', function(){
 	    		console.log('/book connect');
 	    	});
 	    	
 	    	$(document).ready(function(){
 	    		$.mobile.defaultPageTransition = "none";
                 $.mobile.allowCrossDomainPages = true;
+                
+                var woMyBookManager = new com.iamdenny.MyBookManager();
                               
 	    		// Wait for PhoneGap to connect with the device
 	    		document.addEventListener("deviceready", function(){
