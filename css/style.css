@@ -1,2 +1,2 @@
 @import "main.css";
-body {font-family:NanumGothic,"나눔고딕","Malgun Gothic",Dotum,"돋움",Gulim,"굴림",Helvetica,Apple-Gothic;-webkit-text-size-adjust:none;}
+body {font-family:NanumGothic,"나눔고딕","Malgun Gothic",Dotum,"돋움",Gulim,"굴림",Helvetica,Apple-Gothic !important;-webkit-text-size-adjust:none;}

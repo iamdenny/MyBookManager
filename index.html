@@ -8,7 +8,7 @@
 	    
 	    <link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.1.0.min.css" />
 	    <link rel="stylesheet" href="css/style.css" />
-	    
+<!--	    
 	    <script type="text/javascript" src="http://mybookmanagerserver.iamdenny.com:2046/socket.io/socket.io.js"></script>
 <!--
 	    <script type="text/javascript" src="cordova-1.6.1.js"></script>
@@ -28,15 +28,15 @@
 	    
 	    <script type="text/javascript">
 	    	
-	    	var ioLogin = io.connect('http://mybookmanagerserver.iamdenny.com:2046/login');
-	    	ioLogin.on('connect', function(){
-	    		console.log('/login connect');
-	    	});
-	    	
-	    	var ioBook = io.connect('http://mybookmanagerserver.iamdenny.com:2046/book');
-	    	ioBook.on('connect', function(){
-	    		console.log('/book connect');
-	    	});
+	    	// var ioLogin = io.connect('http://mybookmanagerserver.iamdenny.com:2046/login');
+	    	// ioLogin.on('connect', function(){
+	    		// console.log('/login connect');
+	    	// });
+// 	    	
+	    	// var ioBook = io.connect('http://mybookmanagerserver.iamdenny.com:2046/book');
+	    	// ioBook.on('connect', function(){
+	    		// console.log('/book connect');
+	    	// });
 	    	
 	    	$(document).ready(function(){
 	    		$.mobile.defaultPageTransition = "none";
@@ -107,13 +107,11 @@
 	                    </li>	
                 	</script>
                     <script id="tpl-main-list-book" type="text/template">
-                    	<li data-theme="c">
-	                        <a href="#viewbook" data-transition="slide">
-	                            <img class='main-list-book-thumbnail' src="{=db_image}" alt="{=db_title}">
-	                            
-	                            <strong>{=db_title}</strong>
-	                            <span>{=db_author}</span>
-	                        </a>
+                    	<li id='main-list-book-idx_{=db_idx}' class="main-list-book" data-theme="c">
+                            <img class='main-list-book-thumbnail' src="{=db_image}" alt="{=db_title}">
+                            
+                            <strong>{=db_title}</strong>
+                            <span>{=db_author}</span>
 	                    </li>	
                     </script>                    
                 </ul>			
@@ -170,36 +168,36 @@
 			</header>
 			
 			<div id="viewbook-content" class="content" data-role="content" data-inset="true">
-				<img width="173" height="254" onerror="this.src='http://static.naver.net/book/image/noimg7.gif';" src="http://bookthumb.phinf.naver.net/cover/020/778/02077802.jpg?type=w150">
-				<h2>쿠오 바디스</h2>
-				<ul>
-					<li>저자 : 헨릭 시엔키에비츠</li>
-					<li>역자 : 최성은</li>
-					<li>출판사 : 민음사</li>
-					<li>출판일 : 2005.12.16</li>
-					<li>페이지 : 511</li>
-					<li>ISBN : 8937461285</li>
-					<li>정가 : 11,000원</li>
-				</ul>
-				
-				<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-				    <legend>
-				    	현재 이 책의 상태
-				    </legend>
-				    <input name="radiobuttons1" id="radio1" value="radio1" type="radio" />
-				    <label for="radio1">
-				        읽는중
-				    </label>
-				    <input name="radiobuttons1" id="radio2" value="radio2" type="radio" />
-				    <label for="radio2">
-				        읽어야지
-				    </label>
-				    <input name="radiobuttons1" id="radio3" value="radio3" type="radio" />
-				    <label for="radio3">
-				        다읽었다
-				    </label>
-				</fieldset>
-
+				<script id="tpl-viewbook-detail" type="text/template">
+					<div>
+						<img src="{=db_image}">
+						<h2>{=db_title}</h2>
+						<ul>
+							<li>저자 : {=db_author}</li>
+							<li>출판사 : {=db_publisher}</li>
+							<li>출판일 : {=db_pubdate}</li>
+							<li>ISBN : {=db_isbn}</li>
+							<li>정가 : {=db_price}원</li>
+						</ul>
+						<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+						    <legend>
+						    	현재 이 책의 상태
+						    </legend>
+						    <input name="radiobuttons1" id="radio1" value="radio1" type="radio" />
+						    <label for="radio1">
+						        읽는중
+						    </label>
+						    <input name="radiobuttons1" id="radio2" value="radio2" type="radio" />
+						    <label for="radio2">
+						        읽어야지
+						    </label>
+						    <input name="radiobuttons1" id="radio3" value="radio3" type="radio" />
+						    <label for="radio3">
+						        다읽었다
+						    </label>
+						</fieldset>
+					</div>
+				</script>
 			</div>
 		</section>
 	</body>

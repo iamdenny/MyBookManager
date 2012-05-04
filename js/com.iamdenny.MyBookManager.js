@@ -17,8 +17,6 @@ com.iamdenny.MyBookManager = jindo.$Class({
 		this._woDB = new com.iamdenny.MyBookManager.DB();
 		
 		this._woList = new com.iamdenny.MyBookManager.List(this._woDB);
-		console.log('1')
 		this._woList.showList();
-		console.log('2')
 	}
 });

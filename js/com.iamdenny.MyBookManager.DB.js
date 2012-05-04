@@ -233,6 +233,16 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 		this._db.transaction(function(tx){
 			tx.executeSql(sSql, [], fCallback, self._onError);
 		});
+	},
+	
+	loadBook : function(fCallback, nIdx){
+		var sSql = 'SELECT * FROM ' + this._sPrefix + this._sTableList;
+			sSql += ' WHERE db_idx = ?'
+		
+		var self = this;
+		this._db.transaction(function(tx){
+			tx.executeSql(sSql, [nIdx], fCallback, self._onError);
+		})
 	}
   	
 });
