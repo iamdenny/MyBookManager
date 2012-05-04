@@ -7,6 +7,7 @@
 	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	    
 	    <link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.1.0.min.css" />
+	    <link rel="stylesheet" href="css/style.css" />
 	    
 	    <script type="text/javascript" src="http://mybookmanagerserver.iamdenny.com:2046/socket.io/socket.io.js"></script>
 	    <script type="text/javascript" src="cordova-1.6.1.js"></script>
@@ -97,81 +98,22 @@
 			</header>
 			
 			<div id="main-content" data-role="content" class="content">
-                <ul data-role="listview" data-divider-theme="b" data-inset="true">
-                    <li data-role="list-divider" role="heading">
-                    	현재 읽고 있는 도서
-                    </li>
-                    <li data-theme="c">
-                        <a href="#viewbook" data-transition="slide">
-                            <img src="http://bookthumb.phinf.naver.net/cover/067/066/06706668.jpg?type=m1" alt="존 러스킨의 드로잉">
-                            
-                            <h4>책제목~~~~~</h4>
-                            <span>작가 : 아무개</span>,
-                            <span>읽기시작 : 2012-02-02</span>
-                        </a>
-                    </li>
-                    <li data-theme="c">
-                        <a href="#viewbook" data-transition="slide">
-                            <img src="http://bookthumb.phinf.naver.net/cover/059/952/05995206.jpg?type=m1" alt="얼굴 표정 참고서">
-                            
-                            <h4>책제목~~~~~</h4>
-                            <span>작가 : 아무개</span>,
-                            <span>읽기시작 : 2012-02-02</span>
-                        </a>
-                    </li>
-                    <li data-role="list-divider" role="heading">
-                       	즐겨찾는 도서
-                    </li>
-                    <li data-theme="c">
-                        <a href="#viewbook" data-transition="slide">
-                            <img src="http://bookthumb.phinf.naver.net/cover/045/500/04550054.jpg?type=m1" alt="Postmodern Ex-Communist (Paperback)">
-                            
-                            <h4>책제목~~~~~</h4>
-                            <span>작가 : 아무개</span>,
-                            <span>읽기시작 : 2012-02-02</span>
-                        </a>
-                    <li data-role="list-divider" role="heading">
-                    	앞으로 읽을 도서
-                    </li>
-                    <li data-theme="c">
-                        <a href="#viewbook" data-transition="slide">
-                            <img src="http://bookthumb.phinf.naver.net/cover/063/469/06346982.jpg?type=m1" alt="Drawing Lab for Mixed-Media Artists">
-                            
-                            <h4>책제목~~~~~</h4>
-                            <span>작가 : 아무개</span>,
-                            <span>읽기시작 : 2012-02-02</span>
-                        </a>
-                    </li>
-                    <li data-role="list-divider" role="heading">
-                    	다 읽은 도서
-                    </li>
-                    <li data-theme="c">
-                        <a href="#viewbook" data-transition="slide">
-                            <img src="http://bookthumb.phinf.naver.net/cover/063/469/06346982.jpg?type=m1" alt="Drawing Lab for Mixed-Media Artists">
-                            
-                            <h4>책제목~~~~~</h4>
-                            <span>작가 : 아무개</span>,
-                            <span>읽기시작 : 2012-02-02</span>
-                        </a>
-                    </li>
-                    <li data-theme="c">
-                        <a href="#viewbook" data-transition="slide">
-                            <img src="http://bookthumb.phinf.naver.net/cover/063/469/06346982.jpg?type=m1" alt="Drawing Lab for Mixed-Media Artists">
-                            
-                            <h4>책제목~~~~~</h4>
-                            <span>작가 : 아무개</span>,
-                            <span>읽기시작 : 2012-02-02</span>
-                        </a>
-                    </li>
-                    <li data-theme="c">
-                        <a href="#viewbook" data-transition="slide">
-                            <img src="http://bookthumb.phinf.naver.net/cover/063/469/06346982.jpg?type=m1" alt="Drawing Lab for Mixed-Media Artists">
-                            
-                            <h4>책제목~~~~~</h4>
-                            <span>작가 : 아무개</span>,
-                            <span>읽기시작 : 2012-02-02</span>
-                        </a>
-                    </li>
+                <ul id="main-list" data-role="listview" data-divider-theme="b" data-inset="true">
+                	<script id="tpl-main-list-divider" type="text/template">
+                		<li data-role="list-divider" role="heading">
+	                    	{=title}
+	                    </li>	
+                	</script>
+                    <script id="tpl-main-list-book" type="text/template">
+                    	<li data-theme="c">
+	                        <a href="#viewbook" data-transition="slide">
+	                            <img class='main-list-book-thumbnail' src="{=db_image}" alt="{=db_title}">
+	                            
+	                            <h4>{=db_title}</h4>
+	                            <span>{=db_author}</span>
+	                        </a>
+	                    </li>	
+                    </script>                    
                 </ul>			
 			</div>
 		</section>

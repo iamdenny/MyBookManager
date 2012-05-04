@@ -1,0 +1,5 @@
+#main{}
+#main #main-content {}
+#main #main-content #main-list {}
+#main #main-content #main-list li {}
+#main #main-content #main-list li .main-list-book-thumbnail {padding:0 5px}
