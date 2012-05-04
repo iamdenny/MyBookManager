@@ -2,4 +2,7 @@
 #main #main-content {}
 #main #main-content #main-list {}
 #main #main-content #main-list li {}
-#main #main-content #main-list li .main-list-book-thumbnail {padding:0 5px}
+#main #main-content #main-list li .main-list-book-thumbnail {padding:0 17px;margin:0}
+#main #main-content #main-list li .ui-link-inherit {}
+#main #main-content #main-list li strong {padding:.7em 0 .45em 0!important;display:block;overflow:hidden;width:100%;text-overflow:ellipsis;font-weight:normal;font-size:14px;line-height:1.25em;color:black}
+#main #main-content #main-list li span {color:#909090;display:inline;font-weight:normal} 
