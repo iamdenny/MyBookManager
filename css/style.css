@@ -1,2 +1,18 @@
 @import "main.css";
-body {font-family:NanumGothic,"나눔고딕","Malgun Gothic",Dotum,"돋움",Gulim,"굴림",Helvetica,Apple-Gothic !important;-webkit-text-size-adjust:none;}
+@import "viewbook.css";
+
+*{margin:0;padding:0;font-family:NanumGothic,"나눔고딕","Malgun Gothic",Dotum,"돋움",Gulim,"굴림",Helvetica,Apple-Gothic;-webkit-text-size-adjust:none;}
+body{background-color:#f8f8f8;line-height:1.25em;color:#000;word-wrap:break-word;word-break:break-all;position:relative;}
+body,input,select,textarea{font-size:14px;}
+.it,textarea{border:1px solid #bcbcbc;}
+li{list-style:none;}
+ul,ol{list-style:none;}
+table{border-collapse:collapse;}
+img,fieldset{border:none;}
+a{color:#000;text-decoration:none;cursor:pointer;}
+label{cursor:pointer;}
+strong{font-weight:normal;}
+em,address{font-style:normal;}
+.hc,.nc,hr{display:none!important;}
+.is{width:19px;height:19px;}
+.fx{max-width:100%;}

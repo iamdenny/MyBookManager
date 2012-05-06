@@ -1,8 +1,8 @@
 com.iamdenny.MyBookManager.List = jindo.$Class({
 	
 	_woDB : null,
+	_woBook : null,
 	_wtMainListDivider : null,
-	_wtMainListBookDetail : null,
 	_wtViewBook : null,
 	_nMainListIsReadingLimit : null,
 	_nMainListFavoriteLimit : null,
@@ -10,32 +10,33 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 	
 	$init : function(woDB){
 		this._woDB = woDB;	
-		
+		this._woBook = new com.iamdenny.MyBookManager.Book(this._woDB);
+			
 		this._welMainList = jindo.$Element('main-list');
-		this._welViewBookContent = jindo.$Element('viewbook-content');
 		
 		this._nMainListIsReadingLimit = 3;
 		this._nMainListFavoriteLimit = 3;
 		
 		this._initTemplates();
-		this._initPageShowEvnet();
+		this._initPageShowEvent();
 		this._initClickEvent();
 	},
 	
 	_initTemplates : function(){
 		this._wtMainListDivider = jindo.$Template('tpl-main-list-divider');
-		this._wtMainListBook = jindo.$Template('tpl-main-list-book');		
-		this._wtViewBookDetail = jindo.$Template('tpl-viewbook-detail');
+		this._wtMainListBook = jindo.$Template('tpl-main-list-book');	
 	},
-
-	_initPageShowEvnet : function(){
+	
+	_initPageShowEvent : function(){
 		var self = this;
-		$("#viewbook").bind("pagebeforeshow", function(event, ui){
-			self._welViewBookContent.empty();
-			self._showBook();
+		$("#main").bind("pagebeforeshow", function(event, ui){
+			$.mobile.showPageLoadingMsg("b", "Loading...", true);
+			console.log('main pagebeforeshow');
+			self._welMainList.empty();
+			self.showList();
 		});
-		$("#viewbook").bind("pageshow", function(event, ui){
-			console.log('viewbook pageshow');
+		$("#main").bind("pageshow", function(event, ui){
+			console.log('main pageshow');
 		});	
 	},
 	
@@ -50,8 +51,13 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 		    function(eEvent){   // 콜백 함수  
 		    	eEvent.stopDefault();
 		    	self._nMainListBookIdx = jindo.$Element(eEvent.element).attr('id').replace('main-list-book-idx_', '');
-		    	$.mobile.changePage("#viewbook");
-		        //alert("main-list-book 클래스를 가진 li가 클릭 될 때 실행");  
+		    	if(!self._nMainListBookIdx){
+					alert("도서가 선택되지 않았습니다.");
+					return false;
+				}else{
+					self._woBook.loadBook(self._nMainListBookIdx);
+			    	$.mobile.changePage("#viewbook");
+			    }
 		    }
 		);  
 	},
@@ -70,10 +76,10 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 			
 			self._refreshListView();
 			fFavorite();
-		}, 'is reading', null, null, self._nMainListIsReadingLimit);
+		}, 'isreading', null, null, self._nMainListIsReadingLimit);
 		
 		var fFavorite = function(){
-			self._woDB.loadList(function(tx, results){
+			self._woDB.loadFavoriteList(function(tx, results){
 				var el = jindo.$(self._wtMainListDivider.process({title : '즐겨찾는 도서'}));
 				self._welMainList.append(el);
 					
@@ -84,7 +90,7 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 				
 				self._refreshListView();
 				fWillRead();
-			}, 'favorite', null, null, self._nMainListFavoriteLimit);
+			}, null, null, self._nMainListFavoriteLimit);
 		};
 		
 		var fWillRead = function(){
@@ -99,7 +105,7 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 				
 				self._refreshListView();
 				fHasRead();
-			}, 'will read', null, null, self._nMainListFavoriteLimit);
+			}, 'willread', null, null, self._nMainListFavoriteLimit);
 		};
 		
 		var fHasRead = function(){
@@ -113,32 +119,13 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 				}
 				
 				self._refreshListView();
-			}, 'has read', null, null, self._nMainListFavoriteLimit);
+			}, 'hasread', null, null, self._nMainListFavoriteLimit);
 		};
 		
 	},
 		
 	_refreshListView : function(){
 		$(this._welMainList.$value()).listview('refresh');
-	},
-	
-	_refreshViewBook : function(){
-		//(this._welViewBook.$value()).controlgroup('refresh');
-	},
-	
-	_showBook : function(){
-		var self = this;
-		if(!this._nMainListBookIdx){
-			alert("도서가 선택되지 않았습니다.");
-			history.back();
-			return false;
-		}
-		this._woDB.loadBook(function(tx, results){
-			if(results.rows.length > 0){
-				var el = jindo.$(self._wtViewBookDetail.process(results.rows.item(0)));
-				self._welViewBookContent.append(el);
-				self._refreshViewBook();
-			}
-		}, this._nMainListBookIdx);
 	}
+	
 });

@@ -16,6 +16,7 @@
 	    
 	    <script type="text/javascript" src="jquery.mobile/jquery-1.7.2.min.js"></script>
 	    <script type="text/javascript" src="jquery.mobile/jquery.mobile-1.1.0.min.js"></script>
+	    <script type="text/javascript" src="jquery.mobile/jquery.numberformatter.js"></script>
 	    
 	    <script type="text/javascript" src="jindo/jindo.mobile.all.ns.js"></script>
 	    
@@ -93,14 +94,17 @@
 		</section>
 		-->
 		<section id="main" data-role="page" data-fullscreen="false">
-			<header data-role="header" data-position="fixed" data-theme="c">
+			<header data-role="header" data-position="fixed" data-theme="a">
 				<a id="main-setup" data-icon="gear" data-theme="b">설정</a>
 				<h1>나의 도서 관리</h1>
-				<a id="main-add" data-icon="plus" data-theme="b" href="#addbook">추가</a>
+				<a id="main-add" data-icon="plus" data-theme="b" href="#addbook" data-iconpos="right">추가</a>
 			</header>
 			
 			<div id="main-content" data-role="content" class="content">
-                <ul id="main-list" data-role="listview" data-divider-theme="b" data-inset="true">
+				<label for="main-search" class="hc">Search Input:</label>
+				<input type="search" name="main-search" id="main-search" value="" data-mini="true" />
+
+                <ul id="main-list" data-role="listview" data-divider-theme="c" data-inset="true">
                 	<script id="tpl-main-list-divider" type="text/template">
                 		<li data-role="list-divider" role="heading">
 	                    	{=title}
@@ -118,84 +122,161 @@
 			</div>
 		</section>
 		
-		<section id="addbook" data-role="page" data-add-back-btn="true" data-fullscreen="false">
-			<header data-role="header" data-position="fixed" data-theme="c">
+		<section id="addbook" data-role="page" data-add-back-btn="true" data-back-btn-theme="b"  data-fullscreen="false">
+			<header data-role="header" data-position="fixed" data-theme="a">
 				<h1>도서 추가</h1>
 			</header>
 			
 			<div id="addbook-content" class="cotnent" data-role="content" data-inset="true">
-				<form action="" method="post">
-					<div data-role="fieldcontain">
-						<fieldset>
-							<label for="addbook-title">제목 : </label>
-							<input type="text" name="title" id="addbook-title" value="" />
-							
-							<label for="addbook-writer">작가 : </label>
-							<input type="text" name="writer" id="addbook-writer" value="" />
-							
-							<label for="addbook-price">가격 : </label>
-							<input type="number" name="price" id="addbook-price" value="" />
-							
-						</fieldset>
-						
-						<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-						    <legend>
-						    	현재 이 책의 상태
-						    </legend>
-						    <input name="radiobuttons1" id="radio1" value="radio1" type="radio" />
-						    <label for="radio1">
-						        읽는중
-						    </label>
-						    <input name="radiobuttons1" id="radio2" value="radio2" type="radio" />
-						    <label for="radio2">
-						        읽어야지
-						    </label>
-						    <input name="radiobuttons1" id="radio3" value="radio3" type="radio" />
-						    <label for="radio3">
-						        다읽었다
-						    </label>
-						</fieldset>
-						
-						
+				<div data-role="fieldcontain">
+			         <label for="name-d">Text Input:</label>
+			         <input type="text" name="name" id="name-d" value=""  />
 					</div>
-				</form>
+
+					<div data-role="fieldcontain">
+						<label for="switch-d">Flip switch:</label>
+						<select name="switch-d" id="switch-d" data-role="slider">
+							<option value="off">Off</option>
+							<option value="on">On</option>
+						</select> 
+					</div>
+
+					<div data-role="fieldcontain">
+						<label for="slider-d">Slider:</label>
+					 	<input type="range" name="slider" id="slider-d" value="0" min="0" max="100"  />
+					</div>
+
+
+					<div data-role="fieldcontain">
+					<fieldset data-role="controlgroup" data-type="horizontal">
+				    	<legend>Font styling:</legend>
+				    	<input type="checkbox" name="checkbox-6d" id="checkbox-6d" class="custom" />
+						<label for="checkbox-6d">b</label>
+
+						<input type="checkbox" name="checkbox-7d" id="checkbox-7d" class="custom" />
+						<label for="checkbox-7d"><em>i</em></label>
+
+						<input type="checkbox" name="checkbox-8d" id="checkbox-8d" class="custom" />
+						<label for="checkbox-8d">u</label>    
+				    </fieldset>
+					</div>
+
+					<div data-role="fieldcontain">
+					    <fieldset data-role="controlgroup">
+					    	<legend>Choose a pet:</legend>
+					         	<input type="radio" name="radio-choice-1" id="radio-choice-1d" value="choice-1" />
+					         	<label for="radio-choice-1d">Cat</label>
+
+					         	<input type="radio" name="radio-choice-1" id="radio-choice-2d" value="choice-2"  />
+					         	<label for="radio-choice-2d">Dog</label>
+
+					         	<input type="radio" name="radio-choice-1" id="radio-choice-3d" value="choice-3"  />
+					         	<label for="radio-choice-3d">Hamster</label>
+
+					         	<input type="radio" name="radio-choice-1" id="radio-choice-4d" value="choice-4"  />
+					         	<label for="radio-choice-4d">Lizard</label>
+					    </fieldset>
+					</div>
+
+					<div data-role="fieldcontain">
+						<label for="select-choice-d" class="select">Choose shipping method:</label>
+						<select name="select-choice-d" id="select-choice-d">
+							<option value="standard">Standard: 7 day</option>
+							<option value="rush">Rush: 3 days</option>
+							<option value="express">Express: next day</option>
+							<option value="overnight">Overnight</option>
+						</select>
+					</div>
+					
+					<input type="button" data-role="button" data-theme="b" value="추가" />
 			</div>
 		</section>
 		
-		<section id="viewbook" data-role="page" data-add-back-btn="true" data-fullscreen="false">
-			<header data-role="header" data-position="fixed" data-theme="c">
+		<section id="viewbook" data-role="page" data-add-back-btn="true" data-back-btn-theme="b" data-fullscreen="false">
+			<header data-role="header" data-position="fixed" data-theme="a">
 				<h1>현재 읽고 있는 도서</h1>
 			</header>
 			
 			<div id="viewbook-content" class="content" data-role="content" data-inset="true">
 				<script id="tpl-viewbook-detail" type="text/template">
 					<div>
-						<img src="{=db_image}">
-						<h2>{=db_title}</h2>
-						<ul>
-							<li>저자 : {=db_author}</li>
-							<li>출판사 : {=db_publisher}</li>
-							<li>출판일 : {=db_pubdate}</li>
-							<li>ISBN : {=db_isbn}</li>
-							<li>정가 : {=db_price}원</li>
-						</ul>
-						<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-						    <legend>
-						    	현재 이 책의 상태
-						    </legend>
-						    <input name="radiobuttons1" id="radio1" value="radio1" type="radio" />
-						    <label for="radio1">
-						        읽는중
-						    </label>
-						    <input name="radiobuttons1" id="radio2" value="radio2" type="radio" />
-						    <label for="radio2">
-						        읽어야지
-						    </label>
-						    <input name="radiobuttons1" id="radio3" value="radio3" type="radio" />
-						    <label for="radio3">
-						        다읽었다
-						    </label>
-						</fieldset>
+						<div class="bif b2">
+							<span class="tmb1">
+								<img width="88" height="125" src="{=db_image}" class='bx1' />
+							</span>
+							<dl class="cntm1">
+			  					<dt class="h"><strong>{=db_title}</strong></dt>
+			  					
+			  					<dd class="if2">
+			  						<span class="rv">
+			  							<span class="mask" style="width:90%;">
+			  								<img src="http://static.naver.com/www/m/cm/im/bl.gif" alt="포인트" />
+			  							</span>
+			  							<span class="hc">포인트</span>
+			  						</span> 
+			  						<strong class="if21 tx1">9</strong> 
+			  						<span class="if21 if1"><span class="br tx3">|</span> 리뷰264건</span>
+			  					</dd>
+			  					
+								<dd class="if4">
+									<h4 class="hc">기본정보</h4>
+									<dl class="cnt">
+										<dt><span class="w">저</span><span>자&nbsp;&nbsp;:</span></dt>
+										<dd>{=db_author}</dd>
+	
+										<dt>출판사&nbsp;&nbsp;:</dt>
+										<dd>{=db_publisher}</dd>
+								
+										<dt>출간일&nbsp;&nbsp;:</dt>
+										<dd>{=db_pubdate}</dd>
+								
+										<dt>ISBN&nbsp;&nbsp;:</dt>
+										<dd>{=db_isbn}</dd>
+									</dl>
+									<dl class="cnt">					
+										<dt><span class="w">가</span><span>격&nbsp;&nbsp;:</span></dt> 
+						              	<dd>
+						               		<span class="strike db_price">{=db_price}원</span>
+						               		<span class="price"><strong class="db_discounted_price">{=db_price}</strong>원(↓<strong class="per">10</strong>%)</span>
+						               	</dd>                           					
+									</dl>	
+								</dd>
+							</dl>
+							
+							<div class="u_me2b3">
+								<div class="s2plug">
+									<fieldset class="categorygroup" data-role="controlgroup" data-type="horizontal" data-mini="true">
+									    <legend>
+									    	현재 이 책의 상태
+									    </legend>
+									    <input name="db_category" id="category1" value="isreading" type="radio" {=p_category_isreading}/>
+									    <label for="category1">
+									        읽는중
+									    </label>
+									    <input name="db_category" id="category2" value="willread" type="radio" {=p_category_willread}/>
+									    <label for="category2">
+									        읽어야지
+									    </label>
+									    <input name="db_category" id="category3" value="hasread" type="radio" {=p_category_hasread}/>
+									    <label for="category3">
+									        다읽었다
+									    </label>
+									</fieldset>
+									
+									<label for="db_favorite" class="hc">즞겨찾기</label>
+									<select name="db_favorite" id="db_favorite" data-role="slider" data-mini="true">
+										<option value="off" {=p_favorite_off}>안 즐겨찾기</option>
+										<option value="on" {=p_favorite_on}>즐겨찾기</option>
+									</select>									
+								</div>
+							</div>
+						</div>
+						<div style="padding:15px">
+							<div id="viewbook-description">
+								<h5>책소개</h5>
+								<p>{=db_description}</p>
+							</div>
+						</div>
 					</div>
 				</script>
 			</div>

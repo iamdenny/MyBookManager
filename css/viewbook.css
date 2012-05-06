@@ -1,0 +1,26 @@
+#viewbook {}
+#viewbook #viewbook-content {padding:0}
+#viewbook #viewbook-content .bif {position:relative;overflow:hidden;height:1%;padding:17px 10px .4em;}
+#viewbook #viewbook-content .bif.b2{padding-bottom:17px;border-bottom:2px solid #414B5A}
+#viewbook #viewbook-content .bif .tmb1 {display:block;float:left;margin:0}
+#viewbook #viewbook-content .bif .tmb1 img.bx1 {border:1px solid #DEDEDE}
+#viewbook #viewbook-content .bif .cntm1 {margin:0 0 0 102px}
+#viewbook #viewbook-content .bif .f {padding:.2em 0}
+#viewbook #viewbook-content .bif .h strong {font-size:15px}
+#viewbook #viewbook-content .bif .if2 {padding:0;color: #909090;font-size:.86em}
+#viewbook #viewbook-content .rv {position: relative;display: inline-block;width: 70px;height: 13px;text-align: left;background: url(http://static.naver.net/m/book/im/ic_pt.png) 0 -44px no-repeat;}
+#viewbook #viewbook-content .rv .mask {display: inline-block;width: 0;height: 100%;overflow: hidden;background: url(http://static.naver.net/m/book/im/ic_pt.png) 0 -61px no-repeat;}
+#viewbook #viewbook-content .bif .if21 {display: inline-block;vertical-align: top;}
+#viewbook #viewbook-content .tx3 {color: #909090;}
+#viewbook #viewbook-content .bif .cnt {color: #909090;font-size: .86em;text-align: left;}
+#viewbook #viewbook-content .bif .cnt dt {float: left;padding-right: .2em;}
+#viewbook #viewbook-content .bif .cnt dt, .bif .cnt dd {line-height: 1.35em;}
+#viewbook #viewbook-content .bif .cnt dt .w {display: inline-block;padding-right: 11px;white-space: nowrap;}
+#viewbook #viewbook-content .bif .cnt dt .w {display: inline-block;padding-right: 11px;white-space: nowrap;}
+#viewbook #viewbook-content .bif .cnt dd .strike {text-decoration: line-through;}
+#viewbook #viewbook-content .bif .cnt dd .price {font-size: 11px;color: #2D66BF;letter-spacing: -.05em;}
+#viewbook #viewbook-content .ui-controlgroup-label {display: none;}
+#viewbook #viewbook-content .u_me2b3 {margin: 0 -17px;padding-left: 17px;border-top: 1px solid #E9E9E9;clear: both;}
+#viewbook #viewbook-content .s2plug {clear: both;width: 300px;margin: 20px auto;font-family: Helvetica;font-size: 13px;line-height: 1.4em;color: #D4D4D4;text-align: center;}
+#viewbook #viewbook-content .u_me2b3 .s2plug {margin: 11px 0 5px 0;text-align: left;}
+#viewbook #viewbook-content .ui-slider-switch { width: 10em }
