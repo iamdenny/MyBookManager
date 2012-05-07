@@ -5,5 +5,5 @@
 #main #main-content #main-list li.main-list-book {min-height:66px;padding-left:75px}
 #main #main-content #main-list li .main-list-book-thumbnail {padding:2px 10px;margin:0}
 #main #main-content #main-list li .ui-link-inherit {}
-#main #main-content #main-list li h4 {margin:0;padding:.7em 0 .45em 0!important;display:block;overflow:hidden;width:100%;text-overflow:ellipsis;font-weight:normal;font-size:14px;line-height:1.25em;color:black}
+#main #main-content #main-list li h4 {margin:0;padding:.7em 0 .45em 0!important;display:block;overflow:hidden;text-overflow:ellipsis;font-weight:normal;font-size:14px;line-height:1.25em;color:black}
 #main #main-content #main-list li span {color:#909090;display:inline;font-weight:normal;text-overflow:ellipsis;} 

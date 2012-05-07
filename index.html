@@ -20,6 +20,9 @@
 	    
 	    <script type="text/javascript" src="jindo/jindo.mobile.all.ns.js"></script>
 	    
+	    <script type="text/javascript" src="js/datejs/date-ko-KR.js"></script>
+	    <script type="text/javascript" src="js/prettydate/prettydate.js"></script>
+	    
 	    <script type="text/javascript" src="js/com.iamdenny.js"></script>
 	    <script type="text/javascript" src="js/com.iamdenny.MyBookManager.js"></script>
 	    <script type="text/javascript" src="js/com.iamdenny.MyBookManager.Config.js"></script>
@@ -53,45 +56,42 @@
 	    </script>
 	</head>
 	<body>
-		<section id="main" data-role="page" data-fullscreen="false">
+		<section id="main" data-role="page" data-title="의 도서 관리">
 			<header data-role="header" data-theme="a">
 				<h1>나의 도서 관리</h1>
 			</header>
 			
 			<div id="main-content" data-role="content" class="content">
-				<label for="main-search" class="hc">Search Input:</label>
-				<input type="search" name="main-search" id="main-search" value="" data-mini="true" />
-
                 <ul id="main-list" data-role="listview" data-divider-theme="c" data-inset="true">
                 	<script id="tpl-main-list-divider" type="text/template">
-                		<li data-role="list-divider" role="heading">
+                		<li class="main-list-divider {=p_class}" data-role="list-divider" role="heading">
 	                    	<a href="#">{=title}<span class="ui-li-count">12</span></a>
 	                    </li>	
                 	</script>
                     <script id="tpl-main-list-book" type="text/template">
-                    	<li id='main-list-book-idx_{=db_idx}' class="main-list-book" data-theme="c">
+                    	<li id='main-list-book-idx_{=db_idx}' class="main-list-book {=p_class}" data-theme="c">
                             <img class='main-list-book-thumbnail' src="{=db_image}" alt="{=db_title}">
                             
                             <h4>{=db_title}</h4>
                             <span>{=db_author}</span>
-                            <p class="ui-li-aside"><strong>6:24</strong>PM</p>
+                            <p class="ui-li-aside"><strong>{=p_upd}</strong></p>
 	                    </li>	
                     </script>                    
                 </ul>			
 			</div>
 			
-			<footer data-role="footer" data-id="main-footer" data-position="fixed" data-theme="a"   data-fullscreen="false">
+			<footer data-role="footer" data-id="main-footer" data-position="fixed" data-theme="a" data-tap-toggle="false">
 				<div class="navbar" data-role="navbar" data-iconpos="top">
 					<ul>
 						<li><a id="main-setup" data-icon="home" data-theme="a" href="#config">설정</a></li>
-						<li><a id="main-search" data-icon="search" data-theme="a" href="#config">검색</a></li>
+						<li><a id="main-search" data-icon="search" data-theme="a" href="#config">전체검색</a></li>
 						<li><a id="main-add" data-icon="plus" data-theme="a" href="#addbook">추가</a></li>
 					</ul>
 				</div>
 			</footer>
 		</section>
 		
-		<section id="addbook" data-role="page" data-add-back-btn="true" data-back-btn-theme="b"  data-fullscreen="false">
+		<section id="addbook" data-role="page" title="도서 추가">
 			<header data-role="header" data-theme="a">
 				<h1>도서 추가</h1>
 			</header>
@@ -169,9 +169,9 @@
 			</footer>
 		</section>
 		
-		<section id="viewbook" data-role="page" data-add-back-btn="true" data-back-btn-theme="b" data-fullscreen="false">
-			<header data-role="header" data-position="fixed" data-theme="a">
-				<h1>현재 읽고 있는 도서</h1>
+		<section id="viewbook" data-role="page" data-title="나의 도서 관리">
+			<header data-role="header" data-theme="a">
+				<h1>나의 도서 관리</h1>
 			</header>
 			
 			<div id="viewbook-content" class="content" data-role="content" data-inset="true">
@@ -257,9 +257,46 @@
 					</div>
 				</script>
 			</div>
+			
+			<footer data-role="footer" data-id="main-footer" data-position="fixed" data-theme="a" data-tap-toggle="false">
+				<div class="navbar" data-role="navbar" data-iconpos="top">
+					<ul>
+						<li><a data-icon="arrow-l" data-theme="a" href="#" data-rel="back">뒤로</a></li>
+						<li><a data-icon="plus" data-theme="a" href="#">좋은 글귀 추가</a></li>
+						<li><a data-icon="plus" data-theme="a" href="#">사진 삽입</a></li>
+					</ul>
+				</div>
+			</footer>
 		</section>
 		
-		<section id="config" data-role="page" data-add-back-btn="true" data-back-btn-theme="b"  data-fullscreen="false">
+		<section id="viewlist" data-role="page" data-title="나의 도서 관리">
+			<header data-role="header" data-theme="a">
+				<h1>나의 도서 관리</h1>
+			</header>
+			
+			<div id="viewlist-content" data-role="content" class="content">
+				<ul data-role="listview" data-filter="true" data-filter-placeholder="Search ticker or firm name..." data-inset="true">
+					<li data-filtertext="NASDAQ:ADBE Adobe Systems Incorporated"><a href="#">Adobe</a></li>
+					<li data-filtertext="NASDAQ:AMZNL Amazon.com, Inc."><a href="#">Amazon</a></li>
+					<li data-filtertext="NASDAQ:AAPL Apple Inc."><a href="#">Apple</a></li>
+					<li data-filtertext="NASDAQ:GOOG Google Inc."><a href="#">Google</a></li>
+					<li data-filtertext="NYSE:IBM Intl. International Business Machines Corp."><a href="index.html">IBM</a></li>
+					<li data-filtertext="NASDAQ:MSFT Microsoft Corporation"><a href="#">Microsoft</a></li>
+					<li data-filtertext="NASDAQ:YHOO Yahoo! Inc."><a href="#">Yahoo</a></li>
+					<li data-filtertext="USA U.S.A. United States of America"><a href="#">United States</a></li>
+				</ul>
+			</div>
+			
+			<footer data-role="footer" data-id="main-footer" data-position="fixed" data-theme="a" data-tap-toggle="false">
+				<div class="navbar" data-role="navbar" data-iconpos="top">
+					<ul>
+						<li><a data-icon="arrow-l" data-theme="a" href="#" data-rel="back">뒤로</a></li>
+					</ul>
+				</div>
+			</footer>
+		</section>
+		
+		<section id="config" data-role="page">
 			<header data-role="header" data-position="fixed" data-theme="a">
 				<h1>환경설정</h1>
 			</header>

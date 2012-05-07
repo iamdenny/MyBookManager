@@ -5,10 +5,12 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
 	_htData : null,
 	_wtViewBookDetail : null,
 	_welViewBookContent : null,
+	_sMainListBookCategory : null,
 	
 	$init : function(woDB){
 		this._woDB = woDB;
 		
+		this._welViewBook = jindo.$Element('viewbook');
 		this._welViewBookContent = jindo.$Element('viewbook-content');
 		
 		this._initTemplates();
@@ -30,14 +32,17 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
 		});	
 	},
 	
-	loadBook : function(nMainListBookIdx){
+	loadBook : function(nMainListBookIdx, sMainListBookCategory){
 		var self = this;
 		
 		this._nMainListBookIdx = nMainListBookIdx;
+		this._sMainListBookCategory = sMainListBookCategory;
+		var sCategory = this.parseCategoryToString(this._sMainListBookCategory);
+		this.setTitle(sCategory);
 		this._welViewBookContent.empty();
 		this._woDB.loadBook(function(tx, results){
 			if(results.rows.length > 0){
-				self._htData = self._parseRowData(results.rows.item(0));
+				self._htData = self.parseRowData(results.rows.item(0));
 				var el = jindo.$(self._wtViewBookDetail.process(self._htData));
 				self._welViewBookContent.append(el);
 				self._refreshViewBook();
@@ -45,9 +50,44 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
 		}, this._nMainListBookIdx);
 	},
 	
-	_parseRowData : function(htData){
+	setTitle : function(sTitle){
+		$('header h1', this._welViewBook.$value()).text(sTitle);
+	},
+	
+	parseCategoryToString : function(sMainListBookCategory){
+		var sString = '';
+		switch(sMainListBookCategory){
+			case 'isreading':
+				sString = '현재 읽고 있는 도서';
+				break;
+			case 'favorite':
+				sString = '즐겨찾는 도서';
+				break;
+			case 'willread':
+				sString = '앞으로 읽을 도서';
+				break;
+			case 'hasread':
+				sString = '다 읽은 도서';
+				break;
+			default :
+				sString = '분류가 없습니다.';
+				break;
+		}
+		return sString;
+	},
+	
+	parseRowData : function(htData){
 		htData['p_category_' + htData.db_category] = 'checked="checked"';
 		htData['p_favorite_' + htData.db_favorite] = 'selected="selected"';
+		var oDate = Date.parse(htData.db_upd);
+		if(oDate.toString('yyyyMd') == Date.today().toString('yyyyMd')){
+			htData['p_upd'] = oDate.toString('H:m');
+		}else if(oDate.toString('yyyy') == Date.today().toString('yyyy')){
+			htData['p_upd'] = oDate.toString('M.d');	
+		}else{
+			htData['p_upd'] = oDate.toString('yy.M.d');
+		}
+		 
 		return htData;
 	},
 	

@@ -277,7 +277,7 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 	
 	updateCategory : function(nIdx, sCategory){
 		var sSql = 'UPDATE ' + this._sPrefix + this._sTableList + ' SET ';
-			sSql += ' db_category = "'+sCategory+'" WHERE db_idx = "'+nIdx+'"';
+			sSql += ' db_category = "'+sCategory+'", db_upd = DATETIME("NOW") WHERE db_idx = "'+nIdx+'"';
 			
 		var self = this;
 		this._db.transaction(function(tx){
@@ -287,7 +287,7 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 	
 	updateFavorite : function(nIdx, sFavorite){
 		var sSql = 'UPDATE ' + this._sPrefix + this._sTableList + ' SET ';
-			sSql += ' db_favorite = "'+sFavorite+'" WHERE db_idx = "'+nIdx+'"';
+			sSql += ' db_favorite = "'+sFavorite+'", db_upd = DATETIME("NOW") WHERE db_idx = "'+nIdx+'"';
 			
 		var self = this;
 		this._db.transaction(function(tx){
