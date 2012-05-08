@@ -8,22 +8,45 @@
 	
 com.iamdenny.MyBookManager.SearchAPI.Naver = jindo.$Class({
 	
+	_sProxyUrl : 'http://ajaxui.nhndesign.com/jsMatch/temp/PracticalAjaxUIProxy.php',
 	_sUrl : 'http://openapi.naver.com/search',
 	_sKey : 'de5ca00aaa40ab254ea5dec2c93247fd',
 	
 	$init : function(){
-		
+		this._woAjax = jindo.$Ajax(this._sProxyUrl, {
+			type : 'jsonp',
+			onerror : jindo.$Fn(this._onError, this).bind()
+		});
 	},
 	
-	getRSS : function(sQuery, nStart, nDisplay, fCallback){
-		$.get(this._sUrl, 
-		 	{	key: this._sKey, 
-		 		query: sQuery,
-		 		start : nStart,
-		 		display : nDisplay },
-		   	function(data){
-		    	fCallback(data);
-		   	}
-		);
+	_onError : function(e){
+		console.log(e);
+	},
+	
+	_onResponseKeyword : function(that, sCallback, oRes){
+		var htData = this._parseJSON(oRes);
+		console.log(that)
+		that[sCallback](htData)
+	},
+	
+	_parseJSON : function(oRes){
+		var htNewData = oRes.json().channel.item;
+		return htNewData; 
+	},
+	
+	getRSS : function(sQuery, nStart, nDisplay, that, sCallback){
+		// $.get(this._sUrl, 
+		 	// {	key: this._sKey, 
+		 		// query: sQuery,
+		 		// start : nStart,
+		 		// display : nDisplay },
+		   	// function(data){
+		    	// fCallback(data);
+		   	// }
+		// );
+		this._woAjax.option('onload', jindo.$Fn(this._onResponseKeyword, this).bind(that, sCallback));
+		this._woAjax.request({
+			url : this._sUrl + '?key='+this._sKey+'&query='+sQuery+'&display='+nDisplay+'&start='+nStart+'&target=book' 
+		});
 	}
 });

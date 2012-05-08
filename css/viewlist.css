@@ -3,7 +3,7 @@
 #viewlist #viewlist-content #viewlist-list {}
 #viewlist #viewlist-content #viewlist-list li {} 
 #viewlist #viewlist-content #viewlist-list li.viewlist-list-book {min-height:66px;padding-left:75px}
-#viewlist #viewlist-content #viewlist-list li .viewlist-list-book-thumbnail {padding:2px 10px;margin:0}
+#viewlist #viewlist-content #viewlist-list li .viewlist-list-book-thumbnail {padding:2px 10px;margin:0;width:53px;height:80px}
 #viewlist #viewlist-content #viewlist-list li .ui-link-inherit {}
 #viewlist #viewlist-content #viewlist-list li h4 {margin:0;padding:.7em 0 .45em 0!important;display:block;overflow:hidden;text-overflow:ellipsis;font-weight:normal;font-size:14px;line-height:1.25em;color:black}
 #viewlist #viewlist-content #viewlist-list li span {color:#909090;display:inline;font-weight:normal;text-overflow:ellipsis;} 

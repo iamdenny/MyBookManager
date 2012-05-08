@@ -11,7 +11,7 @@ com.iamdenny.MyBookManager.SearchAPI = jindo.$Class({
 		this._welAddBookSearchInput = jindo.$Element('addbook-search-input');
 		this._welAddBookList = jindo.$Element('addbook-list');
 		
-		this._wtAddBookListBook = jindo.$Element('tpl-addbook-list-book');
+		this._wtAddBookListBook = jindo.$Template('tpl-addbook-list-book');
 		
 		this._woNaverAPI = new com.iamdenny.MyBookManager.SearchAPI.Naver();
 		
@@ -30,12 +30,20 @@ com.iamdenny.MyBookManager.SearchAPI = jindo.$Class({
 		var sQuery = sText
 			, nStart = 1
 			, nDisplay = 20;
-		this._woNaverAPI.getRSS(sQuery, nStart, nDisplay, this._callbackRSS);
+		this._woNaverAPI.getRSS(sQuery, nStart, nDisplay, this, '_callbackRSS');
 	},
 	
-	_callbackRSS : function(xml){
-		alert(xml);
-		console.log(xml);
-	}
+	_callbackRSS : function(ahtNewData){
+		this._welAddBookList.empty();
+		for(var i=0, length = ahtNewData.length; i<length; i++){
+			var el = jindo.$(this._wtAddBookListBook.process(ahtNewData[i]));
+			this._welAddBookList.append(el);
+		}
+		this._refreshAddBookListView();
+	},
+	
+	_refreshAddBookListView : function(){
+		$(this._welAddBookList.$value()).listview('refresh');
+	},
 	
 });

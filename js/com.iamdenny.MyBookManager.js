@@ -51,7 +51,7 @@ com.iamdenny.MyBookManager = jindo.$Class({
 		    // window.resizeBy(screen.width ,100)
 		});
 		$(document).bind('pagebeforeshow', function(){
-			$('.ui-btn-active').removeClass('ui-btn-active');
+			$('.ui-btn-active.auto-turn-off').removeClass('ui-btn-active');
 		});
 		
 	}

@@ -85,9 +85,9 @@
 			<footer data-role="footer" data-id="main-footer" data-position="fixed" data-theme="a" data-tap-toggle="false">
 				<div class="navbar" data-role="navbar" data-iconpos="top">
 					<ul>
-						<li><a data-icon="home" data-theme="a" href="#config">설정</a></li>
-						<li><a id="go_to_viewlist" data-icon="search" data-theme="a" href="#">전체검색</a></li>
-						<li><a data-icon="plus" data-theme="a" href="#addbook">추가</a></li>
+						<li><a class="auto-turn-off" data-icon="home" data-theme="a" href="#config">설정</a></li>
+						<li><a class="auto-turn-off" id="go_to_viewlist" data-icon="search" data-theme="a" href="#">전체검색</a></li>
+						<li><a class="auto-turn-off" data-icon="plus" data-theme="a" href="#addbook">추가</a></li>
 					</ul>
 				</div>
 			</footer>
@@ -104,22 +104,22 @@
 				</div>
 				<ul id="addbook-list" data-role="listview" data-divider-theme="c" data-inset="true">
 					<script id="tpl-addbook-list-book" type="text/template">
-                    	<li id='addbook-list-book-idx_{=db_idx}' class="addbook-list-book {=p_class}" data-theme="c">
-                            <img class='addbook-list-book-thumbnail' src="{=db_image}" alt="{=db_title}">
+                    	<li class="addbook-list-book" data-theme="c">
+                            <img class='addbook-list-book-thumbnail' src="{=image}" alt="{=title}">
                             
-                            <h4>{=db_title}</h4>
-                            <span>{=db_author}</span>
-                            <p class="ui-li-aside"><strong>{=p_upd}</strong></p>
+                            <h4>{=title}</h4>
+                            <span>{=author}</span>
+                            <p class="ui-li-aside"><strong>{=pubdate}</strong></p>
 	                    </li>	
                     </script>   
 				</ul>
 				
 			</div>
 			
-			<footer data-role="footer" data-id="main-footer" data-position="fixed" data-theme="a" data-fullscreen="false">
+			<footer data-role="footer" data-id="main-footer" data-position="fixed" data-theme="a" data-tap-toggle="false">
 				<div class="navbar" data-role="navbar" data-iconpos="top">
 					<ul>
-						<li><a data-icon="arrow-l" data-theme="a" href="#" data-rel="back">Back</a></li>
+						<li><a class="auto-turn-off" data-icon="arrow-l" data-theme="a" href="#" data-rel="back">Back</a></li>
 					</ul>
 				</div>
 			</footer>
@@ -217,9 +217,9 @@
 			<footer data-role="footer" data-id="main-footer" data-position="fixed" data-theme="a" data-tap-toggle="false">
 				<div class="navbar" data-role="navbar" data-iconpos="top">
 					<ul>
-						<li><a data-icon="arrow-l" data-theme="a" href="#" data-rel="back">뒤로</a></li>
-						<li><a data-icon="plus" data-theme="a" href="#">좋은 글귀 추가</a></li>
-						<li><a data-icon="plus" data-theme="a" href="#">사진 삽입</a></li>
+						<li><a class="auto-turn-off" data-icon="arrow-l" data-theme="a" href="#" data-rel="back">뒤로</a></li>
+						<li><a class="auto-turn-off" data-icon="plus" data-theme="a" href="#">좋은 글귀 추가</a></li>
+						<li><a class="auto-turn-off" data-icon="plus" data-theme="a" href="#">사진 삽입</a></li>
 					</ul>
 				</div>
 			</footer>
@@ -247,7 +247,7 @@
 			<footer data-role="footer" data-id="main-footer" data-position="fixed" data-theme="a" data-tap-toggle="false">
 				<div class="navbar" data-role="navbar" data-iconpos="top">
 					<ul>
-						<li><a data-icon="arrow-l" data-theme="a" href="#" data-rel="back">뒤로</a></li>
+						<li><a class="auto-turn-off" data-icon="arrow-l" data-theme="a" href="#" data-rel="back">뒤로</a></li>
 					</ul>
 				</div>
 			</footer>
@@ -259,23 +259,64 @@
 			</header>
 			
 			<div id="config-content" class="cotnent" data-role="content" data-inset="true">
-				<h2>메인 - 보여질 리스트 수</h2>
+				<h2>메인</h2>
 				<ul data-role="listview" data-inset="true">
 					<li data-role="fieldcontain">
-			        	<label for="c_isreading_count">현재 읽고 있는 도서</label>
+			        	<label for="c_isreading_count">현재 읽고 있는 도서의 개시물 수</label>
 					 	<input type="range" name="c_isreading_count" id="c_isreading_count" value="3" min="0" max="15" data-highlight="true" data-mini="true" />
 					</li>
 					<li data-role="fieldcontain">
-			        	<label for="c_favorite_count">즐겨찾는 도서</label>
+			        	<label for="c_favorite_count">즐겨찾는 도서의 개시물 수</label>
 					 	<input type="range" name="c_favorite_count" id="c_favorite_count" value="3" min="0" max="15" data-highlight="true" data-mini="true" />
 					</li>
 					<li data-role="fieldcontain">
-			        	<label for="c_willread_count">앞으로 읽을 도서</label>
+			        	<label for="c_willread_count">앞으로 읽을 도서의 개시물 수</label>
 					 	<input type="range" name="c_willread_count" id="c_willread_count" value="3" min="0" max="15" data-highlight="true" data-mini="true" />
 					</li>
 					<li data-role="fieldcontain">
-			        	<label for="c_hasread_count">다 읽은 도서</label>
+			        	<label for="c_hasread_count">다 읽은 도서의 개시물 수</label>
 					 	<input type="range" name="c_hasread_count" id="c_hasread_count" value="3" min="0" max="15" data-highlight="true" data-mini="true" />
+					</li>
+				</ul>
+				
+				<h2>도서 추가</h2>
+				<ul data-role="listview" data-inset="true">
+					<li data-role="fieldcontain">
+			        	<label for="c_isreading_count">검색 결과 수</label>
+					 	<input type="range" name="c_isreading_count" id="c_isreading_count" value="20" min="1" max="100" data-highlight="true" data-mini="true" />
+					</li>
+				</ul>
+					
+				<h2>서버와 동기화</h2>
+				
+				<ul data-role="listview" data-inset="true">
+					<li data-role="fieldcontain">
+			        	<label for="slider2">동기화</label>
+						<select name="slider2" id="slider2" data-role="slider" data-mini="true">
+							<option value="off">끄기</option>
+							<option value="on">켜기</option>
+						</select>
+					</li>
+					<li data-role="fieldcontain">
+			        	<label for="name">아이디</label>
+			        	<input type="text" name="name" id="name" value=""  />
+					</li>
+					<li data-role="fieldcontain">
+			        	<label for="name">비밀번호</label>
+			        	<input type="password" name="password" id="password" value=""  />
+					</li>
+					<li data-role="fieldcontain">
+					    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+					     	<legend>동기화 주기</legend>
+					         	<input type="radio" name="radio-choice-11" id="radio-choice-1" value="1" checked="checked" />
+					         	<label for="radio-choice-1">1분</label>
+					         	<input type="radio" name="radio-choice-11" id="radio-choice-2" value="3" />
+					         	<label for="radio-choice-2">3분</label>
+					         	<input type="radio" name="radio-choice-11" id="radio-choice-3" value="5" />
+					         	<label for="radio-choice-3">5분</label>
+					         	<input type="radio" name="radio-choice-11" id="radio-choice-4" value="10" />
+					         	<label for="radio-choice-4">10분</label>
+					    </fieldset>
 					</li>
 				</ul>
 				
@@ -444,7 +485,7 @@
 			<footer data-role="footer" data-id="main-footer" data-position="fixed" data-theme="a" data-tap-toggle="false">
 				<div class="navbar" data-role="navbar" data-iconpos="top">
 					<ul>
-						<li><a data-icon="arrow-l" data-theme="a" href="#" data-rel="back">뒤로</a></li>
+						<li><a class="auto-turn-off" data-icon="arrow-l" data-theme="a" href="#" data-rel="back">뒤로</a></li>
 					</ul>
 				</div>
 			</footer>			
