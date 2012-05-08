@@ -43,7 +43,7 @@ com.iamdenny.MyBookManager = jindo.$Class({
 			history.back();
 		});
 		$(window).bind('orientationchange', function (e) {
-			$(window).page();
+			$('#main').page();
 		    // setTimeout(function(){
 		    	// var bodyHeight = $(document.body).height();
 		    	// alert(bodyHeight)
