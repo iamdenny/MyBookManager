@@ -43,11 +43,12 @@ com.iamdenny.MyBookManager = jindo.$Class({
 			history.back();
 		});
 		$(window).bind('orientationchange', function (e) {
-		    setTimeout(function(){
-		    	var bodyHeight = $(document.body).height();
-		    	alert(bodyHeight)
-		    },200);
-		    window.resizeBy(screen.width ,100)
+			$(window).page();
+		    // setTimeout(function(){
+		    	// var bodyHeight = $(document.body).height();
+		    	// alert(bodyHeight)
+		    // },200);
+		    // window.resizeBy(screen.width ,100)
 		});
 		$(document).bind('pagebeforeshow', function(){
 			$('.ui-btn-active').removeClass('ui-btn-active');
