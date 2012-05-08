@@ -1,6 +1,7 @@
 com.iamdenny.MyBookManager = jindo.$Class({
 	
 	$init : function(){
+		var self = this;
 		
 		this._woConfig = new com.iamdenny.MyBookManager.Config();
 		var bCurrentBrowserSupport = this._woConfig.checkCurrentBrowserSupport();
@@ -9,14 +10,18 @@ com.iamdenny.MyBookManager = jindo.$Class({
 			return false;
 		}
 		var bConfigExists = this._woConfig.checkConfigExists();
-		if(!bConfigExists){
-			//alert('초기 설정 정보를 셋팅합니다.');
-			this._woConfig.setAsDefault();
-		} 
-		
 		this._woDB = new com.iamdenny.MyBookManager.DB();
-		
 		this._woList = new com.iamdenny.MyBookManager.List(this._woDB);
-		this._woList.showList();
+		if(!bConfigExists){
+			$.mobile.showPageLoadingMsg("b", "초기 셋팅 중...", true);
+			this._woConfig.setAsDefault();
+			this._woDB.setAsDefault();
+			setTimeout(function(){
+				self._woList.showList();
+				$.mobile.hidePageLoadingMsg();
+			}, 1000);
+		}else{
+			this._woList.showList();			
+		}
 	}
 });

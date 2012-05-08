@@ -16,6 +16,9 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 	
 	$init : function(){
 		this._open();
+	},
+	
+	setAsDefault : function(){
 		this._removeAllTables();
 		this._createTables();
 		this._insertDefaultData();
