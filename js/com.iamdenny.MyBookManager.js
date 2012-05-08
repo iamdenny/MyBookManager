@@ -10,7 +10,7 @@ com.iamdenny.MyBookManager = jindo.$Class({
 		}
 		var bConfigExists = this._woConfig.checkConfigExists();
 		if(!bConfigExists){
-			alert('초기 설정 정보를 셋팅합니다.');
+			//alert('초기 설정 정보를 셋팅합니다.');
 			this._woConfig.setAsDefault();
 		} 
 		
