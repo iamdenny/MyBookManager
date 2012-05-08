@@ -29,6 +29,8 @@
 	    <script type="text/javascript" src="js/com.iamdenny.MyBookManager.List.js"></script>
 	    <script type="text/javascript" src="js/com.iamdenny.MyBookManager.Book.js"></script>
 	    <script type="text/javascript" src="js/com.iamdenny.MyBookManager.DB.js"></script>
+	    <script type="text/javascript" src="js/com.iamdenny.MyBookManager.SearchAPI.js"></script>
+	    <script type="text/javascript" src="js/com.iamdenny.MyBookManager.SearchAPI.Naver.js"></script>
 	    
 	    <script type="text/javascript">
 	    	
@@ -97,67 +99,21 @@
 			</header>
 			
 			<div id="addbook-content" class="cotnent" data-role="content" data-inset="true">
-				<div data-role="fieldcontain">
-		         <label for="name-d">Text Input:</label>
-		         <input type="text" name="name" id="name-d" value=""  />
+				<div class="addbook-search">
+					<input type="text" data-type="search" name="addbook-search-input" id="addbook-search-input" value="" />
 				</div>
-
-				<div data-role="fieldcontain">
-					<label for="switch-d">Flip switch:</label>
-					<select name="switch-d" id="switch-d" data-role="slider">
-						<option value="off">Off</option>
-						<option value="on">On</option>
-					</select> 
-				</div>
-
-				<div data-role="fieldcontain">
-					<label for="slider-d">Slider:</label>
-				 	<input type="range" name="slider" id="slider-d" value="0" min="0" max="100"  />
-				</div>
-
-
-				<div data-role="fieldcontain">
-				<fieldset data-role="controlgroup" data-type="horizontal">
-			    	<legend>Font styling:</legend>
-			    	<input type="checkbox" name="checkbox-6d" id="checkbox-6d" class="custom" />
-					<label for="checkbox-6d">b</label>
-
-					<input type="checkbox" name="checkbox-7d" id="checkbox-7d" class="custom" />
-					<label for="checkbox-7d"><em>i</em></label>
-
-					<input type="checkbox" name="checkbox-8d" id="checkbox-8d" class="custom" />
-					<label for="checkbox-8d">u</label>    
-			    </fieldset>
-				</div>
-
-				<div data-role="fieldcontain">
-				    <fieldset data-role="controlgroup">
-				    	<legend>Choose a pet:</legend>
-				         	<input type="radio" name="radio-choice-1" id="radio-choice-1d" value="choice-1" />
-				         	<label for="radio-choice-1d">Cat</label>
-
-				         	<input type="radio" name="radio-choice-1" id="radio-choice-2d" value="choice-2"  />
-				         	<label for="radio-choice-2d">Dog</label>
-
-				         	<input type="radio" name="radio-choice-1" id="radio-choice-3d" value="choice-3"  />
-				         	<label for="radio-choice-3d">Hamster</label>
-
-				         	<input type="radio" name="radio-choice-1" id="radio-choice-4d" value="choice-4"  />
-				         	<label for="radio-choice-4d">Lizard</label>
-				    </fieldset>
-				</div>
-
-				<div data-role="fieldcontain">
-					<label for="select-choice-d" class="select">Choose shipping method:</label>
-					<select name="select-choice-d" id="select-choice-d">
-						<option value="standard">Standard: 7 day</option>
-						<option value="rush">Rush: 3 days</option>
-						<option value="express">Express: next day</option>
-						<option value="overnight">Overnight</option>
-					</select>
-				</div>
+				<ul id="addbook-list" data-role="listview" data-divider-theme="c" data-inset="true">
+					<script id="tpl-addbook-list-book" type="text/template">
+                    	<li id='addbook-list-book-idx_{=db_idx}' class="addbook-list-book {=p_class}" data-theme="c">
+                            <img class='addbook-list-book-thumbnail' src="{=db_image}" alt="{=db_title}">
+                            
+                            <h4>{=db_title}</h4>
+                            <span>{=db_author}</span>
+                            <p class="ui-li-aside"><strong>{=p_upd}</strong></p>
+	                    </li>	
+                    </script>   
+				</ul>
 				
-				<input type="button" data-role="button" data-theme="b" value="추가" />
 			</div>
 			
 			<footer data-role="footer" data-id="main-footer" data-position="fixed" data-theme="a" data-fullscreen="false">
