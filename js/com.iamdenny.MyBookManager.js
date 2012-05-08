@@ -13,7 +13,7 @@ com.iamdenny.MyBookManager = jindo.$Class({
 		this._woDB = new com.iamdenny.MyBookManager.DB();
 		this._woList = new com.iamdenny.MyBookManager.List(this._woDB);
 		if(!bConfigExists){
-			$.mobile.showPageLoadingMsg("b", "초기 셋팅 중...", true);
+			$.mobile.showPageLoadingMsg("a", "Initialization...");
 			this._woConfig.setAsDefault();
 			this._woDB.setAsDefault();
 			setTimeout(function(){
@@ -45,7 +45,9 @@ com.iamdenny.MyBookManager = jindo.$Class({
 		$(window).bind('orientationchange', function (e) {
 		    setTimeout(function(){
 		    	var bodyHeight = $(document.body).height();
+		    	alert(bodyHeight)
 		    },200);
+		    window.resizeBy(screen.width ,100)
 		});
 		$(document).bind('pagebeforeshow', function(){
 			$('.ui-btn-active').removeClass('ui-btn-active');
