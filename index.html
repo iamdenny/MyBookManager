@@ -65,7 +65,7 @@
                 <ul id="main-list" data-role="listview" data-divider-theme="c" data-inset="true">
                 	<script id="tpl-main-list-divider" type="text/template">
                 		<li class="main-list-divider {=p_class}" data-role="list-divider" role="heading">
-	                    	<a href="#">{=title}<span class="ui-li-count">12</span></a>
+	                    	<a href="#">{=title}<span class="ui-li-count">0</span></a>
 	                    </li>	
                 	</script>
                     <script id="tpl-main-list-book" type="text/template">
@@ -83,9 +83,9 @@
 			<footer data-role="footer" data-id="main-footer" data-position="fixed" data-theme="a" data-tap-toggle="false">
 				<div class="navbar" data-role="navbar" data-iconpos="top">
 					<ul>
-						<li><a id="main-setup" data-icon="home" data-theme="a" href="#config">설정</a></li>
-						<li><a id="main-search" data-icon="search" data-theme="a" href="#config">전체검색</a></li>
-						<li><a id="main-add" data-icon="plus" data-theme="a" href="#addbook">추가</a></li>
+						<li><a data-icon="home" data-theme="a" href="#config">설정</a></li>
+						<li><a id="go_to_viewlist" data-icon="search" data-theme="a" href="#">전체검색</a></li>
+						<li><a data-icon="plus" data-theme="a" href="#addbook">추가</a></li>
 					</ul>
 				</div>
 			</footer>
@@ -275,15 +275,16 @@
 			</header>
 			
 			<div id="viewlist-content" data-role="content" class="content">
-				<ul data-role="listview" data-filter="true" data-filter-placeholder="Search ticker or firm name..." data-inset="true">
-					<li data-filtertext="NASDAQ:ADBE Adobe Systems Incorporated"><a href="#">Adobe</a></li>
-					<li data-filtertext="NASDAQ:AMZNL Amazon.com, Inc."><a href="#">Amazon</a></li>
-					<li data-filtertext="NASDAQ:AAPL Apple Inc."><a href="#">Apple</a></li>
-					<li data-filtertext="NASDAQ:GOOG Google Inc."><a href="#">Google</a></li>
-					<li data-filtertext="NYSE:IBM Intl. International Business Machines Corp."><a href="index.html">IBM</a></li>
-					<li data-filtertext="NASDAQ:MSFT Microsoft Corporation"><a href="#">Microsoft</a></li>
-					<li data-filtertext="NASDAQ:YHOO Yahoo! Inc."><a href="#">Yahoo</a></li>
-					<li data-filtertext="USA U.S.A. United States of America"><a href="#">United States</a></li>
+				<ul id="viewlist-list" data-role="listview" data-filter="true" data-filter-placeholder="검색어(제목,저자,가격,ISBN,설명등)를 입력하세요." data-inset="true">
+					<script id="tpl-viewlist-list-book" type="text/template">
+						<li id='viewlist-list-book-idx_{=db_idx}'  class="viewlist-list-book {=p_class}" data-theme="c" data-filtertext="{=p_filtertext}">
+                            <img class='viewlist-list-book-thumbnail' src="{=db_image}" alt="{=db_title}">
+                            
+                            <h4>{=db_title}</h4>
+                            <span>{=db_author}</span>
+                            <p class="ui-li-aside"><strong>{=p_upd}</strong></p>
+	                    </li>			
+					</script>
 				</ul>
 			</div>
 			
@@ -483,6 +484,14 @@
 		
 				</ul>
 			</div>
+			
+			<footer data-role="footer" data-id="main-footer" data-position="fixed" data-theme="a" data-tap-toggle="false">
+				<div class="navbar" data-role="navbar" data-iconpos="top">
+					<ul>
+						<li><a data-icon="arrow-l" data-theme="a" href="#" data-rel="back">뒤로</a></li>
+					</ul>
+				</div>
+			</footer>			
 		</section>
 	</body>
 </html>

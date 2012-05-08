@@ -15,6 +15,10 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 		this._welMain = jindo.$Element('main');
 		this._welMainList = jindo.$Element('main-list');
 		
+		this._welViewList = jindo.$Element('viewlist');
+		this._welViewListList = jindo.$Element('viewlist-list');
+		
+		
 		this._nMainListIsReadingLimit = 3;
 		this._nMainListFavoriteLimit = 3;
 		
@@ -26,19 +30,31 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 	_initTemplates : function(){
 		this._wtMainListDivider = jindo.$Template('tpl-main-list-divider');
 		this._wtMainListBook = jindo.$Template('tpl-main-list-book');	
+		this._wtViewListListBook = jindo.$Template('tpl-viewlist-list-book');
 	},
 	
 	_initPageShowEvent : function(){
 		var self = this;
 		$("#main").bind("pagebeforeshow", function(event, ui){
 			$.mobile.showPageLoadingMsg("b", "Loading...", true);
-			console.log('main pagebeforeshow');
 			self._welMainList.empty();
 			self.showList();
+		}).bind("pageshow", function(event, ui){
 		});
-		$("#main").bind("pageshow", function(event, ui){
-			console.log('main pageshow');
-		});	
+		
+		$("#viewbook").bind("pagebeforeshow", function(event, ui){
+			$.mobile.showPageLoadingMsg("b", "Loading...", true);
+			self._woBook.loadBook(self._nMainListBookIdx, self._sMainListBookCategory);
+		}).bind("pageshow", function(event, ui){
+		});
+		
+		$("#viewlist").bind("pagebeforeshow", function(event, ui){
+			$.mobile.showPageLoadingMsg("b", "Loading...", true);
+			self._welViewListList.empty();
+			self.setTitle(self._welViewList, self._sMainListBookCategory);
+			self.showListByCategory(self._sMainListBookCategory);
+		}).bind("pageshow", function(event, ui){
+		});		
 	},
 	
 	_initClickEvent : function() {
@@ -56,7 +72,6 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 					alert("도서가 선택되지 않았습니다.");
 					return false;
 				}else{
-					self._woBook.loadBook(self._nMainListBookIdx, self._sMainListBookCategory);
 			    	$.mobile.changePage("#viewbook");
 			    }
 		    }
@@ -64,16 +79,35 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 			function(eEvent){
 				eEvent.stopDefault();
 				self._sMainListBookCategory = self._parseDividerToCategory(jindo.$Element(eEvent.element));
-				console.log((eEvent.element))
 				if(!self._sMainListBookCategory){
 					alert('카테고리가 선택되지 않았습니다.');
 					return false;
 				}else{
-					self.showListByCategory(self._sMainListBookCategory);
 					$.mobile.changePage("#viewlist");
 				}
 			}
 		);  
+		
+		jindo.$Element("viewlist-list").delegate("click", ".viewlist-list-book", 
+			function(eEvent){
+				eEvent.stopDefault();
+		    	self._nMainListBookIdx = jindo.$Element(eEvent.element).attr('id').replace('viewlist-list-book-idx_', '');
+		    	if(!self._nMainListBookIdx){
+					alert("도서가 선택되지 않았습니다.");
+					return false;
+				}else{
+			    	$.mobile.changePage("#viewbook");
+			    }
+			}
+		);
+		
+		jindo.$Element("go_to_viewlist").delegate("click", '',
+			function(eEvent){
+				eEvent.stopDefault();
+				self._sMainListBookCategory = 'all';
+				$.mobile.changePage("#viewlist");
+			}
+		);
 	},
 	
 	_parseDividerToCategory : function(welTarget){
@@ -107,33 +141,23 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 			var el = jindo.$(self._wtMainListDivider.process({title : '현재 읽고 있는 도서', p_class : sPClass}));
 			self._welMainList.append(el);
 				
-			for (var i = 0, len = results.rows.length; i < len; i++){
-				var htData = self.parseRowData(results.rows.item(i));
-				htData.p_class = sPClass;
-				var el = jindo.$(self._wtMainListBook.process(htData));
-				self._welMainList.append(el);
-			}
-			
-			self._refreshListView();
+			self._appendTheResultWithTemplate(self._welMainList, self._wtMainListBook, sPClass, results);
+
+			self._refreshMainListView();
 			fFavorite();
-		}, 'isreading', null, null, self._nMainListIsReadingLimit);
+		}, 'isreading', 'db_upd', 'DESC', self._nMainListIsReadingLimit);
 		
 		var fFavorite = function(){
 			self._woDB.loadFavoriteList(function(tx, results){
 				var sPClass = 'main-list-divider_favorite';
 				var el = jindo.$(self._wtMainListDivider.process({title : '즐겨찾는 도서', p_class : sPClass}));
 				self._welMainList.append(el);
-					
-				for (var i = 0, len = results.rows.length; i < len; i++){
-					var htData = self.parseRowData(results.rows.item(i));
-					htData.p_class = 'main-list-divider_favorite';
-					var el = jindo.$(self._wtMainListBook.process(htData));
-					self._welMainList.append(el);
-				}
 				
-				self._refreshListView();
+				self._appendTheResultWithTemplate(self._welMainList, self._wtMainListBook, sPClass, results);
+				
+				self._refreshMainListView();
 				fWillRead();
-			}, null, null, self._nMainListFavoriteLimit);
+			}, 'db_upd', 'DESC', self._nMainListFavoriteLimit);
 		};
 		
 		var fWillRead = function(){
@@ -141,17 +165,12 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 				var sPClass = 'main-list-divider_willread';
 				var el = jindo.$(self._wtMainListDivider.process({title : '앞으로 읽을 도서', p_class : sPClass}));
 				self._welMainList.append(el);
-					
-				for (var i = 0, len = results.rows.length; i < len; i++){
-					var htData = self.parseRowData(results.rows.item(i));
-					htData.p_class = sPClass;
-					var el = jindo.$(self._wtMainListBook.process(htData));
-					self._welMainList.append(el);
-				}
 				
-				self._refreshListView();
+				self._appendTheResultWithTemplate(self._welMainList, self._wtMainListBook, sPClass, results);
+				
+				self._refreshMainListView();
 				fHasRead();
-			}, 'willread', null, null, self._nMainListFavoriteLimit);
+			}, 'willread', 'db_upd', 'DESC', self._nMainListFavoriteLimit);
 		};
 		
 		var fHasRead = function(){
@@ -160,25 +179,72 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 				var el = jindo.$(self._wtMainListDivider.process({title : '다 읽은 도서', p_class : sPClass}));
 				self._welMainList.append(el);
 					
-				for (var i = 0, len = results.rows.length; i < len; i++){
-					var htData = self.parseRowData(results.rows.item(i));
-					htData.p_class = sPClass;
-					var el = jindo.$(self._wtMainListBook.process(htData));
-					self._welMainList.append(el);
-				}
+				self._appendTheResultWithTemplate(self._welMainList, self._wtMainListBook, sPClass, results);
 				
-				self._refreshListView();
-			}, 'hasread', null, null, self._nMainListFavoriteLimit);
+				self._refreshMainListView();
+				
+				self._showCountForMainList();
+			}, 'hasread', 'db_upd', 'DESC', self._nMainListFavoriteLimit);
 		};
-		
+	},
+	
+	_showCountForMainList : function(){
+		var self = this;
+		this._woDB.getCount(function(tx, results){
+			$('.main-list-divider_isreading .ui-li-count', self._welMainList.$value()).text(results.rows.item(0).count);
+		}, 'isreading');
+		this._woDB.getCount(function(tx, results){
+			$('.main-list-divider_favorite .ui-li-count', self._welMainList.$value()).text(results.rows.item(0).count);
+		}, 'favorite');
+		this._woDB.getCount(function(tx, results){
+			$('.main-list-divider_willread .ui-li-count', self._welMainList.$value()).text(results.rows.item(0).count);
+		}, 'willread');
+		this._woDB.getCount(function(tx, results){
+			$('.main-list-divider_hasread .ui-li-count', self._welMainList.$value()).text(results.rows.item(0).count);
+		}, 'hasread');
+	},
+	
+	_appendTheResultWithTemplate : function(welList, wtListBook, sPClass, results){
+		for (var i = 0, len = results.rows.length; i < len; i++){
+			var htData = this.parseRowData(results.rows.item(i));
+			htData.p_class = sPClass;
+			htData.p_filtertext = htData.db_title + ',' + htData.db_author + ',' + htData.price + ',' + htData.publisher + ',' + htData.db_isbn + ',' + htData.db_description;
+			var el = jindo.$(wtListBook.process(htData));
+			welList.append(el);
+		}
 	},
 	
 	showListByCategory : function(sCategory){
-		
+		var self = this;
+		var sPClass = 'viewlist-list-divider_' + sCategory;
+		if(sCategory == 'favorite'){
+			this._woDB.loadFavoriteList(function(tx, results){
+				self._appendTheResultWithTemplate(self._welViewListList, self._wtViewListListBook, sPClass, results);
+				self._refreshViewListListView();
+			}, 'db_upd', 'DESC', null);	
+		}else{
+			this._woDB.loadList(function(tx, results){
+				self._appendTheResultWithTemplate(self._welViewListList, self._wtViewListListBook, sPClass, results);
+				self._refreshViewListListView();
+			}, sCategory, 'db_upd', 'DESC', null);
+		}
 	},
 		
-	_refreshListView : function(){
+	_refreshMainListView : function(){
 		$(this._welMainList.$value()).listview('refresh');
+	},
+	
+	_refreshViewListListView : function(){
+		$(this._welViewListList.$value()).listview('refresh');
+	},
+	
+	setTitle : function(welSection, sCategory){
+		var sTitle = this.parseCategoryToString(sCategory);
+		$('header h1', welSection.$value()).text(sTitle);
+	},
+	
+	parseCategoryToString : function(sCategory){
+		return this._woBook.parseCategoryToString(sCategory);	
 	}
 	
 });

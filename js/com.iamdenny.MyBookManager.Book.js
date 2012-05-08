@@ -25,10 +25,7 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
 		var self = this;
 		$("#viewbook").bind("pagebeforeshow", function(event, ui){
 			$.mobile.showPageLoadingMsg("b", "Loading...", true);
-			console.log('viewbook pagebeforeshow');
-		});
-		$("#viewbook").bind("pageshow", function(event, ui){
-			console.log('viewbook pageshow');
+		}).bind("pageshow", function(event, ui){
 		});	
 	},
 	
@@ -70,7 +67,7 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
 				sString = '다 읽은 도서';
 				break;
 			default :
-				sString = '분류가 없습니다.';
+				sString = '전체 도서';
 				break;
 		}
 		return sString;

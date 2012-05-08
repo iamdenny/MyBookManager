@@ -1,3 +1,12 @@
+/**
+ * 
+ * results is SQLResultSet.
+ * 		- insertId
+ * 		- rows : SQLResultSetRowList
+ * 			- length : number
+ * 			- item : function item(nIndex)
+ * 		- rowsAffected : number
+ */
 com.iamdenny.MyBookManager.DB = jindo.$Class({
 	
 	_db : null,
@@ -267,12 +276,26 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 	
 	loadBook : function(fCallback, nIdx){
 		var sSql = 'SELECT * FROM ' + this._sPrefix + this._sTableList;
-			sSql += ' WHERE db_idx = ?'
+			sSql += ' WHERE db_idx = ?';
 		
 		var self = this;
 		this._db.transaction(function(tx){
 			tx.executeSql(sSql, [nIdx], fCallback, self._onError);
-		})
+		});
+	},
+	
+	getCount : function(fCallback, sCategory){
+		var sSql = 'SELECT COUNT(db_idx) AS count FROM ' + this._sPrefix + this._sTableList;
+		if(sCategory == 'favorite'){
+			sSql += ' WHERE db_favorite = "on"';
+		}else if(sCategory == 'all'){
+		}else{
+			sSql += ' WHERE db_category = "' + sCategory + '"';
+		}
+		var self = this;
+		this._db.transaction(function(tx){
+			tx.executeSql(sSql, [], fCallback, self._onError);
+		});
 	},
 	
 	updateCategory : function(nIdx, sCategory){

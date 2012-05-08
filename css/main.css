@@ -7,3 +7,4 @@
 #main #main-content #main-list li .ui-link-inherit {}
 #main #main-content #main-list li h4 {margin:0;padding:.7em 0 .45em 0!important;display:block;overflow:hidden;text-overflow:ellipsis;font-weight:normal;font-size:14px;line-height:1.25em;color:black}
 #main #main-content #main-list li span {color:#909090;display:inline;font-weight:normal;text-overflow:ellipsis;} 
+#main #main-content #main-list li .ui-li-aside {width:50px}
