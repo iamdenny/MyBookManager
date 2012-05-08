@@ -13,7 +13,7 @@ com.iamdenny.MyBookManager = jindo.$Class({
 		this._woDB = new com.iamdenny.MyBookManager.DB();
 		this._woList = new com.iamdenny.MyBookManager.List(this._woDB);
 		if(!bConfigExists){
-			$.mobile.showPageLoadingMsg("a", "Initialization...", true);
+			$.mobile.showPageLoadingMsg("b", "Initialization...", true);
 			this._woConfig.setAsDefault();
 			this._woDB.setAsDefault();
 			setTimeout(function(){
@@ -34,14 +34,14 @@ com.iamdenny.MyBookManager = jindo.$Class({
 			// event.preventDefault();
 			// alert('swipe');
 		// });
-		$(document).bind('swipeleft', function(event, data){
-			event.preventDefault();
-			history.go();
-		});
-		$(document).bind('swiperight', function(event, data){
-			event.preventDefault();
-			history.back();
-		});
+		// $(document).bind('swipeleft', function(event, data){
+			// event.preventDefault();
+			// history.go();
+		// });
+		// $(document).bind('swiperight', function(event, data){
+			// event.preventDefault();
+			// history.back();
+		// });
 		$(window).bind('orientationchange', function (e) {
 		    // setTimeout(function(){
 		    	// var bodyHeight = $(document.body).height();
