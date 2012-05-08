@@ -19,7 +19,7 @@ com.iamdenny.MyBookManager = jindo.$Class({
 			setTimeout(function(){
 				self._woList.showList();
 				$.mobile.hidePageLoadingMsg();
-			}, 1000);
+			}, 3000);
 		}else{
 			this._woList.showList();			
 		}
