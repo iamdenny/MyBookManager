@@ -23,5 +23,32 @@ com.iamdenny.MyBookManager = jindo.$Class({
 		}else{
 			this._woList.showList();			
 		}
+		
+		// $(document).bind('tap', function(){
+			// alert('tap');
+		// });
+		// $(document).bind('taphold', function(){
+			// alert('taphold');
+		// });
+		// $(document).bind('swipe', function(event, data){
+			// event.preventDefault();
+			// alert('swipe');
+		// });
+		$(document).bind('swipeleft', function(event, data){
+			event.preventDefault();
+			history.go();
+		});
+		$(document).bind('swiperight', function(event, data){
+			event.preventDefault();
+			history.back();
+		});
+		$(document).bind('orientationchange', function(){
+			alert('orientationchange');
+		});
+	
+		$(document).bind('pagebeforeshow', function(){
+			$('.ui-btn-active').removeClass('ui-btn-active');
+		});
+		
 	}
 });
