@@ -13,7 +13,6 @@ com.iamdenny.MyBookManager = jindo.$Class({
 		this._woDB = new com.iamdenny.MyBookManager.DB();
 		this._woList = new com.iamdenny.MyBookManager.List(this._woDB);
 		this._woSearchAPI = new com.iamdenny.MyBookManager.SearchAPI(this._woDB);
-		bConfigExists = false;
 		if(!bConfigExists){
 			$.mobile.showPageLoadingMsg("b", "Initialization...", true);
 			this._woConfig.setAsDefault();
