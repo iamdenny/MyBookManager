@@ -45,6 +45,7 @@ com.iamdenny.MyBookManager.SearchAPI.Naver = jindo.$Class({
 			 		start : nStart,
 			 		display : nDisplay },
 			   	function(data){
+			   		alert(data);
 			    	self._onResponseKeyword(that, sCallback, data);
 			   	}
 			);
