@@ -43,11 +43,7 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 		var self = this;
 		$("#main").bind("pagebeforeshow", function(event, ui){
 			$.mobile.showPageLoadingMsg("b", "Loading...", true);
-			$("#main").page();
-			self._refreshMainListView();
 		}).bind("pageshow", function(event, ui){
-			$("#main").page();
-			self._refreshMainListView();
 		});
 		
 		$("#viewbook").bind("pagebeforeshow", function(event, ui){

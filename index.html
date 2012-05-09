@@ -105,7 +105,7 @@
 				</div>
 				<ul id="addbook-list" data-role="listview" data-divider-theme="c" data-inset="true">
 					<script id="tpl-addbook-list-book" type="text/template">
-                    	<li class="addbook-list-book" data-theme="c">
+                    	<li id="addbook-list-book_{=p_idx}" class="addbook-list-book" data-theme="c">
                             <img class='addbook-list-book-thumbnail' src="{=image}" alt="{=title}">
                             
                             <h4>{=title}</h4>
@@ -124,6 +124,62 @@
 					</ul>
 				</div>
 			</footer>
+		</section>
+		
+		<section id="addbookdialog" data-role="dialog" title="도서 추가">
+			<header data-role="header" data-theme="a">
+				<h1>도서 추가</h1>
+			</header>
+			<div id="addbookdialog-content" class="cotnent" data-role="content" data-inset="true">
+				<script id="tpl-addbookdialog-book" type="text/template">
+					<div class="bif b2">
+						<span class="tmb1">
+							<img width="88" height="125" src="{=image}" class='bx1' />
+						</span>
+						<dl class="cntm1">
+		  					<dt class="h"><strong>{=title}</strong></dt>
+		  					
+		  					<dd class="if2">
+		  						<span class="rv">
+		  							<span class="mask" style="width:90%;">
+		  								<img src="http://static.naver.com/www/m/cm/im/bl.gif" alt="포인트" />
+		  							</span>
+		  							<span class="hc">포인트</span>
+		  						</span> 
+		  						<strong class="if21 tx1">9</strong> 
+		  						<span class="if21 if1"><span class="br tx3">|</span> 리뷰264건</span>
+		  					</dd>
+		  					
+							<dd class="if4">
+								<h4 class="hc">기본정보</h4>
+								<dl class="cnt">
+									<dt><span class="w">저</span><span>자&nbsp;&nbsp;:</span></dt>
+									<dd>{=author}</dd>
+
+									<dt>출판사&nbsp;&nbsp;:</dt>
+									<dd>{=publisher}</dd>
+							
+									<dt>출간일&nbsp;&nbsp;:</dt>
+									<dd>{=pubdate}</dd>
+							
+									<dt>ISBN&nbsp;&nbsp;:</dt>
+									<dd>{=isbn}</dd>
+								</dl>
+								<dl class="cnt">					
+									<dt><span class="w">가</span><span>격&nbsp;&nbsp;:</span></dt> 
+					              	<dd>
+					               		<span class="strike db_price">{=price}원</span>
+					               		<span class="price"><strong class="db_discounted_price">{=discount}</strong>원(↓<strong class="per">10</strong>%)</span>
+					               	</dd>                           					
+								</dl>	
+							</dd>
+						</dl>
+						<div style="clear:both;padding:10px 0 0 0">
+							<input id="addbookdialog-addbook-btn" type="button" data-role="button" data-theme="b" data-mini="true" value="추가" />
+						</div>
+					</div>
+				</script>
+			</div>
 		</section>
 		
 		<section id="viewbook" data-role="page" data-title="나의 도서 관리">
@@ -319,167 +375,6 @@
 					         	<label for="radio-choice-4">10분</label>
 					    </fieldset>
 					</li>
-				</ul>
-				
-				<ul data-role="listview" data-inset="true">
-					<li data-role="fieldcontain">
-			        	<label for="name">Text Input:</label>
-			        	<input type="text" name="name" id="name" value=""  />
-					</li>
-					<li data-role="fieldcontain">
-			        	<label for="textarea">Textarea:</label>
-					<textarea cols="40" rows="8" name="textarea" id="textarea"></textarea>
-					</li>
-					<li data-role="fieldcontain">
-			        	<label for="search">Search Input:</label>
-			         	<input type="search" name="password" id="search" value=""  />
-					</li>
-					<li data-role="fieldcontain">
-			        	<label for="slider2">Flip switch:</label>
-						<select name="slider2" id="slider2" data-role="slider">
-							<option value="off">Off</option>
-							<option value="on">On</option>
-						</select>
-					</li>
-					<li data-role="fieldcontain">
-			        	<label for="slider">Slider:</label>
-					 	<input type="range" name="slider" id="slider" value="0" min="0" max="100"  />
-					</li>
-					<li data-role="fieldcontain">
-			        	<fieldset data-role="controlgroup">
-							<legend>Choose as many snacks as you'd like:</legend>
-							<input type="checkbox" name="checkbox-1a" id="checkbox-1a" class="custom" />
-							<label for="checkbox-1a">Cheetos</label>
-			
-							<input type="checkbox" name="checkbox-2a" id="checkbox-2a" class="custom" />
-							<label for="checkbox-2a">Doritos</label>
-			
-							<input type="checkbox" name="checkbox-3a" id="checkbox-3a" class="custom" />
-							<label for="checkbox-3a">Fritos</label>
-			
-							<input type="checkbox" name="checkbox-4a" id="checkbox-4a" class="custom" />
-							<label for="checkbox-4a">Sun Chips</label>
-					    </fieldset>
-					</li>
-					
-					<li data-role="fieldcontain">
-						<fieldset data-role="controlgroup" data-type="horizontal">
-					    	<legend>Font styling:</legend>
-					    	<input type="checkbox" name="checkbox-6" id="checkbox-6" class="custom" />
-							<label for="checkbox-6">b</label>
-			
-							<input type="checkbox" name="checkbox-7" id="checkbox-7" class="custom" />
-							<label for="checkbox-7"><em>i</em></label>
-			
-							<input type="checkbox" name="checkbox-8" id="checkbox-8" class="custom" />
-							<label for="checkbox-8">u</label>
-					    </fieldset>
-					</li>
-					<li data-role="fieldcontain">
-						 <fieldset data-role="controlgroup">
-					    	<legend>Choose a pet:</legend>
-					         	<input type="radio" name="radio-choice-1" id="radio-choice-1" value="choice-1" checked="checked" />
-					         	<label for="radio-choice-1">Cat</label>
-		
-					         	<input type="radio" name="radio-choice-1" id="radio-choice-2" value="choice-2"  />
-					         	<label for="radio-choice-2">Dog</label>
-		
-					         	<input type="radio" name="radio-choice-1" id="radio-choice-3" value="choice-3"  />
-					         	<label for="radio-choice-3">Hamster</label>
-		
-					         	<input type="radio" name="radio-choice-1" id="radio-choice-4" value="choice-4"  />
-					         	<label for="radio-choice-4">Lizard</label>
-					    </fieldset>
-					</li>
-					
-					
-					<li data-role="fieldcontain">
-					    <fieldset data-role="controlgroup" data-type="horizontal">
-					     	<legend>Layout view:</legend>
-					         	<input type="radio" name="radio-choice-b" id="radio-choice-c" value="on" checked="checked" />
-					         	<label for="radio-choice-c">List</label>
-					         	<input type="radio" name="radio-choice-b" id="radio-choice-d" value="off" />
-					         	<label for="radio-choice-d">Grid</label>
-					    </fieldset>
-					</li>
-		
-					<li data-role="fieldcontain">
-						<label for="select-choice-1" class="select">Choose shipping method:</label>
-						<select name="select-choice-1" id="select-choice-1">
-							<option value="standard">Standard: 7 day</option>
-							<option value="rush">Rush: 3 days</option>
-							<option value="express">Express: next day</option>
-							<option value="overnight">Overnight</option>
-						</select>
-					</li>
-		
-					<li data-role="fieldcontain">
-						<label for="select-choice-3" class="select">Your state:</label>
-						<select name="select-choice-3" id="select-choice-3">
-							<option value="AL">Alabama</option>
-							<option value="AK">Alaska</option>
-							<option value="AZ">Arizona</option>
-							<option value="AR">Arkansas</option>
-							<option value="CA">California</option>
-							<option value="CO">Colorado</option>
-							<option value="CT">Connecticut</option>
-							<option value="DE">Delaware</option>
-							<option value="FL">Florida</option>
-							<option value="GA">Georgia</option>
-							<option value="HI">Hawaii</option>
-							<option value="ID">Idaho</option>
-							<option value="IL">Illinois</option>
-							<option value="IN">Indiana</option>
-							<option value="IA">Iowa</option>
-							<option value="KS">Kansas</option>
-							<option value="KY">Kentucky</option>
-							<option value="LA">Louisiana</option>
-							<option value="ME">Maine</option>
-							<option value="MD">Maryland</option>
-							<option value="MA">Massachusetts</option>
-							<option value="MI">Michigan</option>
-							<option value="MN">Minnesota</option>
-							<option value="MS">Mississippi</option>
-							<option value="MO">Missouri</option>
-							<option value="MT">Montana</option>
-							<option value="NE">Nebraska</option>
-							<option value="NV">Nevada</option>
-							<option value="NH">New Hampshire</option>
-							<option value="NJ">New Jersey</option>
-							<option value="NM">New Mexico</option>
-							<option value="NY">New York</option>
-							<option value="NC">North Carolina</option>
-							<option value="ND">North Dakota</option>
-							<option value="OH">Ohio</option>
-							<option value="OK">Oklahoma</option>
-							<option value="OR">Oregon</option>
-							<option value="PA">Pennsylvania</option>
-							<option value="RI">Rhode Island</option>
-							<option value="SC">South Carolina</option>
-							<option value="SD">South Dakota</option>
-							<option value="TN">Tennessee</option>
-							<option value="TX">Texas</option>
-							<option value="UT">Utah</option>
-							<option value="VT">Vermont</option>
-							<option value="VA">Virginia</option>
-							<option value="WA">Washington</option>
-							<option value="WV">West Virginia</option>
-							<option value="WI">Wisconsin</option>
-							<option value="WY">Wyoming</option>
-						</select>
-					</li>
-		
-					<li data-role="fieldcontain">
-						<label for="select-choice-a" class="select">Choose shipping method:</label>
-						<select name="select-choice-a" id="select-choice-a" data-native-menu="false">
-							<option>Custom menu example</option>
-							<option value="standard">Standard: 7 day</option>
-							<option value="rush">Rush: 3 days</option>
-							<option value="express">Express: next day</option>
-							<option value="overnight">Overnight</option>
-						</select>
-					</li>
-		
 				</ul>
 			</div>
 			

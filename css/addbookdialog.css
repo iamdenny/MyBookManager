@@ -1,0 +1,28 @@
+#addbookdialog {}
+#addbookdialog #addbookdialog-content {padding:0}
+#addbookdialog #addbookdialog-content .bif {position:relative;overflow:hidden;height:1%;padding:17px 10px .4em;}
+#addbookdialog #addbookdialog-content .bif.b2{padding-bottom:17px;border-bottom:2px solid #414B5A}
+#addbookdialog #addbookdialog-content .bif .tmb1 {display:block;float:left;margin:0}
+#addbookdialog #addbookdialog-content .bif .tmb1 img.bx1 {border:1px solid #DEDEDE}
+#addbookdialog #addbookdialog-content .bif .cntm1 {margin:0 0 0 102px}
+#addbookdialog #addbookdialog-content .bif .f {padding:.2em 0}
+#addbookdialog #addbookdialog-content .bif .h strong {font-size:15px}
+#addbookdialog #addbookdialog-content .bif .if2 {padding:0;color: #909090;font-size:.86em}
+#addbookdialog #addbookdialog-content .rv {position: relative;display: inline-block;width: 70px;height: 13px;text-align: left;background: url(http://static.naver.net/m/book/im/ic_pt.png) 0 -44px no-repeat;}
+#addbookdialog #addbookdialog-content .rv .mask {display: inline-block;width: 0;height: 100%;overflow: hidden;background: url(http://static.naver.net/m/book/im/ic_pt.png) 0 -61px no-repeat;}
+#addbookdialog #addbookdialog-content .bif .if21 {display: inline-block;vertical-align: top;}
+#addbookdialog #addbookdialog-content .tx3 {color: #909090;}
+#addbookdialog #addbookdialog-content .bif .cnt {color: #909090;font-size: .86em;text-align: left;}
+#addbookdialog #addbookdialog-content .bif .cnt dt {float: left;padding-right: .2em;}
+#addbookdialog #addbookdialog-content .bif .cnt dt, .bif .cnt dd {line-height: 1.35em;}
+#addbookdialog #addbookdialog-content .bif .cnt dt .w {display: inline-block;padding-right: 11px;white-space: nowrap;}
+#addbookdialog #addbookdialog-content .bif .cnt dt .w {display: inline-block;padding-right: 11px;white-space: nowrap;}
+#addbookdialog #addbookdialog-content .bif .cnt dd .strike {text-decoration: line-through;}
+#addbookdialog #addbookdialog-content .bif .cnt dd .price {font-size: 11px;color: #2D66BF;letter-spacing: -.05em;}
+#addbookdialog #addbookdialog-content .ui-controlgroup-label {display: none;}
+#addbookdialog #addbookdialog-content .u_me2b3 {margin: 0 -17px;padding-left: 17px;border-top: 1px solid #E9E9E9;clear: both;}
+#addbookdialog #addbookdialog-content .s2plug {clear: both;width: 300px;margin: 20px auto;font-family: Helvetica;font-size: 13px;line-height: 1.4em;color: #D4D4D4;text-align: center;}
+#addbookdialog #addbookdialog-content .u_me2b3 .s2plug {margin: 11px 0 5px 0;text-align: left;}
+#addbookdialog #addbookdialog-content .ui-slider-switch { width: 10em }
+
+

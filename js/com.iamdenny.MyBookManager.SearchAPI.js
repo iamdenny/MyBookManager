@@ -3,6 +3,8 @@ com.iamdenny.MyBookManager.SearchAPI = jindo.$Class({
 	_woDB : null,
 	_woNaverAPI : null,
 	_woGoogleAPI : null,
+	_ahtData : null,
+	_welTargetBook : null,
 	
 	$init : function(woDB){
 		this._woDB = woDB;
@@ -11,11 +13,16 @@ com.iamdenny.MyBookManager.SearchAPI = jindo.$Class({
 		this._welAddBookSearchInput = jindo.$Element('addbook-search-input');
 		this._welAddBookList = jindo.$Element('addbook-list');
 		
+		this._welAddBookDialog = jindo.$Element('addbookdialog');
+		this._welAddBookDialogContent = jindo.$Element('addbookdialog-content');
+		
 		this._wtAddBookListBook = jindo.$Template('tpl-addbook-list-book');
+		this._wtAddBookDialogBook = jindo.$Template('tpl-addbookdialog-book');		
 		
 		this._woNaverAPI = new com.iamdenny.MyBookManager.SearchAPI.Naver();
 		
-		this._initEvent();	
+		this._initEvent();
+		this._initPageShowEvent();	
 	},
 	
 	_initEvent : function(){
@@ -24,6 +31,21 @@ com.iamdenny.MyBookManager.SearchAPI = jindo.$Class({
 			self._getRSS($(this).val());			 	
 		});
 		 
+		this._welAddBookList.delegate('click', '.addbook-list-book',
+			function(eEvent){
+				self._welTargetBook = jindo.$Element(eEvent.element);
+				self._loadBookForDialog();
+				$.mobile.changePage("#addbookdialog");				
+			}
+		);
+	},
+	
+	_initPageShowEvent : function(){
+		$("#addbookdialog").bind("pagebeforeshow", function(event, ui){
+			$.mobile.showPageLoadingMsg();
+			$('#addbookdialog-addbook-btn').button();
+		}).bind("pageshow", function(event, ui){
+		});
 	},
 	
 	_getRSS : function(sText){
@@ -33,10 +55,11 @@ com.iamdenny.MyBookManager.SearchAPI = jindo.$Class({
 		this._woNaverAPI.getRSS(sQuery, nStart, nDisplay, this, '_callbackRSS');
 	},
 	
-	_callbackRSS : function(ahtNewData){
+	_callbackRSS : function(ahtData){
+		this._ahtData = ahtData;
 		this._welAddBookList.empty();
-		for(var i=0, length = ahtNewData.length; i<length; i++){
-			var el = jindo.$(this._wtAddBookListBook.process(ahtNewData[i]));
+		for(var i=0, length = ahtData.length; i<length; i++){
+			var el = jindo.$(this._wtAddBookListBook.process(ahtData[i]));
 			this._welAddBookList.append(el);
 		}
 		this._refreshAddBookListView();
@@ -45,5 +68,12 @@ com.iamdenny.MyBookManager.SearchAPI = jindo.$Class({
 	_refreshAddBookListView : function(){
 		$(this._welAddBookList.$value()).listview('refresh');
 	},
+	
+	_loadBookForDialog : function(){
+		var nIdx = this._welTargetBook.attr('id').replace('addbook-list-book_', '');
+		var el = jindo.$(this._wtAddBookDialogBook.process(this._ahtData[nIdx]));
+		this._welAddBookDialogContent.empty();
+		this._welAddBookDialogContent.append(el);
+	}
 	
 });

@@ -31,6 +31,9 @@ com.iamdenny.MyBookManager.SearchAPI.Naver = jindo.$Class({
 	
 	_parseJSON : function(oRes){
 		var htNewData = oRes.json().channel.item;
+		for(var i=0, length=htNewData.length; i<length; i++){
+			htNewData[i].p_idx = i;
+		}
 		return htNewData; 
 	},
 	
