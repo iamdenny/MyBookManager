@@ -25,8 +25,7 @@ com.iamdenny.MyBookManager.SearchAPI.Naver = jindo.$Class({
 	
 	_onResponseKeyword : function(that, sCallback, oRes){
 		var htData = this._parseJSON(oRes);
-		console.log(that)
-		that[sCallback](htData)
+		that[sCallback](htData);
 	},
 	
 	_parseJSON : function(oRes){
@@ -35,18 +34,23 @@ com.iamdenny.MyBookManager.SearchAPI.Naver = jindo.$Class({
 	},
 	
 	getRSS : function(sQuery, nStart, nDisplay, that, sCallback){
-		// $.get(this._sUrl, 
-		 	// {	key: this._sKey, 
-		 		// query: sQuery,
-		 		// start : nStart,
-		 		// display : nDisplay },
-		   	// function(data){
-		    	// fCallback(data);
-		   	// }
-		// );
-		this._woAjax.option('onload', jindo.$Fn(this._onResponseKeyword, this).bind(that, sCallback));
-		this._woAjax.request({
-			url : this._sUrl + '?key='+this._sKey+'&query='+sQuery+'&display='+nDisplay+'&start='+nStart+'&target=book' 
-		});
+		var self = this;
+		if(jindo.$Agent().navigator().mobile){
+			$.get(this._sUrl, 
+			 	{	key: this._sKey, 
+			 		query: sQuery,
+			 		start : nStart,
+			 		display : nDisplay },
+			   	function(data){
+			    	self._onResponseKeyword(that, sCallback, data);
+			   	}
+			);
+		}else{
+			sQuery = encodeURIComponent(sQuery);
+			this._woAjax.option('onload', jindo.$Fn(this._onResponseKeyword, this).bind(that, sCallback));
+			this._woAjax.request({
+				url : this._sUrl + '?key='+this._sKey+'&query='+sQuery+'&display='+nDisplay+'&start='+nStart+'&target=book' 
+			});	
+		}		
 	}
 });
