@@ -16,11 +16,10 @@ com.iamdenny.MyBookManager = jindo.$Class({
 		if(!bConfigExists){
 			$.mobile.showPageLoadingMsg("b", "Initialization...", true);
 			this._woConfig.setAsDefault();
-			this._woDB.setAsDefault();
-			setTimeout(function(){
+			this._woDB.setAsDefault().attach('DefaultDataSuccess', function(eEvent){
 				self._woList.showList();
 				$.mobile.hidePageLoadingMsg();
-			}, 3000);
+			});
 		}else{
 			this._woList.showList();			
 		}
