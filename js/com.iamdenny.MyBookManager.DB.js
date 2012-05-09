@@ -33,16 +33,17 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 	},
 	
 	_onDefaultDataSuccess : function(tx, r) {
-		this._nCurrentDefaultDataCount++;
 		if(this._nCurrentDefaultDataCount == this._nMaxDefaultDataCount){
 		  	this.fireEvent("DefaultDataSuccess");
+		}else{
+			this._nCurrentDefaultDataCount++;
 		};
 	},
 	
 	_removeAllTables : function(){
 		var self = this;
 	  	this._db.transaction(function(tx) {
-	  		tx.executeSql('DROP TABLE IF EXISTS ' + self._sPrefix + 'books', [], self._onDefaultDataSuccess, self._onError);
+	  		tx.executeSql('DROP TABLE IF EXISTS ' + self._sPrefix + 'books', [], jindo.$Fn(self._onDefaultDataSuccess, self).bind(), self._onError);
 	  	});
 	},
 	
@@ -70,10 +71,9 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 	_insertDefaultData : function(){
 		var self = this;
 		this._nCurrentDefaultDataCount = 0;
-		this._nMaxDefaultDataCount = 0;
+		this._nMaxDefaultDataCount = 11;
 		this._db.transaction(function(tx){
 			// isreading
-			self._nMaxDefaultDataCount++;
 			tx.executeSql('INSERT INTO ' + self._sPrefix + self._sTableList + ' ' 
 				+ '(db_category, db_favorite, db_title, db_image, db_author, db_price, db_publisher, db_pubdate, db_isbn, db_description, db_add, db_upd) '
 				+ 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATETIME("NOW"), DATETIME("NOW"))'
@@ -87,8 +87,7 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 					, '2012.01.13'
 					, '9788965700609'
 					, '쫓기듯 사는 삶에 지친 이들에게 혜민 스님이 전하는 지혜로운 이야기!<br><br>종교와 인종, 가치관을 뛰어넘어 진정한 인생의 잠언을 들려주는 혜민 스님의 에세이『멈추면, 비로소 보이는 것들』. 이 책은 관계에 대해, 사랑에 대해, 마음과 인생에 대해 머리로는 알지만 마음으로는 안 되는 것들에 대해 파워 트위터리안으로 불리는 저자의 지혜로운 대답을 담고 있다. 배우자, 자녀, 친구를 내가 원하는 대로 바꾸려 하면 할수록 관계는 틀어지고 나로부터 도망가려고 한다는 것, 잠깐의 뒤처짐에 열등감으로 가슴 아파하지 말고 나만의 아름다운 색깔과 열정을 찾을 것, 어떤 생각을 하는가가 말을 만들고, 어떤 말을 하는가가 행동이 되며, 반복된 행동이 습관으로 굳어지면 그것이 바로 인생이 되는 것이라는 것 등에 대한 이야기를 들려주며 나 자신의 온전함과 존귀함을 알아챌 수 있는 용기와 위로를 전해준다.']
-				, self._onDefaultDataSuccess, self._onError);
-			self._nMaxDefaultDataCount++;
+				, jindo.$Fn(self._onDefaultDataSuccess, self).bind(), self._onError);
 			tx.executeSql('INSERT INTO ' + self._sPrefix + self._sTableList + ' ' 
 				+ '(db_category, db_favorite, db_title, db_image, db_author, db_price, db_publisher, db_pubdate, db_isbn, db_description, db_add, db_upd) '
 				+ 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATETIME("NOW"), DATETIME("NOW"))'
@@ -102,8 +101,7 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 					, '2010.04.06'
 					, '9788954610681'
 					, '네가 가장 예뻤을 때, 나는 너를 사랑했다!<br><br>존재의 내밀한 욕망과 그 근원을 들여다본 박범신의 신작 장편소설『은교』. 위대한 시인이라고 칭송받던 이적요가 죽은 지 일 년, Q변호사는 유언에 따라 그가 남긴 노트를 공개하기로 한다. 하지만 노트에는 이적요가 열일곱 소녀인 한은교를 사랑했으며, 제자였던 베스트셀러 <심장>의 작가 서지우를 죽였고, <심장>을 비롯한 서지우의 모든 작품을 이적요가 썼다는 충격적인 고백이 담겨 있었다. 이적요 기념관 설립이 한창인 시점에서 공개를 망설이던 Q변호사는 은교를 만나고, 서지우 역시 기록을 남겼다는 사실을 듣는다. 은교에게서 서지우의 디스켓을 받은 Q변호사는 이적요와 서지우의 기록을 통해 그들에게 벌어졌던 일들을 알게 되는데…. <br><br><br><br>☞ 북소믈리에 한마디!<br><br>자신과 대비되는 은교의 젊음을 보며 관능과 아름다움을 느끼는 이적요, 그런 이적요의 눈빛을 깨닫고 은교에 대한 집착이 커져가는 서지우. 정에 넘치던 두 사람의 관계는 은교를 둘러싸고 조금씩 변해가며 아슬아슬하게 유지된다. 두 남자와 한 여자의 얽혀 있는 사랑을 그리고 있지만, 작가는 그들의 모습을 통해 \'갈망\'을 이야기한다. 남자와 여자, 젊음과 늙음, 시와 소설, 욕망, 죽음 등에 대한 존재론적인 질문을 던지고 있다. 이 작품은 평생 원고지를 고집했던 작가가 처음으로 컴퓨터 자판을 사용해 쓴 소설이자, 개인 블로그에 연재하면서 한 달 반 만에 완성한 소설이다.']
-				, self._onDefaultDataSuccess, self._onError);
-			self._nMaxDefaultDataCount++;
+				, jindo.$Fn(self._onDefaultDataSuccess, self).bind(), self._onError);
 			tx.executeSql('INSERT INTO ' + self._sPrefix + self._sTableList + ' ' 
 				+ '(db_category, db_favorite, db_title, db_image, db_author, db_price, db_publisher, db_pubdate, db_isbn, db_description, db_add, db_upd) '
 				+ 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATETIME("NOW"), DATETIME("NOW"))'
@@ -117,10 +115,9 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 					, '2012.03.23'
 					, '9788960865273'
 					, '국내 1호 정리 컨설턴트 윤선현 베리굿정리컨설팅 대표의 정리 컨설팅이 담긴 책. 한국의 수많은 정리 컨설팅 사례를 통해 그동안 우리가 정리에 대해 잘못 알고 있었던 점들을 바로 짚어주고, 쉽고 간단한 정리 습관을 체계적으로 익힐 수 있도록 돕는다. <br><br><br>우선 우리가 가지고 있는 정리에 대한 선입견에는 뭐가 있을까? ‘정리는 청소나 수납이다.’ 아니다. 정리는 환경을 통제하는 것으로, 공간뿐만 아니라 시간, 인맥도 정리해야 한다. ‘꼼꼼한 A형이나 정리를 잘하는 것 아닐까?’ 아니다. 정리 유전자는 정해져 있지 않다. 정리는 안 하는 것이지 못 하는 것이 아니다. ‘이사 갈 때 정리하면 된다’ 아니다. 언제 죽을지 모르는 게 인생. 자신의 유품을 가족들이 정리하게 할 것인가. 1부 ‘정리가 뭐길래’에서는 이렇게 기존의 정리 마인드를 개선할 수 있도록 정리의 개념, 목적, 효과 등을 새롭게 짚어준다. <br><br><br>2부 ‘실천! 정리력’에서는 공간, 시간, 인맥의 세 가지 파트로 나눠, 책을 읽은 날부터 당장 부담 없이 시작해볼 수 있는 정리 프로젝트를 제시한다. 책제목에서도 강조하고 있는 ‘하루 15분’은 하루의 단 1%에 해당하는 시간이다. 끊임없이 인풋되는 일과 물건들에 제대로 된 흐름을 부여하는 데는 이 정도면 충분하다. 절대 ‘하루 날 잡아 대청소’할 필요가 없다. 관건은 ‘날마다 조금씩’이다. 책에는 자신의 현 상황을 점검해볼 수 있는 체크리스트, 지갑이든 책상이든 적용할 수 있는 5단계 정리법, 책을 다 읽지 않더라도 골라서 시도해볼 수 있는 액션플랜도 마련해놓았다.']
-				, self._onDefaultDataSuccess, self._onError);
+				, jindo.$Fn(self._onDefaultDataSuccess, self).bind(), self._onError);
 			
 			// favorite
-			self._nMaxDefaultDataCount++;
 			tx.executeSql('INSERT INTO ' + self._sPrefix + self._sTableList + ' ' 
 				+ '(db_category, db_favorite, db_title, db_image, db_author, db_price, db_publisher, db_pubdate, db_isbn, db_description, db_add, db_upd) '
 				+ 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATETIME("NOW"), DATETIME("NOW"))'
@@ -134,8 +131,7 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 					, '2012.04.28'
 					, '9788993838220'
 					, '오랫동안 숙고한 언어, 명상으로부터 길어 올린 지혜, 그리고 진솔한 자기 고백을 마주하다!<br><br>류시화 시인의 세 번째 시집『나의 상처는 돌 너의 상처는 꽃』. <그대가 곁에 있어도 나는 그대가 그립다>, <외눈박이 물고기의 사랑> 이후 15년 만에 펴낸 이번 시집에서 저자는 그동안 써온 350편의 시 가운데 56편을 소개한다. 상처와 허무를 넘어 인간 실존의 경이로움과 삶에 대한 투명한 관조가 담긴 시편들을 통해 긴 시간의 시적 침묵이 가져다 준 한층 깊어진 시의 세계를 마주하게 된다. ‘사하촌에서 겨울을 나다’, ‘봄은 꽃을 열기도 하고 꽃을 닫기도 한다’, ‘두 번째 시집에서 싣지 않은 시’, ‘언 연못 모서리에 봄물 들 때쯤’, ‘살아 있는 것 아프다’, ‘비켜선 것들에 대한 예의’ 등 여행의 노정 위에서 수없이 반복된 중얼거림으로 완성해 저자만의 독특한 리듬과 언어적 감성이 스며들어 있는, 다양한 소재와 주제의 시편들이 수록되어 있다.']
-				, self._onDefaultDataSuccess, self._onError);
-			self._nMaxDefaultDataCount++;
+				, jindo.$Fn(self._onDefaultDataSuccess, self).bind(), self._onError);
 			tx.executeSql('INSERT INTO ' + self._sPrefix + self._sTableList + ' ' 
 				+ '(db_category, db_favorite, db_title, db_image, db_author, db_price, db_publisher, db_pubdate, db_isbn, db_description, db_add, db_upd) '
 				+ 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATETIME("NOW"), DATETIME("NOW"))'
@@ -149,8 +145,7 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 					, '2012.04.24'
 					, '9788937833663'
 					, '시장은 과연 항상 옳을까? 모든 것을 사고파는 사회를 ‘마이클 샌델’과 함께 해부한다!<br><br>『돈으로 살 수 없는 것들: 무엇이 가치를 결정하는가』는 <정의는 무엇인가>로 화제를 모았던 마이클 샌델이 시장의 도덕적 한계와 시장지상주의의 맹점에 대하여 논의한 책이다. 이 책은 1998년 옥스퍼드대학교의 강의에서부터 시작하여 2012년 봄학기부터 ‘Market & Morals\'라는 이름으로 하버드대학교 철학 강의로 개설되는 등 15년간 철저히 준비하고 고민하여 완성한 것으로, 시장지상주의의 한계를 짚어보는 계기를 마련해 준다. 시장논리가 사회 모든 영역을 지배하는 구체적인 사례들을 제시하여 ’과연 시장은 언제나 옳은가‘에 대한 해답을 제공하며, 저자 특유의 문답식 토론과 도발적 문제제기, 치밀한 논리로 시장을 둘러싼 흥미진진한 철학논쟁을 펼친다.']
-				, self._onDefaultDataSuccess, self._onError);
-			self._nMaxDefaultDataCount++;
+				, jindo.$Fn(self._onDefaultDataSuccess, self).bind(), self._onError);
 			tx.executeSql('INSERT INTO ' + self._sPrefix + self._sTableList + ' ' 
 				+ '(db_category, db_favorite, db_title, db_image, db_author, db_price, db_publisher, db_pubdate, db_isbn, db_description, db_add, db_upd) '
 				+ 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATETIME("NOW"), DATETIME("NOW"))'
@@ -164,10 +159,9 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 					, '2012.02.07'
 					, '9788950935665'
 					, '인생의 의미를 잃어버린 남자들이여, 당신만의 이야기를 꺼내라!<br><br>김정운이 제안하는 존재확인의 문화심리학『남자의 물건』. <나는 아내와의 결혼을 후회한다>, <노는 만큼 성공한다>를 통해 현대인들의 여가와 재미의 필요성을 인문·심리학적으로 흥미롭게 풀어낸 김정운 교수가 이번에는 대한민국 남자들의 삶에 주목하였다. 총 2부로 구성하여, 1부에서는 대한민국 남자들의 불안과 외로움을 달래는 유쾌하고도 가슴 찡한 위로를 담고, 2부에서는 각계각층 다양한 분야 13명의 특별한 스토리가 담긴 ‘물건’에 대한 이야기를 소개한다. 지식에의 욕망을 나타낸 이어령의 ‘3미터 책상’을 통해 대학자의 근원적 외로움을 듣고, 문재인의 ‘바둑판’을 통해 재미는 없지만 일희일비하지 않는 신뢰감을 주는 그의 모습을 살펴보는 등 사소한 ‘물건’에 대한 이야기를 통해 인생을 관통하는 그들의 삶의 태도를 엿볼 수 있다. 이를 통해 인생의 의미를 잃어버린 사람들이 좀 더 주체적이고 적극적인 삶의 기쁨과 행복을 찾을 수 있도록 안내하였다.']
-				, self._onDefaultDataSuccess, self._onError);
+				, jindo.$Fn(self._onDefaultDataSuccess, self).bind(), self._onError);
 			
 			// willread
-			self._nMaxDefaultDataCount++;
 			tx.executeSql('INSERT INTO ' + self._sPrefix + self._sTableList + ' ' 
 				+ '(db_category, db_favorite, db_title, db_image, db_author, db_price, db_publisher, db_pubdate, db_isbn, db_description, db_add, db_upd) '
 				+ 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATETIME("NOW"), DATETIME("NOW"))'
@@ -181,8 +175,7 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 					, '2012.04.12'
 					, '9788993838213'
 					, '달라이 라마, 행복에 대한 새로운 물음들에 답하다!<br><br>10년 만에 다시 열린 행복에 대한 특별한 토론『당신은 행복한가』. 티베트의 영적 지도자 달라이 라마와 정신과 의사 하워드 커틀러의 에세이로 우리에게 ‘인간이 한 개인으로서, 그리고 공동체의 일원으로서 행복을 발견해 나갈 수 있는가’에 대해 진지하게 질문하게 만들어준다. 이 책에서 달라이 라마는 ‘혼자 행복해도 되는가, 혼자서 행복할 수 있는가’하는 물음을 던지며, 나의 행복은 타인에게 달려 있음을 일깨워준다. 내가 행복해지고 싶다면 먼저 다른 사람을 행복하게 만들어야 한다고 이야기하며, 내가 행복을 추구할 때 다른 사람의 행복은 어떻게 되는지, 개인의 행복과 사회 전체의 행복은 어떤 관계인지 알 때 진정한 행복을 발견할 수 있음을 강조하고 있다. 다른 사람의 행복에 진심 어린 관심을 가지고 다가가는 것이 자비라고 이야기하며, 이처럼 함께 행복을 나누는 것이야말로 세상을 변화시킬 수 있는 단 하나의 강력한 진리라는 깨달음을 전해주고 있다.']
-				, self._onDefaultDataSuccess, self._onError);
-			self._nMaxDefaultDataCount++;
+				, jindo.$Fn(self._onDefaultDataSuccess, self).bind(), self._onError);
 			tx.executeSql('INSERT INTO ' + self._sPrefix + self._sTableList + ' ' 
 				+ '(db_category, db_favorite, db_title, db_image, db_author, db_price, db_publisher, db_pubdate, db_isbn, db_description, db_add, db_upd) '
 				+ 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATETIME("NOW"), DATETIME("NOW"))'
@@ -196,8 +189,7 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 					, '2010.09.13'
 					, '9788901110806'
 					, '상대방은 모르는 경쟁력의 비밀, 침묵의 언어를 읽어라!<br><br>대화할 때 테이블 밑에 손을 숨기지 마라, 엄지를 주머니에 넣는 행동은 리더의 권위를 손상시킨다, 진실을 강력하게 말할 때 손바닥을 보이지 마라, 공항 세관원이 밀수범을 잡는 비밀은 발의 움직임에 있다, 거짓말이 의심될 때 상대의 목을 보면 알 수 있다, 이렇듯 인간은 인종이나 문화, 언어에 상관없이 분노나 두려움 또는 기쁨과 즐거움의 감정이 얼굴과 신체 동작을 통해 나타난다. 전직 FBI요원이자 행동전문가인 조 내버로가『FBI 행동의 심리학』을 통해 상대방의 몸짓과 표정을 읽음으로써 사람의 마음을 간파해 효과적인 커뮤니케이션을 할 수 있는 기술을 공개한다.']
-				, self._onDefaultDataSuccess, self._onError);
-			self._nMaxDefaultDataCount++;
+				, jindo.$Fn(self._onDefaultDataSuccess, self).bind(), self._onError);
 			tx.executeSql('INSERT INTO ' + self._sPrefix + self._sTableList + ' ' 
 				+ '(db_category, db_favorite, db_title, db_image, db_author, db_price, db_publisher, db_pubdate, db_isbn, db_description, db_add, db_upd) '
 				+ 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATETIME("NOW"), DATETIME("NOW"))'
@@ -211,10 +203,9 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 					, '2012.02.07'
 					, '9788950935665'
 					, '이루지 못한 꿈이 당신의 정체를 바꾼다!<br><br>조국에 대한 비판적 관점으로 자신만의 소설 세계를 구축해가는 미국 태생의 소설가 더글라스 케네디를 대표하는 『빅 픽처』. 빼어난 착상 위에 반전을 거듭하는 폭발적 흡입력의 스토리가 생생한 유머와 위트와 함께 펼쳐져 유럽을 사로잡은 스릴러 소설이다. 변호사 \'벤\'에서 사진가 \'게리\'로 살아가게 된 한 남자의 일상 속으로 초대한다. 주어진 삶에 만족하지 못한 채 일탈을 꿈꾸고는 하는 우리를 완전한 몰입의 세계로 인도하고 있다. 특히 벤이 잃어버린 꿈으로 인해 고독과 슬픔, 방황과 일탈에 빠져든 모습은 마치 거울처럼 우리를 비춘다. 이루지 못한 꿈에 대해 생각하느라 밤마다 잠을 설치는 우리에게 섬뜩한 긴장감을 안겨주고 있다. <br>미국 뉴욕 주 월가의 변호사 \'벤\'은 아름다운 아내 \'베스\'와 함께 \'애덤\'과 \'조시\'라는 두 아들을 키우고 있다. 벤은 어린 시절부터 사진가가 되기를 간절히 바랐으나 아버지의 반대로 변호사가 되었다. 베스는 벤을 마치 벌레라도 본 듯 피해다니기 바빠 그의 일상은 지쳐만 갔다. 그러던 어느 날 베스가 이웃집에 사는 사진가 게리와 불륜에 빠졌다는 것을 알게 된다. 벤은 게리네 집에 찾아가 말싸움을 벌이던 중 우발적으로 그를 살해했다. 요트사고로 위장하여 게리의 시신을 불태운 다음, 몬태나 주 마운틴폴스로 도망친다. 남은 생애를 게리로 살아가기를 결심하고는 젊은 시절에 접어버린 사진가의 꿈을 이루게 되었다. 그런데 벤이 찍은 인물 사진이 지역 신문에 실리면서 비밀이 드러날 위험에 처하는데…….']
-				, self._onDefaultDataSuccess, self._onError);
+				, jindo.$Fn(self._onDefaultDataSuccess, self).bind(), self._onError);
 			
 			// hasread
-			self._nMaxDefaultDataCount++;
 			tx.executeSql('INSERT INTO ' + self._sPrefix + self._sTableList + ' ' 
 				+ '(db_category, db_favorite, db_title, db_image, db_author, db_price, db_publisher, db_pubdate, db_isbn, db_description, db_add, db_upd) '
 				+ 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATETIME("NOW"), DATETIME("NOW"))'
@@ -228,8 +219,7 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 					, '2010.12.24'
 					, '9788965700036'
 					, '인생의 홀로서기를 시작하는 청춘을 위한 김난도 교수의 따뜻한 멘토링!<br><br>불안한 미래와 외로운 청춘을 보내고 있는 이 시대 젊은이들에게 보내는 편지 『아프니까 청춘이다』. 수많은 청춘들의 마음을 울린 김난도 교수가 여러 매체에 기고했던 글을 비롯해 총 42편의 격려 메시지를 하나로 묶어 소개한다. 네이버와 싸이월드를 통해 청춘들의 공감을 얻어내는 멘토링을 던져왔던 김난도 교수는 서울대학교 학생들이 뽑은 최고의 멘토이기도 하다. 그는 미래에 대한 불안감으로 힘들어하는 이들에게 따뜻한 위로의 글을 전한다. 또 때로는 차가운 지성의 언어로 청춘들이 미처 생각하지 못한 깨달음을 일깨워주어 아무리 독한 슬픔과 슬럼프를 만나더라도 스스로 극복하고 이겨낼 수 있는 용기를 전한다.']
-				, self._onDefaultDataSuccess, self._onError);
-			self._nMaxDefaultDataCount++;
+				, jindo.$Fn(self._onDefaultDataSuccess, self).bind(), self._onError);
 			tx.executeSql('INSERT INTO ' + self._sPrefix + self._sTableList + ' ' 
 				+ '(db_category, db_favorite, db_title, db_image, db_author, db_price, db_publisher, db_pubdate, db_isbn, db_description, db_add, db_upd) '
 				+ 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATETIME("NOW"), DATETIME("NOW"))'
@@ -243,7 +233,7 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 					, '2012.04.10'
 					, '9788954427173'
 					, '시간의 흐름 속에 숨겨진 마법 같은 비밀!<br><br>제1회 자음과모음 청소년문학상을 수상한 김선영의 작품 『시간을 파는 상점』. 심사위원들의 만장일치로 선정된 당선작으로, 흐르는 시간이라는 소재를 다루고 있다. 소방대원으로 더불어 사는 삶을 실천하다 일찍 세상을 떠난 아빠의 뜻을 이어받은 주인공 온조. 인터넷 카페에 ‘크로노스’라는 닉네임으로 ‘시간을 파는 상점’을 오픈해 손님들의 어려운 일을 대신 해주면서 자신의 시간을 판다. 범인으로 지목된 아이가 학교 옥상에서 떨어져 죽은 PMP3 도난 사건에 대한 의뢰, 할아버지와 맛있게 식사를 해달라는 엉뚱한 의뢰, 천국의 우편 배달부가 되어 달라는 의뢰 등 여러 가지 의뢰가 이어진다. 그러던 중 PMP3 분실 사건으로 죽음에 이를 뻔한 친구가 밝혀지고 온조와 친구들에게 예상치 못한 위기가 찾아오는데….']
-				, self._onDefaultDataSuccess, self._onError);
+				, jindo.$Fn(self._onDefaultDataSuccess, self).bind(), self._onError);
 		});
 	},
 	
