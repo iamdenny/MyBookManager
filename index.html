@@ -35,15 +35,15 @@
 	    
 	    <script type="text/javascript">
 	    	
-	    	// var ioLogin = io.connect('http://mybookmanagerserver.iamdenny.com:2046/login');
-	    	// ioLogin.on('connect', function(){
-	    		// console.log('/login connect');
-	    	// });
-// 	    	
-	    	// var ioBook = io.connect('http://mybookmanagerserver.iamdenny.com:2046/book');
-	    	// ioBook.on('connect', function(){
-	    		// console.log('/book connect');
-	    	// });
+	    	var ioLogin = io.connect('http://mybookmanagerserver.iamdenny.com:2046/login');
+	    	ioLogin.on('connect', function(){
+	    		console.log('/login connect');
+	    	});
+ 	    	
+	    	var ioBook = io.connect('http://mybookmanagerserver.iamdenny.com:2046/book');
+	    	ioBook.on('connect', function(){
+	    		console.log('/book connect');
+	    	});
 	    	
 	    	$.mobile.showPageLoadingMsg();
 	    	
