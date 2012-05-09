@@ -9,8 +9,14 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 	_nMainListBookIdx : null,
 	
 	$init : function(woDB){
+		var self = this;
+		
 		this._woDB = woDB;	
 		this._woBook = new com.iamdenny.MyBookManager.Book(this._woDB);
+		this._woBook.attach('updated', function(){
+			self._welMainList.empty();
+			self.showList();
+		});
 			
 		this._welMain = jindo.$Element('main');
 		this._welMainList = jindo.$Element('main-list');
@@ -37,9 +43,11 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 		var self = this;
 		$("#main").bind("pagebeforeshow", function(event, ui){
 			$.mobile.showPageLoadingMsg("b", "Loading...", true);
-			self._welMainList.empty();
-			self.showList();
+			$("#main").page();
+			self._refreshMainListView();
 		}).bind("pageshow", function(event, ui){
+			$("#main").page();
+			self._refreshMainListView();
 		});
 		
 		$("#viewbook").bind("pagebeforeshow", function(event, ui){

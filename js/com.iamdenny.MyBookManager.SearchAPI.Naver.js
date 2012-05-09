@@ -8,12 +8,14 @@
 	
 com.iamdenny.MyBookManager.SearchAPI.Naver = jindo.$Class({
 	
-	_sProxyUrl : 'http://ajaxui.nhndesign.com/jsMatch/temp/PracticalAjaxUIProxy.php',
+	//_sProxyUrl : 'http://ajaxui.nhndesign.com/jsMatch/temp/PracticalAjaxUIProxy.php',
+	_sProxyUrl : 'http://blog.iamdenny.com/naver_api_proxy.php',
 	_sUrl : 'http://openapi.naver.com/search',
 	_sKey : 'de5ca00aaa40ab254ea5dec2c93247fd',
 	
 	$init : function(){
 		this._woAjax = jindo.$Ajax(this._sProxyUrl, {
+			type : 'jsonp',
 			onerror : jindo.$Fn(this._onError, this).bind()
 		});
 	},
@@ -24,9 +26,7 @@ com.iamdenny.MyBookManager.SearchAPI.Naver = jindo.$Class({
 	
 	_onResponseKeyword : function(that, sCallback, oRes){
 		var htData = this._parseJSON(oRes);
-		alert(htData);
 		that[sCallback](htData);
-		
 	},
 	
 	_parseJSON : function(oRes){
@@ -36,29 +36,25 @@ com.iamdenny.MyBookManager.SearchAPI.Naver = jindo.$Class({
 	
 	getRSS : function(sQuery, nStart, nDisplay, that, sCallback){
 		var self = this;
-		if(jindo.$Agent().navigator().mobile){
+		// // if(jindo.$Agent().navigator().mobile){
+		// if(true){
 			// $.get(this._sUrl, 
 			 	// {	key: this._sKey, 
 			 		// query: sQuery,
 			 		// start : nStart,
-			 		// display : nDisplay },
+			 		// display : nDisplay,
+			 		// target : 'book' },
 			   	// function(data){
-			   		// alert(data);
+			   		// console.log(data);
 			    	// self._onResponseKeyword(that, sCallback, data);
 			   	// }
 			// );
-			this._woAjax.option('onload', jindo.$Fn(this._onResponseKeyword, this).bind(that, sCallback));
-			this._woAjax.option('type', 'xhr');
-			this._woAjax.url(this._sUrl);
-			this._woAjax.request({key:this._sKey,query:sQuery,display:nDisplay,start:nStart,target:'book'});
-		}else{
+		// }else{
 			sQuery = encodeURIComponent(sQuery);
 			this._woAjax.option('onload', jindo.$Fn(this._onResponseKeyword, this).bind(that, sCallback));
-			this._woAjax.option('type', 'jsonp');
-			this._woAjax.url(this._sProxyUrl);
 			this._woAjax.request({
 				url : this._sUrl + '?key='+this._sKey+'&query='+sQuery+'&display='+nDisplay+'&start='+nStart+'&target=book' 
 			});	
-		}		
+		//}		
 	}
 });

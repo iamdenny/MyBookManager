@@ -110,9 +110,11 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
 	
 	_updateCategory : function(sCategory){
 		this._woDB.updateCategory(this._nMainListBookIdx, sCategory);
+		this.fireEvent('updated');
 	},
 	
 	_updateFavorite : function(sFavorite){
 		this._woDB.updateFavorite(this._nMainListBookIdx, sFavorite);
+		this.fireEvent('updated');
 	}
-});
+}).extend(jindo.Component);
