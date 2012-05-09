@@ -22,7 +22,8 @@ com.iamdenny.MyBookManager = jindo.$Class({
 				$.mobile.hidePageLoadingMsg();
 			});
 		}else{
-			this._woList.showList();			
+			this._woList.showList();	
+			$.mobile.hidePageLoadingMsg();		
 		}
 		
 		// $(document).bind('tap', function(){

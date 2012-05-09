@@ -137,7 +137,7 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 		$('header h1', this.welMain.$value()).text(sTitle);
 	},
 	
-	showList : function(){
+	showList : function(fCallback){
 		var self = this;
 		
 		this._woDB.loadList(function(tx, results){
