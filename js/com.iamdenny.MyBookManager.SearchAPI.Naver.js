@@ -25,7 +25,9 @@ com.iamdenny.MyBookManager.SearchAPI.Naver = jindo.$Class({
 	
 	_onResponseKeyword : function(that, sCallback, oRes){
 		var htData = this._parseJSON(oRes);
+		alert(htData);
 		that[sCallback](htData);
+		
 	},
 	
 	_parseJSON : function(oRes){
@@ -35,6 +37,7 @@ com.iamdenny.MyBookManager.SearchAPI.Naver = jindo.$Class({
 	
 	getRSS : function(sQuery, nStart, nDisplay, that, sCallback){
 		var self = this;
+		alert(jindo.$Agent().navigator().mobile);
 		if(jindo.$Agent().navigator().mobile){
 			$.get(this._sUrl, 
 			 	{	key: this._sKey, 
