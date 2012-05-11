@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns		= "http://www.w3.org/ns/widgets"
+	xmlns:gap	= "http://phonegap.com/ns/1.0"
+	id		= "com.iamdenny.MyBookManager"
+	version 	= "0.2.0">
+
+	<name>나의도서관리</name>
+
+	<description>
+		내가 읽고 있는, 읽었던, 읽어야 할 책들을 관리하는 앱 입니다.
+	</description>
+
+	<author href="http://iamdenny.com"
+		email="hello@iamdenny.com">
+		Denny Lim
+	</author>
+
+	<icon src="icon.png" gap:role="default" />
+
+	<feature name="http://api.phonegap.com/1.0/geolocation"/>
+	<feature name="http://api.phonegap.com/1.0/network"/>
+
+	<preference name="orientation" value="portrait" />
+</widget>
