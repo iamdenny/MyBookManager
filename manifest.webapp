@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "name": "나의도서관리",
+  "description": "내가 읽고 있는, 읽었던, 읽어야 할 책들을 관리하는 앱 입니다.",
+  "icons": {
+    "16": "/icon.png",
+    "48": "/icon.png",
+    "128": "/icon.png"
+  },
+  "developer": {
+    "name": "Denny Lim",
+    "url": "http://iamdenny.com"
+  },
+  "installs_allowed_from": [
+    "https://marketplace.mozilla.org"
+  ],
+  "locales": {
+    "kr": {
+      "description": "내가 읽고 있는, 읽었던, 읽어야 할 책들을 관리하는 앱 입니다.",
+      "developer": {
+        "url": "http://iamdenny.com/"
+      }
+    },
+    "it": {
+      "description": "내가 읽고 있는, 읽었던, 읽어야 할 책들을 관리하는 앱 입니다. - 이태리어ㅋ",
+      "developer": {
+        "url": "http://iamdenny.com/"
+      }
+    }
+  },
+  "default_locale": "en"
+}
