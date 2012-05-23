@@ -1,13 +1,15 @@
 com.iamdenny.MyBookManager.SearchAPI = jindo.$Class({
 	
 	_woDB : null,
+    _woConfig : null,
 	_woNaverAPI : null,
 	_woGoogleAPI : null,
 	_ahtData : null,
 	_welTargetBook : null,
 	
-	$init : function(woDB){
+	$init : function(woDB, woConfig){
 		this._woDB = woDB;
+        this._woConfig = woConfig;
 		
 		this._welAddBook = jindo.$Element('addbook');
 		this._welAddBookSearchInput = jindo.$Element('addbook-search-input');

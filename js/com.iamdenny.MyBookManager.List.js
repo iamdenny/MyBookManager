@@ -1,6 +1,7 @@
 com.iamdenny.MyBookManager.List = jindo.$Class({
 	
 	_woDB : null,
+    _woConfig : null,
 	_woBook : null,
 	_wtMainListDivider : null,
 	_wtViewBook : null,
@@ -8,13 +9,16 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 	_nMainListFavoriteLimit : null,
 	_nMainListBookIdx : null,
 	
-	$init : function(woDB){
+	$init : function(woDB, woConfig){
 		var self = this;
 		
 		this._woDB = woDB;	
+        this._woConfig = woConfig;
+        this._woConfig.attach('pagebeforehide', function(){
+			self.showList();
+		});
 		this._woBook = new com.iamdenny.MyBookManager.Book(this._woDB);
 		this._woBook.attach('updated', function(){
-			self._welMainList.empty();
 			self.showList();
 		});
 			
@@ -23,10 +27,6 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 		
 		this._welViewList = jindo.$Element('viewlist');
 		this._welViewListList = jindo.$Element('viewlist-list');
-		
-		
-		this._nMainListIsReadingLimit = 3;
-		this._nMainListFavoriteLimit = 3;
 		
 		this._initTemplates();
 		this._initPageShowEvent();
@@ -137,9 +137,15 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 		$('header h1', this.welMain.$value()).text(sTitle);
 	},
 	
-	showList : function(fCallback){
-		var self = this;
-		
+	showList : function(){
+		var self = this,
+            htConfigMain = this._woConfig.get('main'),
+		    nIsReadingCount = htConfigMain.isreading_count,
+		    nFavoriteCount = htConfigMain.favorite_count,
+            nWillReadCount = htConfigMain.willread_count,
+            nHasReadCount = htConfigMain.hasread_count;
+        
+        this._welMainList.empty();
 		this._woDB.loadList(function(tx, results){
 			var sPClass = 'main-list-divider_isreading';
 			var el = jindo.$(self._wtMainListDivider.process({title : '현재 읽고 있는 도서', p_class : sPClass}));
@@ -149,7 +155,7 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 
 			self._refreshMainListView();
 			fFavorite();
-		}, 'isreading', 'db_upd', 'DESC', self._nMainListIsReadingLimit);
+		}, 'isreading', 'db_upd', 'DESC', nIsReadingCount);
 		
 		var fFavorite = function(){
 			self._woDB.loadFavoriteList(function(tx, results){
@@ -161,7 +167,7 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 				
 				self._refreshMainListView();
 				fWillRead();
-			}, 'db_upd', 'DESC', self._nMainListFavoriteLimit);
+			}, 'db_upd', 'DESC', nFavoriteCount);
 		};
 		
 		var fWillRead = function(){
@@ -174,7 +180,7 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 				
 				self._refreshMainListView();
 				fHasRead();
-			}, 'willread', 'db_upd', 'DESC', self._nMainListFavoriteLimit);
+			}, 'willread', 'db_upd', 'DESC', nWillReadCount);
 		};
 		
 		var fHasRead = function(){
@@ -188,7 +194,7 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 				self._refreshMainListView();
 				
 				self._showCountForMainList();
-			}, 'hasread', 'db_upd', 'DESC', self._nMainListFavoriteLimit);
+			}, 'hasread', 'db_upd', 'DESC', nHasReadCount);
 		};
 	},
 	

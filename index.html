@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-	<head>
+    <head>
 	    <title>My Book Manager</title>
 	    
 	    <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
@@ -321,27 +321,27 @@
 				<ul data-role="listview" data-inset="true">
 					<li data-role="fieldcontain">
 			        	<label for="c_isreading_count">현재 읽고 있는 도서의 개시물 수</label>
-					 	<input type="range" name="c_isreading_count" id="c_isreading_count" value="3" min="0" max="15" data-highlight="true" data-mini="true" />
+					 	<input type="range" class="config-content-main" name="c_isreading_count" id="c_isreading_count" min="1" max="15" data-highlight="true" data-mini="true" />
 					</li>
 					<li data-role="fieldcontain">
 			        	<label for="c_favorite_count">즐겨찾는 도서의 개시물 수</label>
-					 	<input type="range" name="c_favorite_count" id="c_favorite_count" value="3" min="0" max="15" data-highlight="true" data-mini="true" />
+					 	<input type="range" class="config-content-main" name="c_favorite_count" id="c_favorite_count" min="1" max="15" data-highlight="true" data-mini="true" />
 					</li>
 					<li data-role="fieldcontain">
 			        	<label for="c_willread_count">앞으로 읽을 도서의 개시물 수</label>
-					 	<input type="range" name="c_willread_count" id="c_willread_count" value="3" min="0" max="15" data-highlight="true" data-mini="true" />
+					 	<input type="range" class="config-content-main" name="c_willread_count" id="c_willread_count" min="1" max="15" data-highlight="true" data-mini="true" />
 					</li>
 					<li data-role="fieldcontain">
 			        	<label for="c_hasread_count">다 읽은 도서의 개시물 수</label>
-					 	<input type="range" name="c_hasread_count" id="c_hasread_count" value="3" min="0" max="15" data-highlight="true" data-mini="true" />
+					 	<input type="range" class="config-content-main" name="c_hasread_count" id="c_hasread_count" min="1" max="15" data-highlight="true" data-mini="true" />
 					</li>
 				</ul>
 				
 				<h2>도서 추가</h2>
 				<ul data-role="listview" data-inset="true">
 					<li data-role="fieldcontain">
-			        	<label for="c_isreading_count">검색 결과 수</label>
-					 	<input type="range" name="c_isreading_count" id="c_isreading_count" value="20" min="1" max="100" data-highlight="true" data-mini="true" />
+			        	<label for="c_result_count">검색 결과 수</label>
+					 	<input type="range" class="config-content-search" name="c_result_count" id="c_result_count" value="20" min="1" max="100" data-highlight="true" data-mini="true" />
 					</li>
 				</ul>
 					
