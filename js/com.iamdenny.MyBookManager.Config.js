@@ -15,6 +15,8 @@ com.iamdenny.MyBookManager.Config = jindo.$Class({
 		this._welConfig = jindo.$Element('config');
 		this._welConfigContent = jindo.$Element('config-content');
         
+        $('#config').page();
+        
         this._initPageShowEvent();
         this._initEvents();        
 	},
@@ -30,22 +32,27 @@ com.iamdenny.MyBookManager.Config = jindo.$Class({
     },
     
     _initEvents : function(){
-        var self = this,
-            elRoot = this._welConfigContent.$value();
+        var self = this;
 
-        $(".config-content-main").bind( "change", function(eEvent) {
+        $(".config-content-main").bind("change", function(eEvent) {
             var sId = eEvent.target.id;
             sId = sId.replace('c_', '');
             var htMain = self.get('main');
             htMain[sId] = eEvent.target.value;
             self.set('main', htMain);            
         });  
-        
+        $('.config-content-search').bind('change', function(eEvent){
+            var sId = eEvent.target.id;
+            sId = sId.replace('c_', '');
+            var htSearch = self.get('search');
+            htSearch[sId] = eEvent.target.value;
+            self.set('search', htSearch);
+        });
     },
     
     loadData : function(){
         var htMain = this.get('main');
-        $('#config').page();
+        
         $('#c_isreading_count').val(htMain.isreading_count);
         $('#c_favorite_count').val(htMain.favorite_count);
         $('#c_willread_count').val(htMain.willread_count);

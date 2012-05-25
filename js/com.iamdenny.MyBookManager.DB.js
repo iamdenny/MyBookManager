@@ -19,13 +19,42 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 	},
 	
 	setAsDefault : function(){
-		this._removeAllTables();
-		this._createTables();
+		//this._removeAllTables();
+		//this._createTables();
 		this._insertDefaultData();
 	},
 	
 	_open :  function() {
-  		this._db = openDatabase('MyBookManager', '1.0', 'My Book Manager', this._nDBSize);
+        var self = this;
+        console.log('_open');
+  		this._db = openDatabase('MyBookManager', '', 'My Book Manager', this._nDBSize, function(db){
+            console.log('db version : ' + db.version);
+            db.changeVersion('', '1.0', function(tx){
+                console.log('db install as 1.0');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS ' + 
+            	self._sPrefix + self._sTableList + '('
+	        			+ 'db_idx INTEGER PRIMARY KEY ASC AUTOINCREMENT, '
+	        			+ 'db_category TEXT, '
+	        			+ 'db_favorite TEXT, '
+	        			+ 'db_title TEXT, '
+	        			+ 'db_image TEXT, '
+	        			+ 'db_author TEXT, '
+	        			+ 'db_price INTEGER, '
+	        			+ 'db_publisher TEXT, '
+	        			+ 'db_pubdate DATE, '
+	        			+ 'db_isbn TEXT, '
+	        			+ 'db_description TEXT, '
+                        + 'db_link TEXT, '
+	        			+ 'db_add DATATIME, '
+	        			+ 'db_upd DATETIME)', []);
+            });
+            db.changeVersion('1.0', '1.1', function(tx){
+                console.log('db upgrade from 1.0 to 1.1');
+                tx.executeSql('ALTER TABLE ' + 
+                    self._sPrefix + self._sTableList + 
+                    ' ADD COLUMN db_discount INTEGER');
+            });
+        });
   	},
   	
   	_onError : function(tx, e) {
@@ -46,7 +75,7 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 	  		tx.executeSql('DROP TABLE IF EXISTS ' + self._sPrefix + 'books', [], jindo.$Fn(self._onDefaultDataSuccess, self).bind(), self._onError);
 	  	});
 	},
-	
+	/*
 	_createTables : function() {
 		var self = this;
 	  	this._db.transaction(function(tx) {
@@ -59,14 +88,16 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 	        			+ 'db_image TEXT, '
 	        			+ 'db_author TEXT, '
 	        			+ 'db_price INTEGER, '
+                        + 'db_discount INTERGER, '
 	        			+ 'db_publisher TEXT, '
 	        			+ 'db_pubdate DATE, '
 	        			+ 'db_isbn TEXT, '
 	        			+ 'db_description TEXT, '
+                        + 'db_link TEXT, '
 	        			+ 'db_add DATATIME, '
 	        			+ 'db_upd DATETIME)', []);
 	  	});
-	},
+	},*/
 	
 	_insertDefaultData : function(){
 		var self = this;
@@ -323,6 +354,31 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 		this._db.transaction(function(tx){
 			tx.executeSql(sSql, [], null, self._onError);
 		})
-	}
+	},
+    
+    addBook : function(htData, fSuccess){
+        var sSql = 'INSERT INTO ' + this._sPrefix + this._sTableList + ' ' 
+        		+ '(db_category, db_favorite, db_title, db_image, db_author, db_price, db_discount, db_publisher, db_pubdate, db_isbn, db_description, db_add, db_upd) '
+				+ 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATETIME("NOW"), DATETIME("NOW"))';
+        console.log(htData);
+        var self = this;
+        this._db.transaction(function(tx){
+            tx.executeSql(sSql
+				, [
+                    htData.category,
+                    htData.favorite,
+                    htData.title,
+                    htData.image,
+                    htData.author,
+                    htData.price,
+                    htData.discount,
+                    htData.publisher,
+                    htData.pubdate,
+                    htData.isbn,
+                    htData.description
+                  ] 
+                , fSuccess, self._onError);
+        });
+    }
   	
 }).extend(jindo.Component);

@@ -9,7 +9,7 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 	_nMainListFavoriteLimit : null,
 	_nMainListBookIdx : null,
 	
-	$init : function(woDB, woConfig){
+	$init : function(woDB, woConfig, woBook){
 		var self = this;
 		
 		this._woDB = woDB;	
@@ -17,7 +17,7 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
         this._woConfig.attach('pagebeforehide', function(){
 			self.showList();
 		});
-		this._woBook = new com.iamdenny.MyBookManager.Book(this._woDB);
+		this._woBook = woBook;
 		this._woBook.attach('updated', function(){
 			self.showList();
 		});

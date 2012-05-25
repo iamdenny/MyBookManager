@@ -11,8 +11,13 @@ com.iamdenny.MyBookManager = jindo.$Class({
 		}
 		var bConfigExists = this._woConfig.checkConfigExists();
 		this._woDB = new com.iamdenny.MyBookManager.DB();
-		this._woList = new com.iamdenny.MyBookManager.List(this._woDB, this._woConfig);
+        this._woBook = new com.iamdenny.MyBookManager.Book(this._woDB);
+		this._woList = new com.iamdenny.MyBookManager.List(this._woDB, this._woConfig, this._woBook);
 		this._woSearchAPI = new com.iamdenny.MyBookManager.SearchAPI(this._woDB, this._woConfig);
+        this._woSearchAPI.attach('addBook', function(htData){
+            self._woBook.addBook(htData);
+        });
+        //bConfigExists = false;
 		if(!bConfigExists){
 			$.mobile.showPageLoadingMsg("b", "Initialization...", true);
 			this._woConfig.setAsDefault();

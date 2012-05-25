@@ -1,5 +1,5 @@
 com.iamdenny.MyBookManager.SearchAPI = jindo.$Class({
-	
+    
 	_woDB : null,
     _woConfig : null,
 	_woNaverAPI : null,
@@ -10,6 +10,9 @@ com.iamdenny.MyBookManager.SearchAPI = jindo.$Class({
 	$init : function(woDB, woConfig){
 		this._woDB = woDB;
         this._woConfig = woConfig;
+        
+        $('#addbok').page();
+        $('#addbookdialog').page();
 		
 		this._welAddBook = jindo.$Element('addbook');
 		this._welAddBookSearchInput = jindo.$Element('addbook-search-input');
@@ -37,19 +40,37 @@ com.iamdenny.MyBookManager.SearchAPI = jindo.$Class({
 			function(eEvent){
 				self._welTargetBook = jindo.$Element(eEvent.element);
 				self._loadBookForDialog();
-				$.mobile.changePage("#addbookdialog");				
+				$.mobile.changePage("#addbookdialog");	
 			}
 		);
+        this._welAddBookDialog.delegate('click', '.addbookdialog-addbook-btn',
+            function(eEvent){
+                var welBtn = $(eEvent.element);
+                var nIndex = welBtn.attr('id').replace('addbookdialog-addbook-','');
+                //console.log(self._ahtData[nIndex]);
+                var htData = self._ahtData[nIndex];
+                htData.category = $('input[name=a_category]:checked').val();
+                htData.favorite = $('#a_favorite').val();
+                
+                self.fireEvent('addBook', htData);
+                $('#addbookdialog').dialog('close')
+            }
+	    );
 	},
 	
 	_initPageShowEvent : function(){
 		$("#addbookdialog").bind("pagebeforeshow", function(event, ui){
 			$.mobile.showPageLoadingMsg();
-			$('#addbookdialog-addbook-btn').button();
+			$('.addbookdialog-addbook-btn').button();
+            
+            $('.a_categorygroup').controlgroup();
+            $('.a_checkboxradio').checkboxradio();
+            $('.a_selectmenu').slider();
+            //$('input[name=a_favorite])')//.checkboxradio();
 		}).bind("pageshow", function(event, ui){
 		});
 	},
-	
+    
 	_getRSS : function(sText){
 		var sQuery = sText
 			, nStart = 1
@@ -78,4 +99,4 @@ com.iamdenny.MyBookManager.SearchAPI = jindo.$Class({
 		this._welAddBookDialogContent.append(el);
 	}
 	
-});
+}).extend(jindo.Component);
