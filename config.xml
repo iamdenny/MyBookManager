@@ -29,5 +29,5 @@
 
 	<preference name="orientation" value="portrait" />
     
-    <access origin="http://mybookmanagerserver.iamdenny.com" />
+    <access origin="*" />
 </widget>

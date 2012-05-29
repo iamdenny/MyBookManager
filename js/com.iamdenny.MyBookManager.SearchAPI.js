@@ -11,7 +11,7 @@ com.iamdenny.MyBookManager.SearchAPI = jindo.$Class({
 		this._woDB = woDB;
         this._woConfig = woConfig;
         
-        $('#addbok').page();
+        $('#addbook').page();
         $('#addbookdialog').page();
 		
 		this._welAddBook = jindo.$Element('addbook');
@@ -69,6 +69,7 @@ com.iamdenny.MyBookManager.SearchAPI = jindo.$Class({
             //$('input[name=a_favorite])')//.checkboxradio();
 		}).bind("pageshow", function(event, ui){
 		});
+        
 	},
     
 	_getRSS : function(sText){
