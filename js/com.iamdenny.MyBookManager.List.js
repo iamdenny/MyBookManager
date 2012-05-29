@@ -46,12 +46,6 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 		}).bind("pageshow", function(event, ui){
 		});
 		
-		$("#viewbook").bind("pagebeforeshow", function(event, ui){
-			$.mobile.showPageLoadingMsg("b", "Loading...", true);
-			self._woBook.loadBook(self._nMainListBookIdx, self._sMainListBookCategory);
-		}).bind("pageshow", function(event, ui){
-		});
-		
 		$("#viewlist").bind("pagebeforeshow", function(event, ui){
 			$.mobile.showPageLoadingMsg("b", "Loading...", true);
 			self._welViewListList.empty();
@@ -76,6 +70,8 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 					alert("도서가 선택되지 않았습니다.");
 					return false;
 				}else{
+                    self._woBook.setMainListBookId(self._nMainListBookIdx);
+                    self._woBook.setMainListBookCategory(self._sMainListBookCategory);
 			    	$.mobile.changePage("#viewbook");
 			    }
 		    }
@@ -100,6 +96,10 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 					alert("도서가 선택되지 않았습니다.");
 					return false;
 				}else{
+                    console.log(self._woBook);
+                    self._woBook.setMainListBookId(self._nMainListBookIdx);
+    	            self._woBook.setMainListBookCategory(self._sMainListBookCategory);
+                    
 			    	$.mobile.changePage("#viewbook");
 			    }
 			}

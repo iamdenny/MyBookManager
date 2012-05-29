@@ -13,6 +13,7 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 	_sPrefix : 'dny_',
 	_nDBSize : 10 * 1024 * 1024, // 20MB
 	_sTableList : 'books',
+    _sTableComments : 'books_comments',
 	
 	$init : function(){
 		this._open();
@@ -27,12 +28,13 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 	_open :  function() {
         var self = this;
         console.log('_open');
-  		this._db = openDatabase('MyBookManager', '', 'My Book Manager', this._nDBSize, function(db){
-            console.log('db version : ' + db.version);
-            db.changeVersion('', '1.0', function(tx){
-                console.log('db install as 1.0');
-                tx.executeSql('CREATE TABLE IF NOT EXISTS ' + 
-            	self._sPrefix + self._sTableList + '('
+  		this._db = openDatabase('MyBookManager', '', 'My Book Manager', this._nDBSize);
+          
+        var oM = new Migrator(this._db);
+        oM.migration(1, function(tx){
+            console.log('install db as 1');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS ' + 
+                self._sPrefix + self._sTableList + '('
 	        			+ 'db_idx INTEGER PRIMARY KEY ASC AUTOINCREMENT, '
 	        			+ 'db_category TEXT, '
 	        			+ 'db_favorite TEXT, '
@@ -46,15 +48,25 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 	        			+ 'db_description TEXT, '
                         + 'db_link TEXT, '
 	        			+ 'db_add DATATIME, '
-	        			+ 'db_upd DATETIME)', []);
-            });
-            db.changeVersion('1.0', '1.1', function(tx){
-                console.log('db upgrade from 1.0 to 1.1');
-                tx.executeSql('ALTER TABLE ' + 
+	        			+ 'db_upd DATETIME)');
+        });
+        oM.migration(2, function(tx){
+            console.log('upgrade db from 1 to 2');
+            tx.executeSql('ALTER TABLE ' + 
                     self._sPrefix + self._sTableList + 
                     ' ADD COLUMN db_discount INTEGER');
-            });
         });
+        oM.migration(3, function(tx){
+            console.log('upgrade db from 2 to 3');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS ' + 
+                self._sPrefix + self._sTableComments + '('
+            			+ 'dbc_idx INTEGER PRIMARY KEY ASC AUTOINCREMENT, '
+	        			+ 'db_idx INTEGER, '
+	        			+ 'dbc_comment TEXT, '
+	        			+ 'dbc_add DATATIME, '
+	        			+ 'dbc_upd DATETIME)');
+        });
+        oM.doIt();
   	},
   	
   	_onError : function(tx, e) {
@@ -312,13 +324,23 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 		});
 	},
 	
-	loadBook : function(fCallback, nIdx){
+	loadBook : function(nIdx, fCallback){
 		var sSql = 'SELECT * FROM ' + this._sPrefix + this._sTableList;
 			sSql += ' WHERE db_idx = ?';
 		
 		var self = this;
 		this._db.transaction(function(tx){
-			tx.executeSql(sSql, [nIdx], fCallback, self._onError);
+			tx.executeSql(sSql, [nIdx], function(tx, results){
+                //console.log(results);
+                var sInnerSql = 'SELECT * FROM ' + self._sPrefix + self._sTableComments
+                    + ' WHERE db_idx = ?';
+                //console.log(sInnerSql);
+                tx.executeSql(sInnerSql, [nIdx], function(tx, innerResults){
+                    //console.log(innerResults);
+                    results.innerResults = innerResults;
+                    fCallback(results);
+                }, self._onError);   
+            }, self._onError);
 		});
 	},
 	
@@ -360,7 +382,6 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
         var sSql = 'INSERT INTO ' + this._sPrefix + this._sTableList + ' ' 
         		+ '(db_category, db_favorite, db_title, db_image, db_author, db_price, db_discount, db_publisher, db_pubdate, db_isbn, db_description, db_add, db_upd) '
 				+ 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATETIME("NOW"), DATETIME("NOW"))';
-        console.log(htData);
         var self = this;
         this._db.transaction(function(tx){
             tx.executeSql(sSql
@@ -376,6 +397,21 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
                     htData.pubdate,
                     htData.isbn,
                     htData.description
+                  ] 
+                , fSuccess, self._onError);
+        });
+    },
+    
+    addComment : function(nIdx, sComment, fSuccess){
+        var sSql = 'INSERT INTO ' + this._sPrefix + this._sTableComments + ''
+            + '(db_idx, dbc_comment, dbc_add, dbc_upd) '
+            + ' VALUES (?, ?, DATETIME("NOW"), DATETIME("NOW"))';
+        var self = this;
+        this._db.transaction(function(tx){
+            tx.executeSql(sSql
+    			, [
+                    nIdx,
+                    sComment
                   ] 
                 , fSuccess, self._onError);
         });

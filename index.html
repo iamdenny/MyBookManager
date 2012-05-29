@@ -21,6 +21,7 @@
 	    
 	    <script type="text/javascript" src="js/datejs/date-ko-KR.js"></script>
 	    <script type="text/javascript" src="js/prettydate/prettydate.js"></script>
+        <script type="text/javascript" src="js/migrator/migrator.js"></script>
 	    
 	    <script type="text/javascript" src="js/com.iamdenny.js"></script>
 	    <script type="text/javascript" src="js/com.iamdenny.MyBookManager.js"></script>
@@ -286,11 +287,26 @@
 							</div>
 						</div>
 						<div style="padding:15px">
-							<div id="viewbook-description">
+							<div class="viewbook-collapsible">
 								<h5>책소개</h5>
 								<p>{=db_description}</p>
 							</div>
 						</div>
+                        {if comments.length}
+                            <div style="padding:15px">
+                                <div class="viewbook-collapsible">
+        							<h5>좋은 글귀</h5>
+                                    <ol class="viewbook-listview" data-role="listview" data-inset="true">
+                                        {for key:val in comments}
+                                            <li>
+                                                {=val.dbc_comment}
+                                                <p class="ui-li-aside"><strong>{=val.p_upd}</strong>AM</p>
+                                            </li>
+                                        {/for}
+                                    </ol>
+    							</div>
+                            </div>
+                        {/if}
 					</div>
 				</script>
 			</div>
@@ -299,11 +315,21 @@
 				<div class="navbar" data-role="navbar" data-iconpos="top">
 					<ul>
 						<li><a class="auto-turn-off" data-icon="arrow-l" data-theme="a" href="#" data-rel="back">뒤로</a></li>
-						<li><a class="auto-turn-off" data-icon="plus" data-theme="a" href="#">좋은 글귀 추가</a></li>
-						<li><a class="auto-turn-off" data-icon="plus" data-theme="a" href="#">사진 삽입</a></li>
+						<li><a class="auto-turn-off" data-icon="plus" data-theme="a" href="#viewbookaddcomment">좋은 글귀 추가</a></li>
+						<li><a class="auto-turn-off" id="_insertPhoto" data-icon="plus" data-theme="a" href="#">사진 삽입</a></li>
 					</ul>
 				</div>
 			</footer>
+		</section>
+        
+        <section id="viewbookaddcomment" data-role="dialog" title="좋은 글귀추가">
+			<header data-role="header" data-theme="a">
+				<h1>좋은 글귀추가</h1>
+			</header>
+			<div id="viewbookaddcomment-content" class="cotnent" data-role="content" data-inset="true">
+                <textarea name="textarea" id="viewbookaddcomment-textarea"></textarea>
+                <input id="viewbookaddcomment-btn" class="auto-turn-off" type="button" data-role="button" data-theme="b" data-mini="true" value="추가" />
+			</div>
 		</section>
 		
 		<section id="viewlist" data-role="page" data-title="나의 도서 관리">

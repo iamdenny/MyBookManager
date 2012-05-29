@@ -2,19 +2,20 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
 	
 	_woDB : null,
 	_nMainListBookIdx : null,
+    _sMainListBookCategory : null,
 	_htData : null,
 	_wtViewBookDetail : null,
 	_welViewBookContent : null,
-	_sMainListBookCategory : null,
 	
 	$init : function(woDB){
 		this._woDB = woDB;
 		
 		this._welViewBook = jindo.$Element('viewbook');
 		this._welViewBookContent = jindo.$Element('viewbook-content');
-		
+        
 		this._initTemplates();
 		this._initPageShowEvent();
+        this._initClickEvent();
 	},
 	
 	_initTemplates : function(){
@@ -23,34 +24,58 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
 
 	_initPageShowEvent : function(){
 		var self = this;
+    	
 		$("#viewbook").bind("pagebeforeshow", function(event, ui){
 			$.mobile.showPageLoadingMsg("b", "Loading...", true);
+            self.loadBook();
 		}).bind("pageshow", function(event, ui){
-		});	
+		});
+        
+        $("#viewbookaddcomment").bind("pagebeforeshow", function(event, ui){
+            $('#viewbookaddcomment-textarea').val('');
+        }).bind("pageshow", function(event, ui){
+    	});
 	},
+    
+    _initClickEvent : function() {
+        var self = this;
+        $("#viewbookaddcomment-btn").on('click', function(eEvent){
+            var sComment = $('#viewbookaddcomment-textarea').val();
+            self._woDB.addComment(self._nMainListBookIdx, sComment, function(){
+                $('#viewbookaddcomment').dialog('close');            
+            });            
+        });
+    },
+    
+    setMainListBookId : function(nMainListBookIdx){
+        this._nMainListBookIdx = nMainListBookIdx;  
+    },
+    
+    setMainListBookCategory : function(sMainListBookCategory){
+        this._sMainListBookCategory = sMainListBookCategory;  
+    },
 	
-	loadBook : function(nMainListBookIdx, sMainListBookCategory){
+	loadBook : function(){
 		var self = this;
-		
-		this._nMainListBookIdx = nMainListBookIdx;
-		this._sMainListBookCategory = sMainListBookCategory;
 		var sCategory = this.parseCategoryToString(this._sMainListBookCategory);
 		this.setTitle(sCategory);
 		this._welViewBookContent.empty();
-		this._woDB.loadBook(function(tx, results){
+		this._woDB.loadBook(this._nMainListBookIdx, function(results){
 			if(results.rows.length > 0){
 				self._htData = self.parseRowData(results.rows.item(0));
+                self._htData.comments = self.parseComments(results.innerResults);
+                self._htData.comments.length = results.innerResults.rows.length;
 				var el = jindo.$(self._wtViewBookDetail.process(self._htData));
 				self._welViewBookContent.append(el);
 				self._refreshViewBook();
 			}
-		}, this._nMainListBookIdx);
+		});
 	},
 	
 	setTitle : function(sTitle){
 		$('header h1', this._welViewBook.$value()).text(sTitle);
 	},
-	
+    
 	parseCategoryToString : function(sMainListBookCategory){
 		var sString = '';
 		switch(sMainListBookCategory){
@@ -72,6 +97,23 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
 		}
 		return sString;
 	},
+    
+    parseComments : function(oResult){
+        var nCount = oResult.rows.length;
+        var htData = [];
+        for(var i=0; i<nCount; i++){
+            htData[i] = oResult.rows.item(i);
+            var oDate = Date.parse(htData[i].dbc_upd);
+            if(oDate.toString('yyyyMd') == Date.today().toString('yyyyMd')){
+        		htData[i]['p_upd'] = oDate.toString('H:m');
+    		}else if(oDate.toString('yyyy') == Date.today().toString('yyyy')){
+    			htData[i]['p_upd'] = oDate.toString('M.d');	
+    		}else{
+    			htData[i]['p_upd'] = oDate.toString('yy.M.d');
+    		}
+        }
+        return htData;
+    },
 	
 	parseRowData : function(htData){
 		htData['p_category_' + htData.db_category] = 'checked="checked"';
@@ -105,7 +147,8 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
 		$('.db_price', elRoot).parseNumber({format:"#,###원", locale:"kr"});
 		$('.db_price', elRoot).formatNumber({format:"#,###원", locale:"kr"});
 		$('.db_discounted_price', elRoot).formatNumber({format:"#,###", locale:"kr"});
-		$('#viewbook-description', elRoot).collapsible({ mini: "true", theme : "c" , collapsed : false});
+		$('.viewbook-collapsible', elRoot).collapsible({ mini: "true", theme : "c" , collapsed : false});
+        $('.viewbook-listview', elRoot).listview();
 	},
 	
 	_updateCategory : function(sCategory){

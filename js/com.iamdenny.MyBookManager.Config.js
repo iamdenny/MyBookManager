@@ -77,7 +77,7 @@ com.iamdenny.MyBookManager.Config = jindo.$Class({
 	
 	checkConfigExists : function(){
 		var bConfigExists = true;
-		if(!localStorage.getItem('homepage')){
+		if(!localStorage.getItem('sync')){
 			bConfigExists = false;
 		}
         //bConfigExists = false; // for testing
@@ -115,7 +115,6 @@ com.iamdenny.MyBookManager.Config = jindo.$Class({
     
     set : function(sKey, htData){
         var sData = jindo.$Json(htData).toString();
-        console.log(sData);
         localStorage.setItem(sKey, sData);
     },
     
