@@ -59,22 +59,28 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
         $('#_insertPhoto').on('click', function(eEvent){
             if(self._bDeviceReady){
                 var oCamera = navigator.camera;
-                oCamera.getPicture(function(sImageURI){
-        			alert(sImageURI)
-    				//self._putImageURIToContent(sImageURI, self._welMainContent);
+                oCamera.getPicture(function(sDataUrl){
+        			self._putDataUrl(sDataUrl);
     			}, function(message){
-    				self._onFail(message);
+    				alert(message);
     			}, { 
-                    quality: 50, 
-    		    	destinationType: oCamera.DestinationType.FILE_URI,
-    		    	sourceType: oCamera.PictureSourceType.CAMERA,
-    		    	mediaType: oCamera.MediaType.PICTURE
+                    quality : 50, 
+    		    	destinationType : oCamera.DestinationType.DATA_URL,
+    		    	sourceType : oCamera.PictureSourceType.CAMERA,
+                    allowEdit : false,
+                    encodingType : oCamera.EncodingType.PNG,
+    		    	mediaType : oCamera.MediaType.PICTURE,
+                    correctOrientation : true,
+                    saveToPhotoAlbum : false
                     }
                 );
             }else{
                 alert('폰갭 모듈이 로드 되지 않았습니다.');   
             }
         });
+    },
+    _putDataUrl : function(sDataUrl){
+        alert(sDataUrl)
     },
     
     setMainListBookId : function(nMainListBookIdx){
