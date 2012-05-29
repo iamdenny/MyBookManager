@@ -6,6 +6,7 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
 	_htData : null,
 	_wtViewBookDetail : null,
 	_welViewBookContent : null,
+    _bDeviceReady : null, 
 	
 	$init : function(woDB){
 		this._woDB = woDB;
@@ -16,7 +17,16 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
 		this._initTemplates();
 		this._initPageShowEvent();
         this._initClickEvent();
+        this._initPhonegap();
 	},
+    
+    _initPhonegap : function(){
+        var self = this;
+        self._bDeviceReady = false;
+        document.addEventListener("deviceready", function(){
+            self._bDeviceReady = true;
+        });
+    },
 	
 	_initTemplates : function(){
 		this._wtViewBookDetail = jindo.$Template('tpl-viewbook-detail');
@@ -44,6 +54,26 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
             self._woDB.addComment(self._nMainListBookIdx, sComment, function(){
                 $('#viewbookaddcomment').dialog('close');            
             });            
+        });
+        
+        $('#_insertPhoto').on('click', function(eEvent){
+            if(self._bDeviceReady){
+                var oCamera = navigator.camera;
+                oCamera.getPicture(function(sImageURI){
+        			alert(sImageURI)
+    				//self._putImageURIToContent(sImageURI, self._welMainContent);
+    			}, function(message){
+    				self._onFail(message);
+    			}, { 
+                    quality: 50, 
+    		    	destinationType: oCamera.DestinationType.FILE_URI,
+    		    	sourceType: oCamera.PictureSourceType.CAMERA,
+    		    	mediaType: oCamera.MediaType.PICTURE
+                    }
+                );
+            }else{
+                alert('폰갭 모듈이 로드 되지 않았습니다.');   
+            }
         });
     },
     
