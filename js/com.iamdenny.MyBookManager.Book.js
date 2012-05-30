@@ -59,10 +59,10 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
         $('#_insertPhoto').on('click', function(eEvent){
             if(self._bDeviceReady){
                 var oCamera = navigator.camera;
-                oCamera.getPicture(function(sDataUrl){
+                oCamera.getPicture(function(sFileUri){
                     $.mobile.showPageLoadingMsg("b", "Loading...", true);
-                    sDataUrl = 'data:image/png;base64,' + sDataUrl;
-        			self._woDB.addImage(self._nMainListBookIdx, sDataUrl, function(){
+                    //sDataUrl = 'data:image/png;base64,' + sDataUrl;
+        			self._woDB.addImage(self._nMainListBookIdx, sFileUri, function(){
                         self.loadBook();
                         $.mobile.hidePageLoadingMsg();
         			});
@@ -76,10 +76,10 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
                     }, 100); 
     			}, { 
                     quality : 50, 
-    		    	destinationType : oCamera.DestinationType.DATA_URL,
+    		    	destinationType : oCamera.DestinationType.FILE_URI,
     		    	sourceType : oCamera.PictureSourceType.CAMERA,
                     allowEdit : false,
-                    encodingType : oCamera.EncodingType.PNG,
+                    encodingType : oCamera.EncodingType.JPEG,
     		    	mediaType : oCamera.MediaType.PICTURE,
                     correctOrientation : true,
                     saveToPhotoAlbum : false
