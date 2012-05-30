@@ -14,6 +14,7 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 	_nDBSize : 10 * 1024 * 1024, // 20MB
 	_sTableList : 'books',
     _sTableComments : 'books_comments',
+    _sTableImages : 'books_images',
 	
 	$init : function(){
 		this._open();
@@ -65,6 +66,16 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 	        			+ 'dbc_comment TEXT, '
 	        			+ 'dbc_add DATATIME, '
 	        			+ 'dbc_upd DATETIME)');
+        });
+        oM.migration(4, function(tx){
+            console.log('upgrade db from 3 to 4');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS ' + 
+                self._sPrefix + self._sTableImages + '('
+                		+ 'dbi_idx INTEGER PRIMARY KEY ASC AUTOINCREMENT, '
+	        			+ 'db_idx INTEGER, '
+	        			+ 'dbi_src TEXT, '
+	        			+ 'dbi_add DATATIME, '
+	        			+ 'dbi_upd DATETIME)');
         });
         oM.doIt();
   	},
@@ -415,6 +426,21 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
                   ] 
                 , fSuccess, self._onError);
         });
-    }
+    },
+    
+    addImage : function(nIdx, sSrc, fSuccess){
+        var sSql = 'INSERT INTO ' + this._sPrefix + this._sTableImages + ''
+            + '(db_idx, dbi_src, dbi_add, dbi_upd) '
+            + ' VALUES (?, ?, DATETIME("NOW"), DATETIME("NOW"))';
+        var self = this;
+        this._db.transaction(function(tx){
+            tx.executeSql(sSql
+        		, [
+                    nIdx,
+                    sSrc
+                  ] 
+                , fSuccess, self._onError);
+        });
+    } 
   	
 }).extend(jindo.Component);

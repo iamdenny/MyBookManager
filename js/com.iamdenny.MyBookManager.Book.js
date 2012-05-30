@@ -60,9 +60,19 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
             if(self._bDeviceReady){
                 var oCamera = navigator.camera;
                 oCamera.getPicture(function(sDataUrl){
-        			self._putDataUrl(sDataUrl);
+                    $.mobile.showPageLoadingMsg("b", "Loading...", true);
+        			self._woDB.addImage(self._nMainListBookIdx, sDataUrl, function(){
+                        self.loadBook();
+                        $.mobile.hidePageLoadingMsg();
+        			});
+                    setTimeout(function(){
+                        $('.ui-btn-active.auto-turn-off').removeClass('ui-btn-active');
+                    }, 100); 
     			}, function(message){
     				alert(message);
+                    setTimeout(function(){
+                        $('.ui-btn-active.auto-turn-off').removeClass('ui-btn-active');
+                    }, 100); 
     			}, { 
                     quality : 50, 
     		    	destinationType : oCamera.DestinationType.DATA_URL,
@@ -75,12 +85,12 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
                     }
                 );
             }else{
-                alert('폰갭 모듈이 로드 되지 않았습니다.');   
+                alert('폰갭 모듈이 로드 되지 않았습니다.');  
+                setTimeout(function(){
+                    $('.ui-btn-active.auto-turn-off').removeClass('ui-btn-active');
+                }, 100);                
             }
         });
-    },
-    _putDataUrl : function(sDataUrl){
-        alert('_putDataUrl');
     },
     
     setMainListBookId : function(nMainListBookIdx){
