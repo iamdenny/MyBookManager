@@ -80,10 +80,10 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
         });
         
         $('#viewbook-content').on('click', '._viewbook-images', function(eEvent){
-            var welTarget = $(eEvent.target);
+            var welTarget = $(eEvent.currentTarget);
             self._nDbiIdx = welTarget.attr('id').replace('_dbi_idx_','');
             var welImage = $('img', welTarget);
-            welImage.width('100%');
+            welImage.width('100%').height('auto');
             $('#viewbookimage-content').html('').append(welImage);
             $.mobile.changePage("#viewbookimage");
         });
