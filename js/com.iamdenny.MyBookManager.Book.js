@@ -7,6 +7,8 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
 	_wtViewBookDetail : null,
 	_welViewBookContent : null,
     _bDeviceReady : null, 
+    _nDbcIdx : null,
+    _nDbiIdx : null,
 	
 	$init : function(woDB){
 		this._woDB = woDB;
@@ -56,6 +58,42 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
             });            
         });
         
+        $('#viewbook-content').on('taphold', '._viewbook-comments', function(eEvent){
+            var welTarget = $(eEvent.target);
+            self._nDbcIdx = welTarget.attr('id').replace('_dbc_idx_','');
+            var sComment = $('._viewbook-comment', welTarget).text();
+            $('#viewbookupdatecomment-textarea').val(sComment);
+            $.mobile.changePage("#viewbookupdatecomment");
+        });
+        
+        $('#viewbookupdatecomment-btn').on('click', function(eEvent){
+            var sComment = $('#viewbookupdatecomment-textarea').val();
+            self._woDB.updateComment(self._nDbcIdx, sComment, function(){
+                $('#viewbookupdatecomment').dialog('close');            
+            });
+        });
+        
+        $('#viewbookdeletecomment-btn').on('click', function(eEvent){
+            self._woDB.deleteComment(self._nDbcIdx, function(){
+                $('#viewbookupdatecomment').dialog('close');            
+            });
+        });
+        
+        $('#viewbook-content').on('click', '._viewbook-images', function(eEvent){
+            var welTarget = $(eEvent.target);
+            self._nDbiIdx = welTarget.attr('id').replace('_dbi_idx_','');
+            var welImage = $('img', welTarget);
+            welImage.width('100%');
+            $('#viewbookimage-content').html('').append(welImage);
+            $.mobile.changePage("#viewbookimage");
+        });
+        
+        $('#_deleteImage').on('click', function(eEvent){
+            self._woDB.deleteImage(self._nDbiIdx, function(){
+                $('#viewbookimage').dialog('close'); 
+            });
+        });
+        
         $('#_insertPhoto').on('click', function(eEvent){
             if(self._bDeviceReady){
                 var oCamera = navigator.camera;
@@ -70,7 +108,6 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
                         $('.ui-btn-active.auto-turn-off').removeClass('ui-btn-active');
                     }, 100); 
     			}, function(message){
-    				alert(message);
                     setTimeout(function(){
                         $('.ui-btn-active.auto-turn-off').removeClass('ui-btn-active');
                     }, 100); 

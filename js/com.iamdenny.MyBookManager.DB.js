@@ -436,6 +436,34 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
         });
     },
     
+    updateComment : function(nIdx, sComment, fSuccess){
+        var sSql = 'UPDATE ' + this._sPrefix + this._sTableComments + ' SET '
+            + 'dbc_comment = ?, dbc_upd = DATETIME("NOW") WHERE dbc_idx = ?';
+        var self = this;
+        console.log(sSql);
+        this._db.transaction(function(tx){
+            tx.executeSql(sSql
+        		, [
+                    sComment,
+                    nIdx
+                  ] 
+                , fSuccess, self._onError);
+        });
+    },
+    
+    deleteComment : function(nIdx, fSuccess){
+        var sSql = 'DELETE FROM ' + this._sPrefix + this._sTableComments + ' '
+            + ' WHERE dbc_idx = ?';
+        var self = this;
+        this._db.transaction(function(tx){
+            tx.executeSql(sSql
+            	, [
+                    nIdx
+                  ] 
+                , fSuccess, self._onError);
+        });
+    },
+    
     addImage : function(nIdx, sSrc, fSuccess){
         var sSql = 'INSERT INTO ' + this._sPrefix + this._sTableImages + ''
             + '(db_idx, dbi_src, dbi_add, dbi_upd) '
@@ -449,6 +477,19 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
                   ] 
                 , fSuccess, self._onError);
         });
-    } 
+    },
+    
+    deleteImage : function(nIdx, fSuccess){
+        var sSql = 'DELETE FROM ' + this._sPrefix + this._sTableImages + ''
+            + ' WHERE dbi_idx = ?';
+        var self = this;
+        this._db.transaction(function(tx){
+            tx.executeSql(sSql
+                , [
+                    nIdx
+                  ] 
+                , fSuccess, self._onError);
+        });
+    }
   	
 }).extend(jindo.Component);

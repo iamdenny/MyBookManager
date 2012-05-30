@@ -296,10 +296,10 @@
                             <div style="padding:15px">
                                 <div class="viewbook-collapsible">
         							<h5>좋은 글귀</h5>
-                                    <ol class="viewbook-listview" data-role="listview" data-inset="true">
+                                    <ol class="viewbook-listview" data-role="listview" data-inset="true" data-split-icon="delete">
                                         {for key:val in comments}
-                                            <li>
-                                                {=val.dbc_comment}
+                                            <li id="_dbc_idx_{=val.dbc_idx}" class="_viewbook-comments">
+                                                <span class="_viewbook-comment">{=val.dbc_comment}</span>
                                                 <p class="ui-li-aside"><strong>{=val.p_upd}</strong>AM</p>
                                             </li>
                                         {/for}
@@ -313,7 +313,7 @@
                                     <h5>사진</h5>
                                     <ul class="viewbook-image">
                                         {for key:val in images}
-                                            <li><a id="_dbi_{=val.dbi_idx}" href="#"><img src="{=val.dbi_src}" width="88" height="125"/></li>
+                                            <li id="_dbi_idx_{=val.dbi_idx}" class="_viewbook-images"><img src="{=val.dbi_src}" width="88" height="125"/></li>
                                         {/for}
                                     </ul>
                                 </div>
@@ -334,14 +334,41 @@
 			</footer>
 		</section>
         
-        <section id="viewbookaddcomment" data-role="dialog" title="좋은 글귀추가">
+        <section id="viewbookaddcomment" data-role="dialog" title="좋은 글귀 추가">
 			<header data-role="header" data-theme="a">
-				<h1>좋은 글귀추가</h1>
+				<h1>좋은 글귀 추가</h1>
 			</header>
 			<div id="viewbookaddcomment-content" class="cotnent" data-role="content" data-inset="true">
                 <textarea name="textarea" id="viewbookaddcomment-textarea"></textarea>
                 <input id="viewbookaddcomment-btn" class="auto-turn-off" type="button" data-role="button" data-theme="b" data-mini="true" value="추가" />
 			</div>
+		</section>
+        
+        <section id="viewbookupdatecomment" data-role="dialog" title="좋은 글귀 수정">
+    		<header data-role="header" data-theme="a">
+				<h1>좋은 글귀 수정</h1>
+			</header>
+			<div id="viewbookupdatecomment-content" class="cotnent" data-role="content" data-inset="true">
+                <textarea name="textarea" id="viewbookupdatecomment-textarea"></textarea>
+                <input id="viewbookupdatecomment-btn" class="auto-turn-off" type="button" data-role="button" data-theme="b" data-mini="true" value="수정" />
+                <input id="viewbookdeletecomment-btn" class="auto-turn-off" type="button" data-role="button" data-theme="d" data-mini="true" value="삭제" />
+			</div>
+		</section>
+        
+    	<section id="viewbookimage" data-role="page" data-title="사진">
+			
+			<div id="viewbookimage-content" data-role="content" class="content">
+				
+			</div>
+			
+			<footer data-role="footer" data-id="main-footer" data-position="fixed" data-theme="a" data-tap-toggle="false">
+				<div class="navbar" data-role="navbar" data-iconpos="top">
+					<ul>
+						<li><a class="auto-turn-off" data-icon="arrow-l" data-theme="a" href="#" data-rel="back">뒤로</a></li>
+                        <li><a class="auto-turn-off" id="_deleteImage" data-icon="delete" data-theme="a" href="#">삭제</a></li>
+					</ul>
+				</div>
+			</footer>
 		</section>
 		
 		<section id="viewlist" data-role="page" data-title="나의 도서 관리">
@@ -405,7 +432,7 @@
 					 	<input type="range" class="config-content-search" name="c_result_count" id="c_result_count" value="20" min="1" max="100" data-highlight="true" data-mini="true" />
 					</li>
 				</ul>
-					
+				<!--
 				<h2>로그인</h2>
 				
 				<ul data-role="listview" data-inset="true">
@@ -438,6 +465,7 @@
 					    </fieldset>
 					</li>
 				</ul>
+                -->
 			</div>
 			
 			<footer data-role="footer" data-id="main-footer" data-position="fixed" data-theme="a" data-tap-toggle="false">
