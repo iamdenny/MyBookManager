@@ -343,13 +343,21 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 		this._db.transaction(function(tx){
 			tx.executeSql(sSql, [nIdx], function(tx, results){
                 //console.log(results);
-                var sInnerSql = 'SELECT * FROM ' + self._sPrefix + self._sTableComments
+                var sCommentSql = 'SELECT * FROM ' + self._sPrefix + self._sTableComments
                     + ' WHERE db_idx = ?';
                 //console.log(sInnerSql);
-                tx.executeSql(sInnerSql, [nIdx], function(tx, innerResults){
-                    //console.log(innerResults);
-                    results.innerResults = innerResults;
-                    fCallback(results);
+                tx.executeSql(sCommentSql, [nIdx], function(tx, commentResults){
+                    //console.log(commentResults);
+                    results.commentResults = commentResults;
+                    
+                    var sImageSql = 'SELECT * FROM ' + self._sPrefix + self._sTableImages
+                    + ' WHERE db_idx = ?';
+                    //console.log(sImageSql);
+                    tx.executeSql(sImageSql, [nIdx], function(tx, imageResults){
+                        //console.log(imageResults);
+                        results.imageResults = imageResults;
+                        fCallback(results);
+                    }, self._onError); 
                 }, self._onError);   
             }, self._onError);
 		});

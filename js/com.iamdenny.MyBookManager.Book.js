@@ -61,6 +61,7 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
                 var oCamera = navigator.camera;
                 oCamera.getPicture(function(sDataUrl){
                     $.mobile.showPageLoadingMsg("b", "Loading...", true);
+                    sDataUrl = 'data:image/png;base64,' + sDataUrl;
         			self._woDB.addImage(self._nMainListBookIdx, sDataUrl, function(){
                         self.loadBook();
                         $.mobile.hidePageLoadingMsg();
@@ -109,8 +110,10 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
 		this._woDB.loadBook(this._nMainListBookIdx, function(results){
 			if(results.rows.length > 0){
 				self._htData = self.parseRowData(results.rows.item(0));
-                self._htData.comments = self.parseComments(results.innerResults);
-                self._htData.comments.length = results.innerResults.rows.length;
+                self._htData.comments = self.parseComments(results.commentResults);
+                self._htData.comments.length = results.commentResults.rows.length;
+                self._htData.images = self.parseImages(results.imageResults);
+                self._htData.images.length = results.imageResults.rows.length;
 				var el = jindo.$(self._wtViewBookDetail.process(self._htData));
 				self._welViewBookContent.append(el);
 				self._refreshViewBook();
@@ -152,6 +155,23 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
             var oDate = Date.parse(htData[i].dbc_upd);
             if(oDate.toString('yyyyMd') == Date.today().toString('yyyyMd')){
         		htData[i]['p_upd'] = oDate.toString('H:m');
+    		}else if(oDate.toString('yyyy') == Date.today().toString('yyyy')){
+    			htData[i]['p_upd'] = oDate.toString('M.d');	
+    		}else{
+    			htData[i]['p_upd'] = oDate.toString('yy.M.d');
+    		}
+        }
+        return htData;
+    },
+    
+    parseImages : function(oResult){
+        var nCount = oResult.rows.length;
+        var htData = [];
+        for(var i=0; i<nCount; i++){
+            htData[i] = oResult.rows.item(i);
+            var oDate = Date.parse(htData[i].dbi_upd);
+            if(oDate.toString('yyyyMd') == Date.today().toString('yyyyMd')){
+            	htData[i]['p_upd'] = oDate.toString('H:m');
     		}else if(oDate.toString('yyyy') == Date.today().toString('yyyy')){
     			htData[i]['p_upd'] = oDate.toString('M.d');	
     		}else{

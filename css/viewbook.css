@@ -25,3 +25,5 @@
 #viewbook #viewbook-content .u_me2b3 .s2plug {margin: 11px 0 5px 0;text-align: left;}
 #viewbook #viewbook-content .ui-slider-switch { width: 10em }
 #viewbook #viewbook-content .comment_date {float:right;padding-left:10px;color:gray}
+#viewbook #viewbook-content .viewbook-image ul {}
+#viewbook #viewbook-content .viewbook-image li {float:left;padding:3px;}

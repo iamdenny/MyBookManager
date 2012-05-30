@@ -307,6 +307,18 @@
     							</div>
                             </div>
                         {/if}
+                        {if images.length}
+                            <div style="padding:15px">
+                                <div class="viewbook-collapsible">
+                                    <h5>사진</h5>
+                                    <ul class="viewbook-image">
+                                        {for key:val in images}
+                                            <li><a id="_dbi_{=val.dbi_idx}" href="#"><img src="{=val.dbi_src}" width="88" height="125"/></li>
+                                        {/for}
+                                    </ul>
+                                </div>
+                            </div>
+                        {/if}
 					</div>
 				</script>
 			</div>
