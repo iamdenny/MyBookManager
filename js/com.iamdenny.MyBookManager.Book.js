@@ -80,7 +80,7 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
         });
     },
     _putDataUrl : function(sDataUrl){
-        alert(sDataUrl)
+        alert('_putDataUrl');
     },
     
     setMainListBookId : function(nMainListBookIdx){
