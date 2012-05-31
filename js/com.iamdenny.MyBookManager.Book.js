@@ -90,7 +90,7 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
         
         $('#_deleteImage').on('click', function(eEvent){
             self._woDB.deleteImage(self._nDbiIdx, function(){
-                $('#viewbookimage').dialog('close'); 
+                history.back(); 
             });
         });
         
