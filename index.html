@@ -140,7 +140,7 @@
 						</span>
 						<dl class="cntm1">
 		  					<dt class="h"><strong>{=title}</strong></dt>
-		  					
+		  					<!--
 		  					<dd class="if2">
 		  						<span class="rv">
 		  							<span class="mask" style="width:90%;">
@@ -151,7 +151,7 @@
 		  						<strong class="if21 tx1">9</strong> 
 		  						<span class="if21 if1"><span class="br tx3">|</span> 리뷰264건</span>
 		  					</dd>
-		  					
+		  					-->
 							<dd class="if4">
 								<h4 class="hc">기본정보</h4>
 								<dl class="cnt">
@@ -171,9 +171,13 @@
 									<dt><span class="w">가</span><span>격&nbsp;&nbsp;:</span></dt> 
 					              	<dd>
 					               		<span class="strike db_price">{=price}원</span>
-					               		<span class="price"><strong class="db_discounted_price">{=discount}</strong>원(↓<strong class="per">10</strong>%)</span>
+					               		<span class="price"><strong class="db_discounted_price">{=discount}</strong>원(↓<strong class="per">{=p_discount_ratio}</strong>%)</span>
 					               	</dd>                           					
 								</dl>	
+                                <dl class="cnt">
+                                    <dt>설명&nbsp;&nbsp;:</dt>
+                                    <dd>{=p_description}</dd>
+                                </dl>
 							</dd>
 						</dl>
 						<div style="clear:both;padding:10px 0 0 0">
@@ -286,12 +290,14 @@
 								</div>
 							</div>
 						</div>
-						<div style="padding:15px">
-							<div class="viewbook-collapsible">
-								<h5>책소개</h5>
-								<p>{=db_description}</p>
-							</div>
-						</div>
+                        {if db_description}
+    						<div style="padding:15px">
+    							<div class="viewbook-collapsible">
+    								<h5>책소개</h5>
+    								<p>{=db_description}</p>
+    							</div>
+    						</div>
+                        {/if}
                         {if comments.length}
                             <div style="padding:15px">
                                 <div class="viewbook-collapsible">
@@ -340,9 +346,34 @@
 						<li><a class="auto-turn-off" data-icon="arrow-l" data-theme="a" href="#" data-rel="back">뒤로</a></li>
 						<li><a class="auto-turn-off" data-icon="plus" data-theme="a" href="#viewbookaddcomment">좋은 글귀 추가</a></li>
 						<li><a class="auto-turn-off" id="_insertPhoto" data-icon="plus" data-theme="a" href="#">사진 삽입</a></li>
+                        <li><a class="auto-turn-off" data-icon="delete" data-theme="a" href="#viewbookdeletebook">도서 삭제</a></li>
 					</ul>
 				</div>
 			</footer>
+		</section>
+        
+        <section id="viewbookdeletebook" data-role="dialog" title="도서 삭제">
+    		<header data-role="header" data-theme="a">
+				<h1>도서 삭제</h1>
+			</header>
+			<div id="viewbookdeletebook-content" class="cotnent" data-role="content" data-inset="true">
+                <p>정말로 삭제하시겠습니까?</p>
+                <div style="text-align:center">
+                    <a class="auto-turn-off" type="button" data-role="button" data-theme="b" data-rel="back" data-inline="true">취소</a>
+                    <input id="viewbookdeletebook-btn" class="auto-turn-off" type="button" data-role="button" data-theme="d" data-inline="true" value="삭제" />
+                </div>
+			</div>
+		</section>
+        
+        <section id="viewbookupdatecomment" data-role="dialog" title="좋은 글귀 수정">
+    		<header data-role="header" data-theme="a">
+				<h1>좋은 글귀 수정</h1>
+			</header>
+			<div id="viewbookupdatecomment-content" class="cotnent" data-role="content" data-inset="true">
+                <textarea name="textarea" id="viewbookupdatecomment-textarea"></textarea>
+                <input id="viewbookupdatecomment-btn" class="auto-turn-off" type="button" data-role="button" data-theme="b" data-mini="true" value="수정" />
+                <input id="viewbookdeletecomment-btn" class="auto-turn-off" type="button" data-role="button" data-theme="d" data-mini="true" value="삭제" />
+			</div>
 		</section>
         
         <section id="viewbookaddcomment" data-role="dialog" title="좋은 글귀 추가">

@@ -33,6 +33,12 @@ com.iamdenny.MyBookManager.SearchAPI.Naver = jindo.$Class({
 		var htNewData = oRes.json().channel.item;
 		for(var i=0, length=htNewData.length; i<length; i++){
 			htNewData[i].p_idx = i;
+            if(typeof htNewData[i].description == 'string'){
+                htNewData[i].p_description = htNewData[i].description;
+            }else{
+                htNewData[i].p_description = '';
+            }
+            htNewData[i].p_discount_ratio = Math.round((1 - htNewData[i].discount / htNewData[i].price) * 100);
 		}
 		return htNewData; 
 	},

@@ -415,7 +415,7 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
                     htData.publisher,
                     htData.pubdate,
                     htData.isbn,
-                    htData.description
+                    htData.p_description
                   ] 
                 , fSuccess, self._onError);
         });
@@ -464,6 +464,19 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
         });
     },
     
+    deleteAllComments : function(nIdx, fSuccess){
+        var sSql = 'DELETE FROM ' + this._sPrefix + this._sTableComments + ' '
+            + ' WHERE db_idx = ?';
+        var self = this;
+        this._db.transaction(function(tx){
+            tx.executeSql(sSql
+                , [
+                    nIdx
+                  ] 
+                , fSuccess, self._onError);
+        });
+    },
+    
     addImage : function(nIdx, sSrc, fSuccess){
         var sSql = 'INSERT INTO ' + this._sPrefix + this._sTableImages + ''
             + '(db_idx, dbi_src, dbi_add, dbi_upd) '
@@ -490,6 +503,34 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
                   ] 
                 , fSuccess, self._onError);
         });
+    },
+    
+    deleteAllImages : function(nIdx, fSuccess){
+        var sSql = 'DELETE FROM ' + this._sPrefix + this._sTableImages + ''
+            + ' WHERE db_idx = ?';
+        var self = this;
+        this._db.transaction(function(tx){
+            tx.executeSql(sSql
+                , [
+                    nIdx
+                  ] 
+                , fSuccess, self._onError);
+        });
+    },
+    
+    deleteBook : function(nIdx, fSuccess){
+        var sSql = 'DELETE FROM ' + this._sPrefix + this._sTableList + ''
+            + ' WHERE db_idx = ?';
+        var self = this;
+        this._db.transaction(function(tx){
+            tx.executeSql(sSql
+                , [
+                    nIdx
+                  ] 
+                , fSuccess, self._onError);
+        });  
+        this.deleteAllComments(nIdx);
+        this.deleteAllImages(nIdx);
     }
   	
 }).extend(jindo.Component);

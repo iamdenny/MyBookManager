@@ -58,7 +58,7 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
             });            
         });
         
-        $('#viewbook-content').on('taphold', '._viewbook-comments', function(eEvent){
+        $('#viewbook-content').on('click', '._viewbook-comments', function(eEvent){
             var welTarget = $(eEvent.target);
             self._nDbcIdx = welTarget.attr('id').replace('_dbc_idx_','');
             var sComment = $('._viewbook-comment', welTarget).text();
@@ -76,6 +76,13 @@ com.iamdenny.MyBookManager.Book = jindo.$Class({
         $('#viewbookdeletecomment-btn').on('click', function(eEvent){
             self._woDB.deleteComment(self._nDbcIdx, function(){
                 $('#viewbookupdatecomment').dialog('close');            
+            });
+        });
+        
+        $('#viewbookdeletebook-btn').on('click', function(eEvent){
+            self._woDB.deleteBook(self._nMainListBookIdx, function(){
+                self.fireEvent('updated');
+                history.go(-2);
             });
         });
         
