@@ -85,11 +85,10 @@ com.iamdenny.MyBookManager.DB = jindo.$Class({
 	},
 	
 	_onDefaultDataSuccess : function(tx, r) {
+        this._nCurrentDefaultDataCount++;
 		if(this._nCurrentDefaultDataCount == this._nMaxDefaultDataCount){
 		  	this.fireEvent("DefaultDataSuccess");
-		}else{
-			this._nCurrentDefaultDataCount++;
-		};
+		}
 	},
 	
 	_removeAllTables : function(){

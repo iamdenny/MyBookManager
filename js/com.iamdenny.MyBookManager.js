@@ -24,6 +24,7 @@ com.iamdenny.MyBookManager = jindo.$Class({
 			this._woDB.setAsDefault();
             this._woConfig.loadData();
 			this._woDB.attach('DefaultDataSuccess', function(eEvent){
+                console.log('DefaultDataSuccess');
 				self._woList.showList();
 				$.mobile.hidePageLoadingMsg();
 			});
