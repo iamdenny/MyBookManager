@@ -24,6 +24,7 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 			
 		this._welMain = jindo.$Element('main');
 		this._welMainList = jindo.$Element('main-list');
+        //this._oIScrollMain = new iScroll('scroller-main', { hScrollbar: false, vScrollbar: true, bounce : true });
 		
 		this._welViewList = jindo.$Element('viewlist');
 		this._welViewListList = jindo.$Element('viewlist-list');
