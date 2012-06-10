@@ -89,12 +89,13 @@ function fixed(elm) {
 
 	var scroller = elm.find('[data-iscroll="scroller"]').get(0);
 	if (scroller) {
-		var iscroll = new iScroll(scroller, {desktopCompatibility:true});
+		var iscroll = new iScroll(scroller, {desktopCompatibility:true, bounce:true, scrollbarClass: 'myScrollbar'});
 		elm.data("iscroll-plugin", iscroll);
 	}
 }
 $('[data-role="page"][data-iscroll="enable"]').live("pageshow", function() {
 	fixed($(this));
+    console.log('pageshow - iscroll');
 });
 if ($.mobile.activePage.data("iscroll") == "enable") {
 	fixed($.mobile.activePage);

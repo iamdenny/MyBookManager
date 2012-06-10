@@ -24,8 +24,7 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 			
 		this._welMain = jindo.$Element('main');
 		this._welMainList = jindo.$Element('main-list');
-        //this._oIScrollMain = new iScroll('scroller-main', { hScrollbar: false, vScrollbar: true, bounce : true });
-		
+        
 		this._welViewList = jindo.$Element('viewlist');
 		this._welViewListList = jindo.$Element('viewlist-list');
 		
@@ -208,7 +207,6 @@ com.iamdenny.MyBookManager.List = jindo.$Class({
 			$('.main-list-divider_favorite .ui-li-count', self._welMainList.$value()).text(results.rows.item(0).count);
 		}, 'favorite');
 		this._woDB.getCount(function(tx, results){
-			$('.main-list-divider_willread .ui-li-count', self._welMainList.$value()).text(results.rows.item(0).count);
 		}, 'willread');
 		this._woDB.getCount(function(tx, results){
 			$('.main-list-divider_hasread .ui-li-count', self._welMainList.$value()).text(results.rows.item(0).count);
