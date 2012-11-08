@@ -1,0 +1,18 @@
+CACHE MANIFEST
+# version 1.0.0
+
+CACHE:
+index.html
+splash.png
+icon.png
+js/com.iamdenny.js
+js/com.iamdenny.MyBookManager.Book.js
+js/com.iamdenny.MyBookManager.Config.js
+js/com.iamdenny.MyBookManager.DB.js
+js/com.iamdenny.MyBookManager.js
+js/com.iamdenny.MyBookManager.List.js
+js/com.iamdenny.MyBookManager.SearchAPI.js
+js/com.iamdenny.MyBookManager.SearchAPI.Naver.js
+
+NETWORK:
+*
