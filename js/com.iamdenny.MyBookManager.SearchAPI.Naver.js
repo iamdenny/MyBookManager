@@ -1,4 +1,3 @@
-
 /*
 	http://openapi.naver.com/search?key=de5ca00aaa40ab254ea5dec2c93247fd&query=%EC%82%BC%EA%B5%AD%EC%A7%80&target=book&display=20&start=1
 	http://openapi.naver.com/search?key=de5ca00aaa40ab254ea5dec2c93247fd&query=%EC%82%BC%EA%B5%AD%EC%A7%80&display=10&start=1&target=book
@@ -9,7 +8,8 @@
 com.iamdenny.MyBookManager.SearchAPI.Naver = jindo.$Class({
 	
 	//_sProxyUrl : 'http://ajaxui.nhndesign.com/jsMatch/temp/PracticalAjaxUIProxy.php',
-	_sProxyUrl : 'http://blog.iamdenny.com/naver_api_proxy.php',
+	//_sProxyUrl : 'http://blog.iamdenny.com/naver_api_proxy.php',
+	_sProxyUrl : 'http://mybookmanagerserver.iamdenny.com:2046',
 	_sUrl : 'http://openapi.naver.com/search',
 	_sKey : 'de5ca00aaa40ab254ea5dec2c93247fd',
 	
