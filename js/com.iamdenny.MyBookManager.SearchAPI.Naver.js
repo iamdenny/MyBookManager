@@ -15,7 +15,7 @@ com.iamdenny.MyBookManager.SearchAPI.Naver = jindo.$Class({
 	
 	$init : function(){
 		this._woAjax = jindo.$Ajax(this._sProxyUrl, {
-			type : 'jsonp',
+			type : 'json',
 			onerror : jindo.$Fn(this._onError, this).bind()
 		});
 	},
